@@ -8,7 +8,7 @@
 npm install express sqlite3 cors moment-timezone
 ```
 * Then, the backend and frontend need to be run simultaneously in separate terminal instances
-* Make sure you are in the 5Times directory in your terminal
+  * Make sure you are in the 5Times directory in your terminal
 ### In Terminal 1
 ```bash
 node server.js
