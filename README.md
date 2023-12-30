@@ -1,5 +1,5 @@
 # 5Times
-## An app that displays prayer times for masajid in Calgary
+5Times is an app that displays prayer times for masajid in Calgary
 
 ## Usage
 * To run the application, the following dependencies need to be installed
