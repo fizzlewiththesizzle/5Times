@@ -26,9 +26,14 @@ function App() {
     return () => clearInterval(intervalId);
   }, []); // Empty dependency array ensures that this effect runs only once on mount
 
+  const h_month = prayerData.length > 0 ? prayerData[0].hijri_month : '';
+  const h_day = prayerData.length > 0 ? prayerData[0].hijri_day : '';
+  const h_year = prayerData.length > 0 ? prayerData[0].hijri_year : '';
+
   return (
     <div className="App">
       <h1>Prayer Times</h1>
+      <h1>{h_month} {h_day}, {h_year}</h1>
       <table>
         <thead>
           <tr>
