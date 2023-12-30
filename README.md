@@ -16,7 +16,7 @@
 
 ### In Terminal 2
 ```bash
-    cd client
+cd client
 npm start
 ```
 
