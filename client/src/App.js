@@ -31,7 +31,7 @@ function App() {
       <h1 className="text-4xl font-bold mb-4">Prayer Times</h1>
       <h1 className="text-2xl">
         {prayerData.length > 0
-          ? `${prayerData[0].hijri_month} ${prayerData[0].hijri_day}, ${prayerData[0].hijri_year}`
+          ? `${prayerData[0].hijri_month} ${prayerData[0].hijri_day}, ${prayerData[0].hijri_year} AH`
           : ''}
       </h1>
       <div className="rounded-2xl overflow-hidden shadow-lg w-3/4 mx-auto">
