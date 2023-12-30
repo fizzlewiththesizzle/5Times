@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import fajrIcon from './icons/fajr.svg';
-import sunriseIcon from './icons/sunrise.svg';
-import dhuhrIcon from './icons/dhuhr.svg';
-import asrIcon from './icons/asr.svg';
-import maghribIcon from './icons/maghrib.svg';
-import ishaIcon from './icons/isha.svg';
 
 function App() {
   const [prayerData, setPrayerData] = useState([]);
