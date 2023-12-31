@@ -223,7 +223,7 @@ function fetchDataFromDatabase() {
 
 // Initial fetch and setup interval for periodic fetch (every hour)
 fetchDataFromDatabase();
-setInterval(fetchDataFromDatabase, 3600000); // 1 hour in milliseconds
+setInterval(fetchDataFromDatabase, 300000); // 5 minutes in milliseconds
 
 app.get('/api/prayer', (req, res) => {
   res.json(cachedData);
