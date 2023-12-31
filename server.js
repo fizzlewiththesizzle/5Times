@@ -27,7 +27,7 @@ function queryDatabase(callback) {
   const month = today.getMonth() + 1;
   const h_m = hijri_today.monthText
   const isDaylightSavingTime = today.getTimezoneOffset() < new Date(today.getFullYear(), 0, 1).getTimezoneOffset();
-
+  
   if (isDaylightSavingTime) {
     //console.log("Daylight savings in effect");
     jumuah_time_1 = "01:00 PM"
@@ -119,6 +119,85 @@ function queryDatabase(callback) {
     console.log("Jumuah 1: " + result[0].jumuah_1 + " | Jumuah 2: " + result[0].jumuah_2);
     console.log("Hijri Date: " + result[0].hijri_month + " " + result[0].hijri_day + ", " + result[0].hijri_year);
     console.log(result[0].month_s + " " + result[0].day_s + ", " + result[0].year_s);
+
+    var nowDateTime = today.toISOString();
+    var nowDate = nowDateTime.split('T')[0];
+
+    // convert fajr adhan to UTC
+    var fa_hms = result[0].fajr_adhan + ":00";
+    var fa_utc = new Date(nowDate + 'T' + fa_hms);
+    //convert sunrise to UTC
+    var sr_hms = result[0].sunrise + ":00";
+    var sr_utc = new Date(nowDate + 'T' + sr_hms);
+    // convert dhuhr adhan to UTC
+    var da_hms = result[0].dhuhr_adhan + ":00";
+    var da_utc = new Date(nowDate + 'T' + da_hms);
+    // convert asr adhan to UTC
+    var aa_hms = result[0].asr_adhan + ":00";
+    var aa_utc = new Date(nowDate + 'T' + aa_hms);
+    aa_utc.setHours(aa_utc.getHours() + 12);
+    // convert maghrib adhan to UTC
+    var ma_hms = result[0].maghrib_adhan + ":00";
+    var ma_utc = new Date(nowDate + 'T' + ma_hms);
+    ma_utc.setHours(ma_utc.getHours() + 12);
+    // convert isha adhan to UTC
+    var ia_hms = result[0].isha_adhan + ":00";
+    var ia_utc = new Date(nowDate + 'T' + ia_hms);
+    ia_utc.setHours(ia_utc.getHours() + 12);
+
+    // convert fajr iqama to UTC
+    var fi_hms = result[0].fajr_iqama + ":00";
+    var fi_utc = new Date(nowDate + 'T' + fi_hms);
+    // convert dhuhr iqama to UTC
+    var di_hms = result[0].dhuhr_iqama + ":00";
+    var di_utc = new Date(nowDate + 'T' + di_hms);
+    di_utc.setHours(di_utc.getHours() + 12);
+    // convert asr iqama to UTC
+    var ai_hms = result[0].asr_iqama + ":00";
+    var ai_utc = new Date(nowDate + 'T' + ai_hms);
+    ai_utc.setHours(ai_utc.getHours() + 12);
+    // convert maghrib iqama to UTC
+    var mi_hms = result[0].maghrib_iqama + ":00";
+    var mi_utc = new Date(nowDate + 'T' + mi_hms);
+    mi_utc.setHours(mi_utc.getHours() + 12);
+    // convert isha iqama to UTC
+    var ii_hms = result[0].isha_iqama + ":00";
+    var ii_utc = new Date(nowDate + 'T' + ii_hms);
+    ii_utc.setHours(ii_utc.getHours() + 12);
+
+    if(fa_utc >= today){
+      console.log("Fajr Adhan Up Next");
+    }
+    else if(fi_utc >= today){
+      console.log("Fajr Iqama Up Next");
+    }
+    else if(sr_utc >= today){
+      console.log("Sunrise Up Next");
+    }
+    else if(da_utc >= today){
+      console.log("Dhuhr Adhan Up Next");
+    }
+    else if(di_utc >= today){
+      console.log("Dhuhr Iqama Up Next");
+    }
+    else if(aa_utc >= today){
+      console.log("Asr Adhan Up Next");
+    }
+    else if(ai_utc >= today){
+      console.log("Asr Iqama Up Next");
+    }
+    else if(ma_utc >= today){
+      console.log("Maghrib Adhan Up Next");
+    }
+    else if(mi_utc >= today){
+      console.log("Maghrib Iqama Up Next");
+    }
+    else if(isha >= today){
+      console.log("Isha Adhan Up Next");
+    }
+    else if(ii_utc >= today){
+      console.log("Isha Iqama Up Next");
+    }
   });
 }
 
