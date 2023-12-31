@@ -47,22 +47,22 @@ function queryDatabase(callback) {
     hijri_month_en = "Safar";
   }
   else if (h_m == 'ربيع الأوّل'){
-    hijri_month_en = "Rabi ul Awal";
+    hijri_month_en = "Rabi' Al Awwal";
   }
   else if (h_m == 'ربيع الآخر'){
-    hijri_month_en = "Rabi Al-Akhar";
+    hijri_month_en = "Rabi' Al-Thani";
   }
   else if (h_m == 'جمادى الأولى'){
     hijri_month_en = "Jumada Al-Awwal";
   }
   else if (h_m == 'جمادى الآخرة'){
-    hijri_month_en = "Jumada Al-Akhirah";
+    hijri_month_en = "Jumada Al-Thani";
   }
   else if (h_m == 'رجب'){
     hijri_month_en = "Rajab";
   }
   else if (h_m == 'شعبان'){
-    hijri_month_en = "Shaban";
+    hijri_month_en = "Sha'aban";
   }
   else if (h_m == 'رمضان'){
     hijri_month_en = "Ramadan";
@@ -71,10 +71,10 @@ function queryDatabase(callback) {
     hijri_month_en = "Shawwal";
   }
   else if (h_m == 'ذو القعدة'){
-    hijri_month_en = "Dhul Qadah";
+    hijri_month_en = "Dhu Al-Qi'dah";
   }
   else if (h_m == 'ذو الحجّة'){
-    hijri_month_en = "Dhul Hijjah";
+    hijri_month_en = "Dhu Al-Hijjah";
   }
 
   db.all(query, [day, month], (err, rows) => {
