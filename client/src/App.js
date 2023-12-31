@@ -3,6 +3,7 @@ import './App.css';
 
 function App() {
   const [prayerData, setPrayerData] = useState([]);
+  const [nextPrayer, setNextPrayer] = useState('');
 
   const fetchPrayerData = () => {
     console.log('Fetching prayer data...');
@@ -13,6 +14,14 @@ function App() {
         setPrayerData(data);
       })
       .catch(error => console.error('Error fetching prayer data:', error));
+
+    fetch('/api/nextPrayer')
+      .then(response => response.json())
+      .then(data => {
+        console.log('Next prayer received: ', data);
+        setNextPrayer(data);
+      })
+      .catch(error => console.error('Error fetching next prayer:', error));
   };
 
   useEffect(() => {
@@ -28,17 +37,20 @@ function App() {
 
   return (
     <div className="App space-y-4 w-fit xl:w-3/4 2xl:w-3/4 mx-auto">
-      <div className='bg-gray-200 rounded-2xl overflow-hidden text-left xs:text-center xl:text-left 2xl:text-left mt-4 shadow-lg'>
-        <h1 className='text-4xl xs:text-3xl font-bold px-4'>MAC Al-Salam Centre</h1>
-        <h1 className="text-3xl xs:text-2xl px-4">
+      <div className='bg-gray-200 rounded-2xl overflow-hidden text-left xs:text-center xl:text-left 2xl:text-left mt-4 shadow-lg px-4'>
+        <h1 className='text-4xl xs:text-3xl font-bold'>MAC Al-Salam Centre</h1>
+        <h1 className="text-3xl xs:text-2xl">
         {prayerData.length > 0
           ? `${prayerData[0].month_s} ${prayerData[0].day_s}, ${prayerData[0].year_s}`
           : ''}
       </h1>
-        <h1 className="text-3xl xs:text-2xl px-4">
+        <h1 className="text-3xl xs:text-2xl">
         {prayerData.length > 0
           ? `${prayerData[0].hijri_month} ${prayerData[0].hijri_day}, ${prayerData[0].hijri_year} AH`
           : ''}
+      </h1>
+      <h1 className="text-3xl xs:text-2xl">
+        Next Up: <span className='font-semibold text-emerald-500'>{nextPrayer.next}</span>
       </h1>
       </div>
       <div className="rounded-2xl overflow-hidden shadow-lg">

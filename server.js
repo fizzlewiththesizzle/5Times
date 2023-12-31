@@ -16,6 +16,7 @@ const db = new sqlite3.Database('SalamPrayerDB.sqlite3');
 const query = 'SELECT * FROM SalamPrayerDB_Time WHERE SalamPrayerDB_Time.Day = ? AND SalamPrayerDB_Time.Month = ?';
 
 let cachedData = [];
+var next = null;
 
 function queryDatabase(callback) {
   const today = new Date();
@@ -167,36 +168,47 @@ function queryDatabase(callback) {
 
     if(fa_utc >= today){
       console.log("Fajr Adhan Up Next");
+      next = "Fajr Adhan";
     }
     else if(fi_utc >= today){
       console.log("Fajr Iqama Up Next");
+      next = "Fajr Iqama";
     }
     else if(sr_utc >= today){
       console.log("Sunrise Up Next");
+      next = "Sunrise";
     }
     else if(da_utc >= today){
       console.log("Dhuhr Adhan Up Next");
+      next = "Dhuhr Adhan";
     }
     else if(di_utc >= today){
       console.log("Dhuhr Iqama Up Next");
+      next = "Dhuhr Iqama";
     }
     else if(aa_utc >= today){
       console.log("Asr Adhan Up Next");
+      next = "Asr Adhan";
     }
     else if(ai_utc >= today){
       console.log("Asr Iqama Up Next");
+      next = "Asr Iqama";
     }
     else if(ma_utc >= today){
       console.log("Maghrib Adhan Up Next");
+      next = "Maghrib Adhan"
     }
     else if(mi_utc >= today){
       console.log("Maghrib Iqama Up Next");
+      next = "Maghrib Iqama"
     }
-    else if(isha >= today){
+    else if(ia_utc >= today){
       console.log("Isha Adhan Up Next");
+      next = "Isha Adhan"
     }
     else if(ii_utc >= today){
       console.log("Isha Iqama Up Next");
+      next = "Isha Iqama"
     }
   });
 }
@@ -215,6 +227,10 @@ setInterval(fetchDataFromDatabase, 3600000); // 1 hour in milliseconds
 
 app.get('/api/prayer', (req, res) => {
   res.json(cachedData);
+});
+
+app.get('/api/nextPrayer', (req, res) => {
+  res.json({ next });
 });
 
 app.get('*', (req, res) => {
