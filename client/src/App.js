@@ -72,8 +72,8 @@ function App() {
                       <span>Fajr</span>
                     </div>
                   </td>
-                  <td className="py-2 px-4 text-xl text-center">{prayer.fajr_adhan} AM</td>
-                  <td className="py-2 px-4 text-xl text-right">{prayer.fajr_iqama} AM</td>
+                  <td className={`py-2 px-4 text-xl text-center ${nextPrayer.next === "Fajr Adhan" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.fajr_adhan} AM</td>
+                  <td className={`py-2 px-4 text-xl text-right ${nextPrayer.next === "Fajr Iqama" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.fajr_iqama} AM</td>
                 </tr>
                 <tr className="bg-gray-100">
                   <td className="py-2 px-4 text-xl">
@@ -82,7 +82,7 @@ function App() {
                       <span>Sunrise</span>
                     </div>
                   </td>
-                  <td className="py-2 px-4 text-xl text-center">{prayer.sunrise} AM</td>
+                  <td className={`py-2 px-4 text-xl text-center ${nextPrayer.next === "Sunrise" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.sunrise} AM</td>
                   <td className="py-2 px-4 text-xl text-center xl:text-right 2xl:text-right">---</td>
                 </tr>
                 <tr className="bg-white">
@@ -92,8 +92,8 @@ function App() {
                       <span>Dhuhr</span>
                     </div>
                   </td>
-                  <td className="py-2 px-4 text-xl text-center">{prayer.dhuhr_adhan} PM</td>
-                  <td className="py-2 px-4 text-xl text-right">{prayer.dhuhr_iqama} PM</td>
+                  <td className={`py-2 px-4 text-xl text-center ${nextPrayer.next === "Dhuhr Adhan" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.dhuhr_adhan} PM</td>
+                  <td className={`py-2 px-4 text-xl text-right ${nextPrayer.next === "Dhuhr Iqama" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.dhuhr_iqama} PM</td>
                 </tr>
                 <tr className="bg-gray-100">
                   <td className="py-2 px-4 text-xl">
@@ -102,8 +102,8 @@ function App() {
                       <span>Asr</span>
                     </div>
                   </td>
-                  <td className="py-2 px-4 text-xl text-center">{prayer.asr_adhan} PM</td>
-                  <td className="py-2 px-4 text-xl text-right">{prayer.asr_iqama} PM</td>
+                  <td className={`py-2 px-4 text-xl text-center ${nextPrayer.next === "Asr Adhan" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.asr_adhan} PM</td>
+                  <td className={`py-2 px-4 text-xl text-right ${nextPrayer.next === "Asr Iqama" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.asr_iqama} PM</td>
                 </tr>
                 <tr className="bg-white">
                   <td className="py-2 px-4 text-xl">
@@ -112,8 +112,8 @@ function App() {
                       <span>Maghrib</span>
                     </div>
                   </td>
-                  <td className="py-2 px-4 text-xl text-center">{prayer.maghrib_adhan} PM</td>
-                  <td className="py-2 px-4 text-xl text-right">{prayer.maghrib_iqama} PM</td>
+                  <td className={`py-2 px-4 text-xl text-center ${nextPrayer.next === "Maghrib Adhan" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.maghrib_adhan} PM</td>
+                  <td className={`py-2 px-4 text-xl text-right ${nextPrayer.next === "Maghrib Iqama" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.maghrib_iqama} PM</td>
                 </tr>
                 <tr className="bg-gray-100">
                   <td className="py-2 px-4 text-xl">
@@ -122,8 +122,8 @@ function App() {
                       <span>Isha</span>
                     </div>
                   </td>
-                  <td className="py-2 px-4 text-xl text-center">{prayer.isha_adhan} PM</td>
-                  <td className="py-2 px-4 text-xl text-right">{prayer.isha_iqama} PM</td>
+                  <td className={`py-2 px-4 text-xl text-center ${nextPrayer.next === "Isha Adhan" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.isha_adhan} PM</td>
+                  <td className={`py-2 px-4 text-xl text-right ${nextPrayer.next === "Isha Iqama" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.isha_iqama} PM</td>
                 </tr>
               </React.Fragment>
             ))}
