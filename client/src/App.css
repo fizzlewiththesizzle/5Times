@@ -2,9 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  font-family: 'Inter', sans-serif;
+}
+
 .App {
   text-align: center;
-  margin-top: 50px;
 }
 
 .App-logo {

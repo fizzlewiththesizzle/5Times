@@ -6,7 +6,7 @@ function App() {
 
   const fetchPrayerData = () => {
     console.log('Fetching prayer data...');
-    fetch('http://localhost:3001/api/prayer')
+    fetch('/api/prayer')
       .then(response => response.json())
       .then(data => {
         console.log('Prayer data received:', data);
@@ -27,14 +27,21 @@ function App() {
   }, []); // Empty dependency array ensures that this effect runs only once on mount
 
   return (
-    <div className="App">
-      <h1 className="text-4xl font-bold mb-4">Prayer Times</h1>
-      <h1 className="text-2xl mb-4">
+    <div className="App space-y-4 w-fit xl:w-3/4 2xl:w-3/4 mx-auto">
+      <div className='bg-gray-200 rounded-2xl overflow-hidden text-left xs:text-center xl:text-left 2xl:text-left mt-4 shadow-lg'>
+        <h1 className='text-4xl xs:text-3xl font-bold px-4'>MAC Al-Salam Centre</h1>
+        <h1 className="text-3xl xs:text-2xl px-4">
+        {prayerData.length > 0
+          ? `${prayerData[0].month_s} ${prayerData[0].day_s}, ${prayerData[0].year_s}`
+          : ''}
+      </h1>
+        <h1 className="text-3xl xs:text-2xl px-4">
         {prayerData.length > 0
           ? `${prayerData[0].hijri_month} ${prayerData[0].hijri_day}, ${prayerData[0].hijri_year} AH`
           : ''}
       </h1>
-      <div className="rounded-2xl overflow-hidden shadow-lg w-fit 2xl:w-3/4 mx-auto">
+      </div>
+      <div className="rounded-2xl overflow-hidden shadow-lg">
         <table className="w-full border-collapse">
           <thead className="bg-gray-200">
             <tr>
@@ -64,7 +71,7 @@ function App() {
                     </div>
                   </td>
                   <td className="py-2 px-4 text-xl text-center">{prayer.sunrise} AM</td>
-                  <td className="py-2 px-4 text-xl text-center">---</td>
+                  <td className="py-2 px-4 text-xl text-center xl:text-right 2xl:text-right">---</td>
                 </tr>
                 <tr className="bg-white">
                   <td className="py-2 px-4 text-xl">
@@ -110,6 +117,18 @@ function App() {
             ))}
           </tbody>
         </table>
+      </div>
+      <div className="bg-gray-200 rounded-2xl overflow-hidden text-center text-emerald-500 font-semibold shadow-lg text-3xl xs:text-2xl xl:text-4xl 2xl:text-4xl px-4">
+      <h1>
+        {prayerData.length > 0
+        ? <span>1<sup>st</sup> Jumuah: {prayerData[0].jumuah_1}</span> 
+        : ''}
+      </h1>
+      <h1>
+        {prayerData.length > 0
+          ? <span>2<sup>nd</sup> Jumuah: {prayerData[0].jumuah_2}</span> 
+          : ''}
+      </h1>
       </div>
     </div>
   );

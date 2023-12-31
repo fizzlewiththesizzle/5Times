@@ -19,10 +19,24 @@ let cachedData = [];
 
 function queryDatabase(callback) {
   const today = new Date();
+  const s_year = today.getFullYear();
+  const s_month = today.toLocaleString('en-US', { month: 'long' });
+  const s_day = today.getDate();
   const hijri_today = hijri.convert(today, -1);
   const day = today.getDate();
   const month = today.getMonth() + 1;
   const h_m = hijri_today.monthText
+  const isDaylightSavingTime = today.getTimezoneOffset() < new Date(today.getFullYear(), 0, 1).getTimezoneOffset();
+
+  if (isDaylightSavingTime) {
+    //console.log("Daylight savings in effect");
+    jumuah_time_1 = "01:00 PM"
+    jumuah_time_2 = "02:00 PM"
+  } else {
+    //console.log("Daylight savings not in effect");
+    jumuah_time_1 = "12:00 PM"
+    jumuah_time_2 = "01:00 PM"
+  }
 
   // convert arabic hijri months to english
   if (h_m == 'المحرّم'){
@@ -62,7 +76,6 @@ function queryDatabase(callback) {
     hijri_month_en = "Dhul Hijjah";
   }
 
-
   db.all(query, [day, month], (err, rows) => {
     if (err) {
       console.error('Error fetching data from the database:', err.message);
@@ -88,6 +101,11 @@ function queryDatabase(callback) {
       hijri_day: hijri_today.dayOfMonth,
       hijri_year: hijri_today.year,
       hijri_month: hijri_month_en,
+      jumuah_1: jumuah_time_1,
+      jumuah_2: jumuah_time_2,
+      day_s: s_day,
+      month_s: s_month,
+      year_s: s_year,
     }));
 
     callback(null, result);
@@ -98,7 +116,9 @@ function queryDatabase(callback) {
     console.log("Asr     " + result[0].asr_adhan + " " + result[0].asr_iqama);
     console.log("Maghrib " + result[0].maghrib_adhan + " " + result[0].maghrib_iqama);
     console.log("Isha    " + result[0].isha_adhan + " " + result[0].isha_iqama + "\n");
+    console.log("Jumuah 1: " + result[0].jumuah_1 + " | Jumuah 2: " + result[0].jumuah_2);
     console.log("Hijri Date: " + result[0].hijri_month + " " + result[0].hijri_day + ", " + result[0].hijri_year);
+    console.log(result[0].month_s + " " + result[0].day_s + ", " + result[0].year_s);
   });
 }
 
