@@ -29,12 +29,12 @@ function App() {
   return (
     <div className="App">
       <h1 className="text-4xl font-bold mb-4">Prayer Times</h1>
-      <h1 className="text-2xl">
+      <h1 className="text-2xl mb-4">
         {prayerData.length > 0
           ? `${prayerData[0].hijri_month} ${prayerData[0].hijri_day}, ${prayerData[0].hijri_year} AH`
           : ''}
       </h1>
-      <div className="rounded-2xl overflow-hidden shadow-lg w-3/4 mx-auto">
+      <div className="rounded-2xl overflow-hidden shadow-lg w-fit 2xl:w-3/4 mx-auto">
         <table className="w-full border-collapse">
           <thead className="bg-gray-200">
             <tr>
@@ -64,7 +64,7 @@ function App() {
                     </div>
                   </td>
                   <td className="py-2 px-4 text-xl text-center">{prayer.sunrise} AM</td>
-                  <td className="py-2 px-4 text-xl text-right">---</td>
+                  <td className="py-2 px-4 text-xl text-center">---</td>
                 </tr>
                 <tr className="bg-white">
                   <td className="py-2 px-4 text-xl">
