@@ -1,4 +1,4 @@
-# 5Times
+# <img src="client/public//android-chrome-192x192.png" width="40px"> 5Times
 5Times is a web app that displays prayer times for masajid in Calgary
 
 # Background
