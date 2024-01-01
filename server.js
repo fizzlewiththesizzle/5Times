@@ -20,6 +20,8 @@ var next = null;
 
 function queryDatabase(callback) {
   const today = new Date();
+  const today_utc = new Date();
+  today_utc.setHours(today_utc.getHours() - 24);
   const s_year = today.getFullYear();
   const s_month = today.toLocaleString('en-US', { month: 'long' });
   const s_day = today.getDate();
@@ -110,7 +112,7 @@ function queryDatabase(callback) {
     }));
 
     callback(null, result);
-    console.log('Data refreshed:', moment().tz('America/Denver').format('YYYY-MM-DD HH:mm:ss'));
+    console.log('\nData refreshed:', moment().tz('America/Denver').format('YYYY-MM-DD HH:mm:ss'));
     console.log("Fajr    " + result[0].fajr_adhan + " " + result[0].fajr_iqama);
     console.log("Sunrise " + result[0].sunrise + "  ---");
     console.log("Dhuhr   " + result[0].dhuhr_adhan + " " + result[0].dhuhr_iqama);
@@ -119,7 +121,7 @@ function queryDatabase(callback) {
     console.log("Isha    " + result[0].isha_adhan + " " + result[0].isha_iqama + "\n");
     console.log("Jumuah 1: " + result[0].jumuah_1 + " | Jumuah 2: " + result[0].jumuah_2);
     console.log("Hijri Date: " + result[0].hijri_month + " " + result[0].hijri_day + ", " + result[0].hijri_year);
-    console.log(result[0].month_s + " " + result[0].day_s + ", " + result[0].year_s);
+    console.log("Greogorian Date: " + result[0].month_s + " " + result[0].day_s + ", " + result[0].year_s);
 
     var nowDateTime = today.toISOString();
     var nowDate = nowDateTime.split('T')[0];
@@ -127,20 +129,23 @@ function queryDatabase(callback) {
     // convert fajr adhan to UTC
     var fa_hms = result[0].fajr_adhan + ":00";
     var fa_utc = new Date(nowDate + 'T' + fa_hms);
+    fa_utc.setHours(fa_utc.getHours() - 24);
     //convert sunrise to UTC
     var sr_hms = result[0].sunrise + ":00";
     var sr_utc = new Date(nowDate + 'T' + sr_hms);
+    sr_utc.setHours(sr_utc.getHours() - 24);
     // convert dhuhr adhan to UTC
     var da_hms = result[0].dhuhr_adhan + ":00";
     var da_utc = new Date(nowDate + 'T' + da_hms);
+    da_utc.setHours(da_utc.getHours() - 24);
     // convert asr adhan to UTC
     var aa_hms = result[0].asr_adhan + ":00";
     var aa_utc = new Date(nowDate + 'T' + aa_hms);
-    aa_utc.setHours(aa_utc.getHours() + 12);
+    aa_utc.setHours(aa_utc.getHours() - 12);
     // convert maghrib adhan to UTC
     var ma_hms = result[0].maghrib_adhan + ":00";
     var ma_utc = new Date(nowDate + 'T' + ma_hms);
-    ma_utc.setHours(ma_utc.getHours() + 12);
+    ma_utc.setHours(ma_utc.getHours() - 12);
     // convert isha adhan to UTC
     var ia_hms = result[0].isha_adhan + ":00";
     var ia_utc = new Date(nowDate + 'T' + ia_hms);
@@ -149,66 +154,89 @@ function queryDatabase(callback) {
     // convert fajr iqama to UTC
     var fi_hms = result[0].fajr_iqama + ":00";
     var fi_utc = new Date(nowDate + 'T' + fi_hms);
+    fi_utc.setHours(fi_utc.getHours() - 24);
     // convert dhuhr iqama to UTC
     var di_hms = result[0].dhuhr_iqama + ":00";
     var di_utc = new Date(nowDate + 'T' + di_hms);
-    di_utc.setHours(di_utc.getHours() + 12);
+    di_utc.setHours(di_utc.getHours() - 12);
     // convert asr iqama to UTC
     var ai_hms = result[0].asr_iqama + ":00";
     var ai_utc = new Date(nowDate + 'T' + ai_hms);
-    ai_utc.setHours(ai_utc.getHours() + 12);
+    ai_utc.setHours(ai_utc.getHours() - 12);
     // convert maghrib iqama to UTC
     var mi_hms = result[0].maghrib_iqama + ":00";
     var mi_utc = new Date(nowDate + 'T' + mi_hms);
-    mi_utc.setHours(mi_utc.getHours() + 12);
+    mi_utc.setHours(mi_utc.getHours() - 12);
     // convert isha iqama to UTC
     var ii_hms = result[0].isha_iqama + ":00";
     var ii_utc = new Date(nowDate + 'T' + ii_hms);
     ii_utc.setHours(ii_utc.getHours() + 12);
 
-    if(fa_utc >= today){
+    /*
+    Debugging Statements
+    console.log("UTC " + today_utc);
+    console.log("Fajr Adhan " + fa_utc + "\n")
+    console.log("Fajr Iqama " + fi_utc + "\n");
+    console.log("Sunrise " + sr_utc + "\n");
+    console.log("Dhuhr Adhan " + da_utc + "\n");
+    console.log("Dhuhr Iqama " + di_utc + "\n");
+    console.log("Asr Adhan " + aa_utc + "\n");
+    console.log("Asr Iqama " + ai_utc + "\n");
+    console.log("Maghrib Adhan " + ma_utc + "\n");
+    console.log("Maghrib Iqama " + mi_utc + "\n");
+    console.log("Isha Adhan " + ia_utc + "\n");
+    console.log("Isha Iqama " + ii_utc + "\n");
+    console.log(today_utc);
+    console.log(ia_utc);
+    */
+
+    if(fa_utc >= today_utc){
       console.log("Fajr Adhan Up Next");
       next = "Fajr Adhan";
     }
-    else if(fi_utc >= today){
+    else if(fi_utc >= today_utc){
       console.log("Fajr Iqama Up Next");
       next = "Fajr Iqama";
     }
-    else if(sr_utc >= today){
+    else if(sr_utc >= today_utc){
       console.log("Sunrise Up Next");
       next = "Sunrise";
     }
-    else if(da_utc >= today){
+    else if(da_utc >= today_utc){
       console.log("Dhuhr Adhan Up Next");
       next = "Dhuhr Adhan";
     }
-    else if(di_utc >= today){
+    else if(di_utc >= today_utc){
       console.log("Dhuhr Iqama Up Next");
       next = "Dhuhr Iqama";
     }
-    else if(aa_utc >= today){
+    else if(aa_utc >= today_utc){
       console.log("Asr Adhan Up Next");
       next = "Asr Adhan";
     }
-    else if(ai_utc >= today){
+    else if(ai_utc >= today_utc){
       console.log("Asr Iqama Up Next");
       next = "Asr Iqama";
     }
-    else if(ma_utc >= today){
+    else if(ma_utc >= today_utc){
       console.log("Maghrib Adhan Up Next");
-      next = "Maghrib Adhan"
+      next = "Maghrib Adhan";
     }
-    else if(mi_utc >= today){
+    else if(mi_utc >= today_utc){
       console.log("Maghrib Iqama Up Next");
-      next = "Maghrib Iqama"
+      next = "Maghrib Iqama";
     }
-    else if(ia_utc >= today){
+    else if(ia_utc >= today_utc){
       console.log("Isha Adhan Up Next");
-      next = "Isha Adhan"
+      next = "Isha Adhan";
     }
-    else if(ii_utc >= today){
+    else if(ii_utc >= today_utc){
       console.log("Isha Iqama Up Next");
-      next = "Isha Iqama"
+      next = "Isha Iqama";
+    }
+    else{
+      console.log("Fajr Adhan Up Next (End of Day)");
+      next = "Fajr Adhan";
     }
   });
 }

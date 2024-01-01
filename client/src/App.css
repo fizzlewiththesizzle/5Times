@@ -4,7 +4,20 @@
 
 body {
   font-family: 'Inter', sans-serif;
-  background-color: bg-white
+  background-color: bg-white;
+  animation: transitionIn 0.75s;
+}
+
+@keyframes transitionIn {
+  from {
+    opacity: 0;
+    transform: translateY(-1em);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media (prefers-color-scheme: dark) {
