@@ -1,3 +1,4 @@
+process.env.TZ = 'America/Denver'; // Use 'America/Denver' for MST
 const express = require('express');
 const cors = require('cors');
 const sqlite3 = require('sqlite3').verbose();
@@ -12,7 +13,8 @@ const PORT = process.env.PORT || 3001;
 // Use the cors middleware
 app.use(cors());
 
-const db = new sqlite3.Database('SalamPrayerDB.sqlite3');
+const dbPath = path.join(__dirname, 'SalamPrayerDB.sqlite3');
+const db = new sqlite3.Database(dbPath);
 const query = 'SELECT * FROM SalamPrayerDB_Time WHERE SalamPrayerDB_Time.Day = ? AND SalamPrayerDB_Time.Month = ?';
 
 let cachedData = [];
