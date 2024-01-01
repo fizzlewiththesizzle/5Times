@@ -8,8 +8,8 @@
 * Express.js backend
 * Implementation of SQL database for prayer times rather than CSV files
 * React and TailwindCSS based UI for better mobile and overall accessibility
-* *NEW* Support for light and dark modes based on system preference
-* *NEW* See what prayer is coming up next
+* *✨NEW✨* Support for light and dark modes based on system preference
+* *✨NEW✨* See what prayer is coming up next
 
 ## Usage
 * To run the application, the following dependencies need to be installed
