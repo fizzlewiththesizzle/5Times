@@ -22,5 +22,10 @@
   "display": "standalone",
   "theme_color": "#10b981",
   "background_color": "#ffffff",
-  "description": "Prayer Times for MAC Al-Salam Centre"
+  "description": "Prayer Times for MAC Al-Salam Centre",
+  "id": "5timesapp",
+  "orientation": "portrait",
+  "categories": [
+    "utilities"
+  ]
 }
