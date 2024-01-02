@@ -10,6 +10,7 @@
 * React and TailwindCSS based UI for better mobile and overall accessibility
 * *✨NEW✨* Support for light and dark modes based on system preference
 * *✨NEW✨* See what prayer is coming up next
+* *✨NEW✨* "Add to Home Screen" prompt for iOS
 
 ## Usage
 * To run the application, the following dependencies need to be installed
