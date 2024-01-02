@@ -1,9 +1,24 @@
 import React, { useEffect, useState } from 'react';
+import Alert from './Alert';
 import './App.css';
 
 function Home() {
     const [prayerData, setPrayerData] = useState([]);
     const [nextPrayer, setNextPrayer] = useState('');
+
+    // Detects if device is on iOS 
+    const isIos = () => {
+    const userAgent = window.navigator.userAgent.toLowerCase();
+    return /iphone|ipad|ipod/.test( userAgent );
+    }
+    // Detects if device is in standalone mode
+    const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator.standalone);
+
+    // Checks if should display install popup notification:
+    let showPrompt = false;
+    if (isIos() && !isInStandaloneMode()) {
+      showPrompt = true;
+    }
   
     useEffect(() => {
       const fetchPrayerData = () => {
@@ -142,6 +157,7 @@ function Home() {
           : ''}
       </h1>
       </div>
+      <Alert showAlert={showPrompt}/>
     </div>
   );
 }
