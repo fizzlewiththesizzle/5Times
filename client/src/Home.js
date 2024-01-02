@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Alert from './Alert';
 import './App.css';
+import mac_neo from './Calgary-neo.png';
 
 function Home() {
     const [prayerData, setPrayerData] = useState([]);
@@ -53,7 +54,8 @@ function Home() {
   return (
     <div className="space-y-4 w-fit xl:w-3/4 2xl:w-3/4 mx-auto">
       <div className='bg-gray-200 dark:bg-gray-800 dark:text-white rounded-2xl overflow-hidden text-left xs:text-center xl:text-left 2xl:text-left mt-4 shadow-lg px-4'>
-        <h1 className='text-4xl xs:text-3xl font-bold'>MAC Al-Salam Centre</h1>
+        <img src={mac_neo} alt="logo" className='h-10 mt-2 xs:mx-auto xl:mx-0 2xl:mx-0'></img>
+        <h1 className='text-4xl xs:text-3xl font-bold'>Al-Salam Centre</h1>
         <h1 className="text-3xl xs:text-2xl">
         {prayerData.length > 0
           ? `${prayerData[0].month_s} ${prayerData[0].day_s}, ${prayerData[0].year_s}`
@@ -158,6 +160,7 @@ function Home() {
       </h1>
       </div>
       <Alert showAlert={showPrompt}/>
+      <footer className='text-gray-500 text-xl text-center'>Beta</footer>
     </div>
   );
 }
