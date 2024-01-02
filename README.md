@@ -16,7 +16,7 @@
 * To run the application, the following dependencies need to be installed
 
 ```bash
-npm install express sqlite3 cors moment-timezone hijri
+npm install express sqlite3 cors react-router-dom moment-timezone hijri
 ```
 * Then, the backend and frontend need to be run simultaneously in separate terminal instances
   * Make sure you are in the 5Times directory in your terminal
