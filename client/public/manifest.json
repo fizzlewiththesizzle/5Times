@@ -1,6 +1,7 @@
 {
   "short_name": "5Times",
   "name": "5Times",
+  "description": "Prayer Times for MAC Al-Salam Centre",
   "icons": [
     {
       "src": "favicon.ico",
@@ -21,6 +22,5 @@
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#10b981",
-  "background_color": "#ffffff",
-  "description": "Prayer Times for MAC Al-Salam Centre"
+  "background_color": "#ffffff"
 }
