@@ -155,7 +155,7 @@ function TV() {
                     <img src={mac_neo} alt="logo" className='pt-4 w-3/5 h-auto pb-4'></img>
                 </div>
 
-                <div className='dark:text-white text-center text-7xl clock-font font-bold flex justify-center items-center'>
+                <div className='dark:text-white text-center xl:text-7xl 2xl:text-8xl clock-font font-bold flex justify-center items-center'>
                     <Clock></Clock>
                 </div>
             </div>
