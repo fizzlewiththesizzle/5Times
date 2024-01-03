@@ -140,7 +140,7 @@ function TV() {
                     </div>
                 </div>
 
-                <div className='pl-4 text-white col-span-2 bg-gray-200 dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg'>
+                <div className='pl-4 dark:text-white col-span-2 bg-gray-200 dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg'>
                     <h1 className='text-6xl font-bold pt-4'>Al-Salam Centre</h1>
                     <h1 className="text-5xl">
                         {prayerData.length > 0
