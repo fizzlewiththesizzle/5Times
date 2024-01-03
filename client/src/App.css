@@ -68,3 +68,7 @@ body {
 table {
   margin: auto;       /* Center the table horizontally */
 }
+
+.clock-font {
+  font-family: 'Chivo Mono', monospace;
+}
