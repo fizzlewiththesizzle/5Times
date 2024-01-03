@@ -4,7 +4,11 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontSize: {
+        '10xl' : '10rem'
+      }
+    },
     screens: {
       'xs': '320px',
       // => @media (min-width: 320px) { ... }
@@ -24,6 +28,12 @@ module.exports = {
 
       '2xl': '1536px',
       // => @media (min-width: 1536px) { ... }
+
+      '3xl': '2560px',
+      // => @media (min-width: 2560px)
+
+      '4xl': '3840px',
+      // => @media (min-width: 3840px)
     }
   },
   plugins: [],

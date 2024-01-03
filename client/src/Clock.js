@@ -38,7 +38,7 @@ const Clock = () => {
 
     // Clear the interval when the component unmounts
     return () => clearInterval(intervalId);
-  }, []);
+  }, );
 
   return (
     <div id="clock">

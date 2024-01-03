@@ -72,3 +72,7 @@ table {
 .clock-font {
   font-family: 'Chivo Mono', monospace;
 }
+
+.text-10xl {
+  font-size: 10rem;
+}
