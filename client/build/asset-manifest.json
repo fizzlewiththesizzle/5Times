@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/static/css/main.4ec484b9.css",
-    "main.js": "/static/js/main.1a08e750.js",
+    "main.css": "/static/css/main.1aff5ca2.css",
+    "main.js": "/static/js/main.05c498ea.js",
     "static/js/787.d5fa4d18.chunk.js": "/static/js/787.d5fa4d18.chunk.js",
     "static/media/slide-1.png": "/static/media/slide-1.ff150bee7c44a1a4d5b3.png",
     "static/media/slide-3.png": "/static/media/slide-3.f964bc70518ef1b53ef4.png",
     "static/media/slide-2.png": "/static/media/slide-2.b60b8ee4287c7c42e51e.png",
     "static/media/Calgary-neo.png": "/static/media/Calgary-neo.fc731a7897e5a3c666e1.png",
     "index.html": "/index.html",
-    "main.4ec484b9.css.map": "/static/css/main.4ec484b9.css.map",
-    "main.1a08e750.js.map": "/static/js/main.1a08e750.js.map",
+    "main.1aff5ca2.css.map": "/static/css/main.1aff5ca2.css.map",
+    "main.05c498ea.js.map": "/static/js/main.05c498ea.js.map",
     "787.d5fa4d18.chunk.js.map": "/static/js/787.d5fa4d18.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.4ec484b9.css",
-    "static/js/main.1a08e750.js"
+    "static/css/main.1aff5ca2.css",
+    "static/js/main.05c498ea.js"
   ]
 }
