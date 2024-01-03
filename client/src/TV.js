@@ -127,7 +127,7 @@ function TV() {
                             ))}
                         </tbody>
                     </table>
-                    <div className="bg-gray-200 dark:bg-gray-800 rounded-2xl 4xl:rounded-3xl overflow-hidden text-center text-emerald-500 font-semibold shadow-lg xl:text-4xl 2xl:text-5xl 4xl:text-8xl px-4 mt-4 space-y-8">
+                    <div className="bg-gray-200 dark:bg-gray-800 rounded-2xl 4xl:rounded-3xl overflow-hidden text-center text-emerald-500 font-semibold shadow-lg xl:text-4xl 2xl:text-5xl 4xl:text-8xl px-4 mt-4 4xl:mt-8 space-y-8">
                         <h1 className="pt-4">
                             {prayerData.length > 0
                             ? <span>1<sup>st</sup> Jumuah: {prayerData[0].jumuah_1}</span> 
