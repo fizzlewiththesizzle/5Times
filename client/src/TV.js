@@ -6,7 +6,7 @@ import Clock from './Clock';
 import mac_neo from './Calgary-neo.png';
 
 const OPTIONS = {}
-const SLIDE_COUNT = 3
+const SLIDE_COUNT = 4
 const SLIDES = Array.from(Array(SLIDE_COUNT).keys())
 const iconSize = window.innerWidth >= 3840 ? '70px' : window.innerWidth >= 1920 ? '40px' : '24px';
 
