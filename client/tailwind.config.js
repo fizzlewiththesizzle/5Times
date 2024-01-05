@@ -8,7 +8,8 @@ module.exports = {
       fontSize: {
         '4.5xl' : '2.5rem',
         '7.5xl' : '5rem',
-        '10xl' : '10rem'
+        '10xl' : '10rem',
+        '12xl' : '12rem'
       }
     },
     screens: {

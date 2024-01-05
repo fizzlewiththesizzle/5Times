@@ -8,7 +8,7 @@ import mac_neo from './Calgary-neo.png';
 const OPTIONS = {}
 const SLIDE_COUNT = 3
 const SLIDES = Array.from(Array(SLIDE_COUNT).keys())
-const iconSize = window.innerWidth >= 3840 ? '80px' : window.innerWidth >= 1920 ? '40px' : '24px';
+const iconSize = window.innerWidth >= 3840 ? '70px' : window.innerWidth >= 1920 ? '40px' : '24px';
 
 function TV() {
     const [prayerData, setPrayerData] = useState([]);
@@ -161,7 +161,7 @@ function TV() {
                     <h1 className='text-6xl 4xl:text-10xl font-semibold text-emerald-500 my-auto'>{nextPrayer.next}</h1>
                 </div>
 
-                <div className='dark:text-white text-center xl:text-7xl 2xl:text-8xl 4xl:text-10xl clock-font font-bold flex justify-center items-center'>
+                <div className='dark:text-white text-center xl:text-7xl 2xl:text-8xl 4xl:text-12xl clock-font font-bold flex justify-center items-center'>
                     <Clock></Clock>
                 </div>
             </div>
