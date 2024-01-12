@@ -68,7 +68,7 @@ function Month() {
                 </thead>
                 <tbody className='bg-white dark:bg-gray-700'>
                     {monthlyData[selectedMonth] && monthlyData[selectedMonth].map((item, index) => (
-                    <tr key={item.id} className={index % 2 === 0 ? 'bg-white dark:bg-gray-700' : 'bg-gray-100 dark:bg-gray-800'}>
+                    <tr key={item.id} className={index % 2 === 0 ? 'bg-gray-100 dark:bg-gray-700' : 'bg-gray-200 dark:bg-gray-800'}>
                         <td className='py-3 pl-2 first:rounded-tl-lg first:rounded-bl-lg last:rounded-tr-lg last:rounded-br-lg'>{item.day}</td>
                         <td className='py-3 first:rounded-tl-lg first:rounded-bl-lg last:rounded-tr-lg last:rounded-br-lg'>{item.fajr_adhan}</td>
                         <td className='py-3 first:rounded-tl-lg first:rounded-bl-lg last:rounded-tr-lg last:rounded-br-lg'>{item.sunrise}</td>
