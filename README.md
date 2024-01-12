@@ -12,6 +12,7 @@
 * *✨NEW✨* See what prayer is coming up next
 * *✨NEW✨* "Add to Home Screen" prompt for iOS
 * *✨NEW✨* TV Display Mode
+* *✨NEW✨* Monthly Times View
 
 ## Usage
 * To run the application, the following dependencies need to be installed

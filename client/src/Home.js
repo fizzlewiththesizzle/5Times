@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Alert from './Alert';
 import './App.css';
 import mac_neo from './Calgary-neo.png';
@@ -160,6 +161,11 @@ function Home() {
       </h1>
       </div>
       <Alert showAlert={showPrompt}/>
+      <Link to ='/Month' >
+        <div className='flex flex-col items-center'>
+          <button className='bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xl py-2 px-4 rounded-lg shadow-lg mt-4'>Monthly Times</button>
+        </div>
+      </Link>
       <footer className='text-gray-500 text-xl text-center'>Beta</footer>
     </div>
   );

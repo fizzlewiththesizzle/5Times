@@ -2,6 +2,7 @@ import React from 'react';
 import { HashRouter, Route, Routes } from 'react-router-dom';
 import Home from './Home';
 import TV from './TV';
+import Month from './Month';
  
  const App = () => (
   <HashRouter>
@@ -15,6 +16,11 @@ import TV from './TV';
       exact
       path='/TV'
       element={<TV/>}
+    />
+    <Route
+      exact
+      path='/Month'
+      element={<Month/>}
     />
     </Routes>
   </HashRouter>

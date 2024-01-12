@@ -19,6 +19,18 @@ const query = 'SELECT * FROM SalamPrayerDB_Time WHERE SalamPrayerDB_Time.Day = ?
 
 let cachedData = [];
 var next = null;
+let jan_data = [];
+let feb_data = [];
+let mar_data = [];
+let apr_data = [];
+let may_data = [];
+let jun_data = [];
+let jul_data = [];
+let aug_data = [];
+let sep_data = [];
+let oct_data = [];
+let nov_data = [];
+let dec_data = [];
 
 function queryDatabase(callback) {
   const today = new Date();
@@ -249,9 +261,52 @@ function fetchDataFromDatabase() {
   });
 }
 
+const query_m = 'SELECT * FROM SalamPrayerDB_Time';
+function queryMonth() {
+  db.all(query_m, [], (err, rows) => {
+    if (err) {
+      console.error('Error fetching data from the database:', err.message);
+      return callback(err, null);
+    }
+    const result = rows.map(row => ({
+      id: row.Id,
+      date: row.Date,
+      day: row.Day,
+      month: row.Month,
+      fajr_adhan: row.FajrAdhan,
+      fajr_iqama: row.FajrIqama,
+      sunrise: row.Sunrise,
+      dhuhr_adhan: row.DhuhrAdhan,
+      dhuhr_iqama: row.DhuhrIqama,
+      asr_adhan: row.AsrAdhan,
+      asr_iqama: row.AsrIqama,
+      maghrib_adhan: row.MaghribAdhan,
+      maghrib_iqama: row.MaghribIqama,
+      isha_adhan: row.IshaAdhan,
+      isha_iqama: row.IshaIqama,
+    }));
+    jan_data = result.filter(row => row.month === 1);
+    feb_data = result.filter(row => row.month === 2);
+    mar_data = result.filter(row => row.month === 3);
+    apr_data = result.filter(row => row.month === 4);
+    may_data = result.filter(row => row.month === 5);
+    jun_data = result.filter(row => row.month === 6);
+    jul_data = result.filter(row => row.month === 7);
+    aug_data = result.filter(row => row.month === 8);
+    sep_data = result.filter(row => row.month === 9);
+    oct_data = result.filter(row => row.month === 10);
+    nov_data = result.filter(row => row.month === 11);
+    dec_data = result.filter(row => row.month === 12);
+    //feb_data.forEach((row) => {
+      //console.log(row.fajr_adhan);
+    //});
+  });
+}
+
 // Initial fetch and setup interval for periodic fetch (every hour)
 fetchDataFromDatabase();
 setInterval(fetchDataFromDatabase, 300000); // 5 minutes in milliseconds
+queryMonth();
 
 app.get('/api/prayer', (req, res) => {
   res.json(cachedData);
@@ -259,6 +314,24 @@ app.get('/api/prayer', (req, res) => {
 
 app.get('/api/nextPrayer', (req, res) => {
   res.json({ next });
+});
+
+app.get('/api/month', (req, res) => {
+  const monthlyData = {
+    jan: jan_data,
+    feb: feb_data,
+    mar: mar_data,
+    apr: apr_data,
+    may: may_data,
+    jun: jun_data,
+    jul: jul_data,
+    aug: aug_data,
+    sep: sep_data,
+    oct: oct_data,
+    nov: nov_data, 
+    dec: dec_data,
+  };
+  res.json(monthlyData);
 });
 
 app.get('*', (req, res) => {
