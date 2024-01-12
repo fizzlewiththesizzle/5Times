@@ -1,20 +1,30 @@
 {
   "files": {
-    "main.css": "/static/css/main.68e5d282.css",
-    "main.js": "/static/js/main.dc6ac064.js",
+    "main.css": "/static/css/main.a00fd93e.css",
+    "main.js": "/static/js/main.156a0bf4.js",
+    "static/js/180.6040e1a1.chunk.js": "/static/js/180.6040e1a1.chunk.js",
+    "static/css/747.70d8918b.chunk.css": "/static/css/747.70d8918b.chunk.css",
+    "static/js/747.a8d629eb.chunk.js": "/static/js/747.a8d629eb.chunk.js",
+    "static/js/379.52622123.chunk.js": "/static/js/379.52622123.chunk.js",
     "static/js/787.d5fa4d18.chunk.js": "/static/js/787.d5fa4d18.chunk.js",
+    "static/js/954.78bcf4ab.chunk.js": "/static/js/954.78bcf4ab.chunk.js",
     "static/media/slide-1.png": "/static/media/slide-1.ff150bee7c44a1a4d5b3.png",
     "static/media/slide-3.png": "/static/media/slide-3.f964bc70518ef1b53ef4.png",
     "static/media/5times-ad.png": "/static/media/5times-ad.d7f2c53678e91ebd43ae.png",
     "static/media/slide-2.png": "/static/media/slide-2.b60b8ee4287c7c42e51e.png",
     "static/media/Calgary-neo.png": "/static/media/Calgary-neo.fc731a7897e5a3c666e1.png",
     "index.html": "/index.html",
-    "main.68e5d282.css.map": "/static/css/main.68e5d282.css.map",
-    "main.dc6ac064.js.map": "/static/js/main.dc6ac064.js.map",
-    "787.d5fa4d18.chunk.js.map": "/static/js/787.d5fa4d18.chunk.js.map"
+    "main.a00fd93e.css.map": "/static/css/main.a00fd93e.css.map",
+    "main.156a0bf4.js.map": "/static/js/main.156a0bf4.js.map",
+    "180.6040e1a1.chunk.js.map": "/static/js/180.6040e1a1.chunk.js.map",
+    "747.70d8918b.chunk.css.map": "/static/css/747.70d8918b.chunk.css.map",
+    "747.a8d629eb.chunk.js.map": "/static/js/747.a8d629eb.chunk.js.map",
+    "379.52622123.chunk.js.map": "/static/js/379.52622123.chunk.js.map",
+    "787.d5fa4d18.chunk.js.map": "/static/js/787.d5fa4d18.chunk.js.map",
+    "954.78bcf4ab.chunk.js.map": "/static/js/954.78bcf4ab.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.68e5d282.css",
-    "static/js/main.dc6ac064.js"
+    "static/css/main.a00fd93e.css",
+    "static/js/main.156a0bf4.js"
   ]
 }
