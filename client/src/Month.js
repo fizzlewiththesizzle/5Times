@@ -5,10 +5,13 @@ import mac_neo from './Calgary-neo.png';
 
 function Month() {
     const [monthlyData, setMonthlyData] = useState({});
+    const [prayerData, setPrayerData] = useState([]);
+    const [nextPrayer, setNextPrayer] = useState('');
     const [selectedMonth, setSelectedMonth] = useState("jan"); // State for selected month
 
     useEffect(() => {
-        const fetchMonthData = async () => {
+        
+        const fetchPrayerData = async () => {
             console.log('Fetching monthly data...');
             fetch('/api/month')
                 .then(response => response.json())
@@ -17,10 +20,28 @@ function Month() {
                     setMonthlyData(data);
                 })
                 .catch(error => console.error('Error fetching monthly data:', error));
+
+                console.log('Fetching prayer data...');
+                fetch('/api/prayer')
+                  .then(response => response.json())
+                  .then(data => {
+                    console.log('Prayer data received:', data);
+                    setPrayerData(data);
+                  })
+                  .catch(error => console.error('Error fetching prayer data:', error));
+
+                  fetch('/api/nextPrayer')
+                  .then(response => response.json())
+                  .then(data => {
+                    console.log('Next prayer received: ', data);
+                    setNextPrayer(data);
+                  })
+                  .catch(error => console.error('Error fetching next prayer:', error));
         };
 
-        fetchMonthData();
+        fetchPrayerData();
     }, []); // Empty dependency array to ensure useEffect runs only once on component mount
+
 
     console.log('Monthly Data:', monthlyData); // Log monthlyData
 
