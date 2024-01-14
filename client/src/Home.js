@@ -31,6 +31,7 @@ function Home() {
           .then(data => {
             console.log('Prayer data received:', data);
             setPrayerData(data);
+            localStorage.setItem('prayerData', JSON.stringify(data)); // Save data to local storage
           })
           .catch(error => console.error('Error fetching prayer data:', error));
   
@@ -39,23 +40,10 @@ function Home() {
           .then(data => {
             console.log('Next prayer received: ', data);
             setNextPrayer(data);
+            localStorage.setItem('nextPrayer', JSON.stringify(data)); // Save nextPrayer to local storage
           })
           .catch(error => console.error('Error fetching next prayer:', error));
       };
-
-      const handleVisibilityChange = () => {
-        if (!document.hidden) {
-          // Page is visible, trigger state refresh
-          fetchPrayerData();
-        }
-      };
-
-      const visibilityChangeHandler = () => {
-        handleVisibilityChange();
-      };
-
-      // Event listener for visibility change
-      document.addEventListener('visibilitychange', visibilityChangeHandler);
   
       // Fetch initial prayer data
       fetchPrayerData();
@@ -64,10 +52,7 @@ function Home() {
       const intervalId = setInterval(fetchPrayerData, 300000);
   
       // Clean up the interval when the component unmounts
-      return () => {
-        clearInterval(intervalId);
-        document.removeEventListener('visibilitychange', visibilityChangeHandler);
-      }
+      return () => clearInterval(intervalId);
     }, []); // Empty dependency array ensures that this effect runs only once on mount
 
   return (
