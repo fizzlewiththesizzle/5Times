@@ -41,6 +41,20 @@ function Home() {
           })
           .catch(error => console.error('Error fetching next prayer:', error));
       };
+
+      const handleVisibilityChange = () => {
+        if (!document.hidden) {
+          // Page is visible, trigger state refresh
+          fetchPrayerData();
+        }
+      };
+
+      const visibilityChangeHandler = () => {
+        handleVisibilityChange();
+      };
+
+      // Event listener for visibility change
+      document.addEventListener('visibilitychange', visibilityChangeHandler);
   
       // Fetch initial prayer data
       fetchPrayerData();
@@ -49,7 +63,10 @@ function Home() {
       const intervalId = setInterval(fetchPrayerData, 300000);
   
       // Clean up the interval when the component unmounts
-      return () => clearInterval(intervalId);
+      return () => {
+        clearInterval(intervalId);
+        document.removeEventListener('visibilitychange', visibilityChangeHandler);
+      }
     }, []); // Empty dependency array ensures that this effect runs only once on mount
 
   return (
