@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './App.css';
 import mac_neo from './Calgary-neo.png';
+import PageTransition from './PageTransition';
 
 function Month() {
     const [monthlyData, setMonthlyData] = useState({});
@@ -50,6 +51,7 @@ function Month() {
     };
 
     return (
+    <PageTransition>
         <div className='px-4 w-screen dark:text-white'>
             <div className='bg-gray-200 dark:bg-gray-800 dark:text-white rounded-2xl overflow-hidden text-left xs:text-center xl:text-left 2xl:text-left mt-4 shadow-lg px-4 mb-4'>
                 <img src={mac_neo} alt="logo" className='h-10 mt-2 xs:mx-auto xl:mx-0 2xl:mx-0'></img>
@@ -108,6 +110,7 @@ function Month() {
             </Link>
             <footer className='text-gray-500 text-xl text-center pt-2 pb-4'>Beta</footer>
         </div>
+    </PageTransition>
     );
 }
 

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Alert from './Alert';
 import './App.css';
 import mac_neo from './Calgary-neo.png';
+import PageTransition from './PageTransition';
 
 function Home() {
     const [prayerData, setPrayerData] = useState([]);
@@ -70,6 +71,7 @@ function Home() {
     }, []); // Empty dependency array ensures that this effect runs only once on mount
 
   return (
+    <PageTransition>
     <div className="space-y-4 w-fit xl:w-3/4 2xl:w-3/4 mx-auto">
       <div className='bg-gray-200 dark:bg-gray-800 dark:text-white rounded-2xl overflow-hidden text-left xs:text-center xl:text-left 2xl:text-left mt-4 shadow-lg px-4'>
         <img src={mac_neo} alt="logo" className='h-10 mt-2 xs:mx-auto xl:mx-0 2xl:mx-0'></img>
@@ -185,6 +187,7 @@ function Home() {
       <Alert showAlert={showPrompt}/>
       <footer className='text-gray-500 text-xl text-center'>Beta</footer>
     </div>
+    </PageTransition>
   );
 }
 
