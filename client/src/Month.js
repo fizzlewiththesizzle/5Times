@@ -19,6 +19,7 @@ function Month() {
                 .then(data => {
                     console.log('Monthly data received:', data);
                     setMonthlyData(data);
+                    localStorage.setItem('monthlyData', JSON.stringify(data)); // Save nextPrayer to local storage
                 })
                 .catch(error => console.error('Error fetching monthly data:', error));
 
@@ -28,6 +29,7 @@ function Month() {
                   .then(data => {
                     console.log('Prayer data received:', data);
                     setPrayerData(data);
+                    localStorage.setItem('prayerData', JSON.stringify(data)); // Save data to local storage
                   })
                   .catch(error => console.error('Error fetching prayer data:', error));
 
@@ -36,11 +38,28 @@ function Month() {
                   .then(data => {
                     console.log('Next prayer received: ', data);
                     setNextPrayer(data);
+                    localStorage.setItem('nextPrayer', JSON.stringify(data)); // Save nextPrayer to local storage
                   })
                   .catch(error => console.error('Error fetching next prayer:', error));
         };
 
         fetchPrayerData();
+
+        const storedMonthlyData = JSON.parse(localStorage.getItem('monthlyData'));
+        const storedPrayerData = JSON.parse(localStorage.getItem('prayerData'));
+        const storedNextPrayer = JSON.parse(localStorage.getItem('nextPrayer'));
+        
+        if (storedPrayerData) {
+          setPrayerData(storedPrayerData);
+        }
+        
+        if (storedNextPrayer) {
+          setNextPrayer(storedNextPrayer);
+        }
+
+        if (storedMonthlyData) {
+          setMonthlyData(storedMonthlyData);
+        }
     }, []); // Empty dependency array to ensure useEffect runs only once on component mount
 
 
