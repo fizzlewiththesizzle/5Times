@@ -43,22 +43,22 @@ function Home() {
             localStorage.setItem('nextPrayer', JSON.stringify(data)); // Save nextPrayer to local storage
           })
           .catch(error => console.error('Error fetching next prayer:', error));
+
+        const storedPrayerData = JSON.parse(localStorage.getItem('prayerData'));
+        const storedNextPrayer = JSON.parse(localStorage.getItem('nextPrayer'));
+          
+        if (storedPrayerData) {
+          setPrayerData(storedPrayerData);
+        }
+          
+        if (storedNextPrayer) {
+          setNextPrayer(storedNextPrayer);
+        }
       };
   
       // Fetch initial prayer data
       fetchPrayerData();
 
-      const storedPrayerData = JSON.parse(localStorage.getItem('prayerData'));
-      const storedNextPrayer = JSON.parse(localStorage.getItem('nextPrayer'));
-      
-      if (storedPrayerData) {
-        setPrayerData(storedPrayerData);
-      }
-      
-      if (storedNextPrayer) {
-        setNextPrayer(storedNextPrayer);
-      }
-  
       // Set up interval to fetch data every 5 minutes (300000 milliseconds)
       const intervalId = setInterval(fetchPrayerData, 300000);
   
