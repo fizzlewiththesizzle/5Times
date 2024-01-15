@@ -8,6 +8,8 @@ import PageTransition from './PageTransition';
 function Home() {
     const [prayerData, setPrayerData] = useState([]);
     const [nextPrayer, setNextPrayer] = useState('');
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     // Detects if device is on iOS 
     const isIos = () => {
@@ -25,6 +27,7 @@ function Home() {
   
     useEffect(() => {
       const fetchPrayerData = () => {
+        setIsLoading(true);
         console.log('Fetching prayer data...');
         fetch('/api/prayer')
           .then(response => response.json())
@@ -33,7 +36,10 @@ function Home() {
             setPrayerData(data);
             localStorage.setItem('prayerData', JSON.stringify(data)); // Save data to local storage
           })
-          .catch(error => console.error('Error fetching prayer data:', error));
+          .catch(error => {
+            setError(error);
+            console.error('Error fetching prayer data:', error);
+          })
   
         fetch('/api/nextPrayer')
           .then(response => response.json())
@@ -42,7 +48,11 @@ function Home() {
             setNextPrayer(data);
             localStorage.setItem('nextPrayer', JSON.stringify(data)); // Save nextPrayer to local storage
           })
-          .catch(error => console.error('Error fetching next prayer:', error));
+          .catch(error => {
+            setError(error);
+            console.error('Error fetching next prayer:', error);
+          })
+          .finally(() => setIsLoading(false));
 
         const storedPrayerData = JSON.parse(localStorage.getItem('prayerData'));
         const storedNextPrayer = JSON.parse(localStorage.getItem('nextPrayer'));
@@ -65,6 +75,13 @@ function Home() {
       // Clean up the interval when the component unmounts
       return () => clearInterval(intervalId);
     }, []); // Empty dependency array ensures that this effect runs only once on mount
+
+    if (isLoading) {
+      return <div></div>; // or display a loading spinner
+    }
+    if (error) {
+      return <div>Error loading data: {error.message}</div>; // Display error message
+    }
 
   return (
     <PageTransition>
