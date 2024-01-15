@@ -27,7 +27,7 @@ function Home() {
   const fetchPrayerData = () => {
     setIsLoading(true);
     console.log('Fetching prayer data...');
-    fetch('/api/prayer')
+    fetch('/api/prayer?v=' + new Date().getTime())
       .then(response => response.json())
       .then(data => {
         console.log('Prayer data received:', data);
@@ -39,7 +39,7 @@ function Home() {
         console.error('Error fetching prayer data:', error);
       });
 
-    fetch('/api/nextPrayer')
+    fetch('/api/nextPrayer?v=' + new Date().getTime())
       .then(response => response.json())
       .then(data => {
         console.log('Next prayer received: ', data);
