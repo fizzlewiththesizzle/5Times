@@ -6,82 +6,94 @@ import mac_neo from './Calgary-neo.png';
 import PageTransition from './PageTransition';
 
 function Home() {
-    const [prayerData, setPrayerData] = useState([]);
-    const [nextPrayer, setNextPrayer] = useState('');
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
+  const [prayerData, setPrayerData] = useState([]);
+  const [nextPrayer, setNextPrayer] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    // Detects if device is on iOS 
-    const isIos = () => {
+  const isIos = () => {
     const userAgent = window.navigator.userAgent.toLowerCase();
-    return /iphone|ipad|ipod/.test( userAgent );
-    }
-    // Detects if device is in standalone mode
-    const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator.standalone);
+    return /iphone|ipad|ipod/.test(userAgent);
+  }
 
-    // Checks if should display install popup notification:
-    let showPrompt = false;
-    if (isIos() && !isInStandaloneMode()) {
-      showPrompt = true;
-    }
-  
-    useEffect(() => {
-      const fetchPrayerData = () => {
-        setIsLoading(true);
-        console.log('Fetching prayer data...');
-        fetch('/api/prayer')
-          .then(response => response.json())
-          .then(data => {
-            console.log('Prayer data received:', data);
-            setPrayerData(data);
-            localStorage.setItem('prayerData', JSON.stringify(data)); // Save data to local storage
-          })
-          .catch(error => {
-            setError(error);
-            console.error('Error fetching prayer data:', error);
-          })
-  
-        fetch('/api/nextPrayer')
-          .then(response => response.json())
-          .then(data => {
-            console.log('Next prayer received: ', data);
-            setNextPrayer(data);
-            localStorage.setItem('nextPrayer', JSON.stringify(data)); // Save nextPrayer to local storage
-          })
-          .catch(error => {
-            setError(error);
-            console.error('Error fetching next prayer:', error);
-          })
-          .finally(() => setIsLoading(false));
+  const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator.standalone);
 
-        const storedPrayerData = JSON.parse(localStorage.getItem('prayerData'));
-        const storedNextPrayer = JSON.parse(localStorage.getItem('nextPrayer'));
-          
-        if (storedPrayerData) {
-          setPrayerData(storedPrayerData);
-        }
-          
-        if (storedNextPrayer) {
-          setNextPrayer(storedNextPrayer);
-        }
-      };
-  
-      // Fetch initial prayer data
-      fetchPrayerData();
+  let showPrompt = false;
+  if (isIos() && !isInStandaloneMode()) {
+    showPrompt = true;
+  }
 
-      // Set up interval to fetch data every 5 minutes (300000 milliseconds)
-      const intervalId = setInterval(fetchPrayerData, 300000);
-  
-      // Clean up the interval when the component unmounts
-      return () => clearInterval(intervalId);
-    }, []); // Empty dependency array ensures that this effect runs only once on mount
+  const fetchPrayerData = () => {
+    setIsLoading(true);
+    console.log('Fetching prayer data...');
+    fetch('/api/prayer')
+      .then(response => response.json())
+      .then(data => {
+        console.log('Prayer data received:', data);
+        setPrayerData(data);
+        localStorage.setItem('prayerData', JSON.stringify(data));
+      })
+      .catch(error => {
+        setError(error);
+        console.error('Error fetching prayer data:', error);
+      });
 
-    if (isLoading) {
-      return <div></div>; // or display a loading spinner
+    fetch('/api/nextPrayer')
+      .then(response => response.json())
+      .then(data => {
+        console.log('Next prayer received: ', data);
+        setNextPrayer(data);
+        localStorage.setItem('nextPrayer', JSON.stringify(data));
+      })
+      .catch(error => {
+        setError(error);
+        console.error('Error fetching next prayer:', error);
+      })
+      .finally(() => setIsLoading(false));
+
+    const storedPrayerData = JSON.parse(localStorage.getItem('prayerData'));
+    const storedNextPrayer = JSON.parse(localStorage.getItem('nextPrayer'));
+
+    if (storedPrayerData) {
+      setPrayerData(storedPrayerData);
     }
-    if (error) {
-      return <div>Error loading data: {error.message}</div>; // Display error message
+
+    if (storedNextPrayer) {
+      setNextPrayer(storedNextPrayer);
     }
+  };
+
+  useEffect(() => {
+    // Fetch initial prayer data
+    fetchPrayerData();
+
+    const intervalId = setInterval(fetchPrayerData, 300000);
+
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        // The app is back in focus, fetch data again
+        fetchPrayerData();
+        // Force a page reload
+        window.location.reload(true);
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    // Clean up the interval and event listener when the component unmounts
+    return () => {
+      clearInterval(intervalId);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+
+  }, []); // Empty dependency array ensures that this effect runs only once on mount
+
+  if (isLoading) {
+    return <div></div>; // or display a loading spinner
+  }
+  if (error) {
+    return <div>Error loading data: {error.message}</div>; // Display error message
+  }
 
   return (
     <PageTransition>
