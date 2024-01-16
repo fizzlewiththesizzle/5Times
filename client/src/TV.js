@@ -29,7 +29,7 @@ function TV() {
     const dhuhrAdhan = data.prayers[0].dhuhr_adhan;
     const dhuhrIqama = data.prayers[0].dhuhr_iqama;
     const asrAdhan = data.prayers[0].asr_adhan;
-    const asrIqama = data.prayers[0].dhuhr_iqama;
+    const asrIqama = data.prayers[0].asr_iqama;
     const maghribAdhan = data.prayers[0].maghrib_adhan;
     const maghribIqama = data.prayers[0].maghrib_iqama;
     const ishaAdhan = data.prayers[0].isha_adhan;
