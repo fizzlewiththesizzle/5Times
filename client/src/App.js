@@ -1,10 +1,10 @@
-import React, { lazy, Suspense } from 'react';
+import React from 'react';
 import { HashRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 
-const Home = lazy(() => import('./Home'));
-const TV = lazy(() => import('./TV'));
-const Month = lazy(() => import('./Month'));
+import Home from './Home';
+import TV from './TV';
+import Month from './Month';
 
 const App = () => (
   <HashRouter>
