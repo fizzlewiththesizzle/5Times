@@ -8,25 +8,23 @@ const Month = lazy(() => import('./Month'));
 
 const App = () => (
   <HashRouter>
-    <Suspense fallback={<div></div>}>
-      <Routes>
-        <Route
-          exact
-          path='/'
-          element={<Home />}
-        />
-        <Route
-          exact
-          path='/TV'
-          element={<TV />}
-        />
-        <Route
-          exact
-          path='/Month'
-          element={<Month />}
-        />
-      </Routes>
-    </Suspense>
+    <Routes>
+      <Route
+        exact
+        path='/'
+        element={<Home />}
+      />
+      <Route
+        exact
+        path='/TV'
+        element={<TV />}
+      />
+      <Route
+        exact
+        path='/Month'
+        element={<Month />}
+      />
+    </Routes>
   </HashRouter>
 );
 
