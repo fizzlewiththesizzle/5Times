@@ -41,6 +41,12 @@ function TV() {
         if (storedNextPrayerData) {
             setNextPrayer(storedNextPrayerData);
           }
+
+        // Set up interval to fetch data every 5 minutes (300000 milliseconds)
+      const intervalId = setInterval(fetchPrayerData, 300000);
+  
+      // Clean up the interval when the component unmounts
+      return () => clearInterval(intervalId);
       }, []); // Empty dependency array to ensure useEffect runs only once on component mount
 
     return (

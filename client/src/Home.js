@@ -9,6 +9,7 @@ function Home() {
   const [prayerData, setPrayerData] = useState([]);
   const [nextPrayer, setNextPrayer] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const isIos = () => {
     const userAgent = window.navigator.userAgent.toLowerCase();
@@ -24,6 +25,7 @@ function Home() {
 
   useEffect(() => {
     const fetchPrayerData = async () => {
+      setIsLoading(true);
       console.log('Fetching prayer data...');
       fetch('/api/prayer')
         .then(response => response.json())
@@ -35,7 +37,11 @@ function Home() {
           localStorage.setItem('prayerData', JSON.stringify(data.prayers)); // Save data to local storage
           localStorage.setItem('nextPrayerData', JSON.stringify(data.nextPrayer)); // Save data to local storage
         })
-        .catch(error => console.error('Error fetching prayer data:', error));
+        .catch(error => {
+          setError(error);
+          console.error('Error fetching prayer data:', error);
+        })
+        .finally(() => setIsLoading(false));
     };
 
     fetchPrayerData();
@@ -49,8 +55,19 @@ function Home() {
     if (storedNextPrayerData) {
       setNextPrayer(storedNextPrayerData);
     }
+    // Set up interval to fetch data every 5 minutes (300000 milliseconds)
+    const intervalId = setInterval(fetchPrayerData, 300000);
+
+    // Clean up the interval when the component unmounts
+    return () => clearInterval(intervalId);
   }, []); // Empty dependency array to ensure useEffect runs only once on component mount
 
+  if (isLoading) {
+    return <div></div>; // or display a loading spinner
+  }
+  if (error) {
+    return <div>Error loading data: {error.message}</div>; // Display error message
+  }
 
   return (
     <PageTransition>
