@@ -10,7 +10,7 @@ function Home() {
   const [nextPrayer, setNextPrayer] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [lastFetchTimestamp] = useState(null);
+  const [lastFetchTimestamp, setLastFetchTimestamp] = useState(null);
 
   const isIos = () => {
     const userAgent = window.navigator.userAgent.toLowerCase();
@@ -24,43 +24,28 @@ function Home() {
     showPrompt = true;
   }
 
-  const fetchPrayerData = () => {
+  const fetchPrayerData = async () => {
     setIsLoading(true);
-    console.log('Fetching prayer data...');
-    fetch('/api/prayer?v=' + new Date().getTime())
-      .then(response => response.json())
-      .then(data => {
-        console.log('Prayer data received:', data);
-        setPrayerData(data);
-        localStorage.setItem('prayerData', JSON.stringify(data));
-      })
-      .catch(error => {
-        setError(error);
-        console.error('Error fetching prayer data:', error);
-      });
+    try {
+      console.log('Fetching prayer data...');
+      const [prayerResponse, nextPrayerResponse] = await Promise.all([
+        fetch('/api/prayer?v=' + new Date().getTime()).then(response => response.json()),
+        fetch('/api/nextPrayer?v=' + new Date().getTime()).then(response => response.json())
+      ]);
 
-    fetch('/api/nextPrayer?v=' + new Date().getTime())
-      .then(response => response.json())
-      .then(data => {
-        console.log('Next prayer received: ', data);
-        setNextPrayer(data);
-        localStorage.setItem('nextPrayer', JSON.stringify(data));
-      })
-      .catch(error => {
-        setError(error);
-        console.error('Error fetching next prayer:', error);
-      })
-      .finally(() => setIsLoading(false));
+      console.log('Prayer data received:', prayerResponse);
+      setPrayerData(prayerResponse);
+      localStorage.setItem('prayerData', JSON.stringify(prayerResponse));
 
-    const storedPrayerData = JSON.parse(localStorage.getItem('prayerData'));
-    const storedNextPrayer = JSON.parse(localStorage.getItem('nextPrayer'));
-
-    if (storedPrayerData) {
-      setPrayerData(storedPrayerData);
-    }
-
-    if (storedNextPrayer) {
-      setNextPrayer(storedNextPrayer);
+      console.log('Next prayer received: ', nextPrayerResponse);
+      setNextPrayer(nextPrayerResponse);
+      localStorage.setItem('nextPrayer', JSON.stringify(nextPrayerResponse));
+    } catch (error) {
+      setError(error);
+      console.error('Error fetching data:', error);
+    } finally {
+      setIsLoading(false);
+      setLastFetchTimestamp(new Date().getTime());
     }
   };
 
@@ -72,25 +57,22 @@ function Home() {
 
       return !lastFetchTimestamp || timeSinceLastFetch >= refreshInterval;
     };
-    fetchPrayerData();
+
+    if (shouldRefreshData()) {
+      fetchPrayerData();
+    }
 
     const intervalId = setInterval(() => {
       if (shouldRefreshData()) {
         fetchPrayerData();
       }
-    }, 300000); // Check every second for timestamp comparison
+    }, 300000); // Check every 5 minutes for timestamp comparison
 
     return () => {
       clearInterval(intervalId);
     };
   }, [lastFetchTimestamp]);
 
-  if (isLoading) {
-    return <div></div>; // or display a loading spinner
-  }
-  if (error) {
-    return <div>Error loading data: {error.message}</div>; // Display error message
-  }
 
   return (
     <PageTransition>
