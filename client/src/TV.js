@@ -15,34 +15,33 @@ function TV() {
     const [nextPrayer, setNextPrayer] = useState('');
 
     useEffect(() => {
-        const fetchPrayerData = () => {
+        const fetchPrayerData = async () => {
           console.log('Fetching prayer data...');
           fetch('/api/prayer')
             .then(response => response.json())
             .then(data => {
-              console.log('Prayer data received:', data);
-              setPrayerData(data);
+              console.log('Prayer data received:', data.prayers);
+              console.log('Next Prayer Received:', data.nextPrayer);
+              setPrayerData(data.prayers);
+              setNextPrayer(data.nextPrayer);
+              localStorage.setItem('prayerData', JSON.stringify(data.prayers)); // Save data to local storage
+              localStorage.setItem('nextPrayerData', JSON.stringify(data.nextPrayer)); // Save data to local storage
             })
             .catch(error => console.error('Error fetching prayer data:', error));
-    
-          fetch('/api/nextPrayer')
-            .then(response => response.json())
-            .then(data => {
-              console.log('Next prayer received: ', data);
-              setNextPrayer(data);
-            })
-            .catch(error => console.error('Error fetching next prayer:', error));
         };
     
-        // Fetch initial prayer data
         fetchPrayerData();
     
-        // Set up interval to fetch data every 5 minutes (300000 milliseconds)
-        const intervalId = setInterval(fetchPrayerData, 300000);
+        const storedPrayerData = JSON.parse(localStorage.getItem('prayerData'));
+        const storedNextPrayerData = JSON.parse(localStorage.getItem('nextPrayerData'));
     
-        // Clean up the interval when the component unmounts
-        return () => clearInterval(intervalId);
-      }, []); // Empty dependency array ensures that this effect runs only once on mount
+        if (storedPrayerData) {
+          setPrayerData(storedPrayerData);
+        }
+        if (storedNextPrayerData) {
+            setNextPrayer(storedNextPrayerData);
+          }
+      }, []); // Empty dependency array to ensure useEffect runs only once on component mount
 
     return (
         <React.Fragment>
@@ -70,8 +69,8 @@ function TV() {
                                             <span>Fajr</span>
                                             </div>
                                         </td>
-                                        <td className={`py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-center ${nextPrayer.next === "Fajr Adhan" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.fajr_adhan} AM</td>
-                                        <td className={`py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-right ${nextPrayer.next === "Fajr Iqama" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.fajr_iqama} AM</td>
+                                        <td className={`py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-center ${nextPrayer === "Fajr Adhan" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.fajr_adhan} AM</td>
+                                        <td className={`py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-right ${nextPrayer === "Fajr Iqama" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.fajr_iqama} AM</td>
                                     </tr>
                                     <tr className="bg-gray-100 dark:bg-gray-800 dark:text-white">
                                         <td className="py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl">
@@ -80,7 +79,7 @@ function TV() {
                                                 <span>Sunrise</span>
                                             </div>
                                         </td>
-                                        <td className={`py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-center ${nextPrayer.next === "Sunrise" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.sunrise} AM</td>
+                                        <td className={`py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-center ${nextPrayer === "Sunrise" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.sunrise} AM</td>
                                         <td className="py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-center xl:text-right 2xl:text-right">---</td>
                                     </tr>
                                     <tr className="bg-white dark:bg-gray-700 dark:text-white">
@@ -90,8 +89,8 @@ function TV() {
                                                 <span>Dhuhr</span>
                                             </div>
                                         </td>
-                                        <td className={`py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-center ${nextPrayer.next === "Dhuhr Adhan" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.dhuhr_adhan} PM</td>
-                                        <td className={`py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-right ${nextPrayer.next === "Dhuhr Iqama" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.dhuhr_iqama} PM</td>
+                                        <td className={`py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-center ${nextPrayer === "Dhuhr Adhan" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.dhuhr_adhan} PM</td>
+                                        <td className={`py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-right ${nextPrayer === "Dhuhr Iqama" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.dhuhr_iqama} PM</td>
                                     </tr>
                                     <tr className="bg-gray-100 dark:bg-gray-800 dark:text-white">
                                         <td className="py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl">
@@ -100,8 +99,8 @@ function TV() {
                                                 <span>Asr</span>
                                             </div>
                                         </td>
-                                        <td className={`py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-center ${nextPrayer.next === "Asr Adhan" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.asr_adhan} PM</td>
-                                        <td className={`py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-right ${nextPrayer.next === "Asr Iqama" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.asr_iqama} PM</td>
+                                        <td className={`py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-center ${nextPrayer === "Asr Adhan" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.asr_adhan} PM</td>
+                                        <td className={`py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-right ${nextPrayer === "Asr Iqama" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.asr_iqama} PM</td>
                                     </tr>
                                     <tr className="bg-white dark:bg-gray-700 dark:text-white">
                                         <td className="py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl">
@@ -110,8 +109,8 @@ function TV() {
                                                 <span>Maghrib</span>
                                             </div>
                                         </td>
-                                        <td className={`py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-center ${nextPrayer.next === "Maghrib Adhan" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.maghrib_adhan} PM</td>
-                                        <td className={`py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-right ${nextPrayer.next === "Maghrib Iqama" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.maghrib_iqama} PM</td>
+                                        <td className={`py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-center ${nextPrayer === "Maghrib Adhan" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.maghrib_adhan} PM</td>
+                                        <td className={`py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-right ${nextPrayer === "Maghrib Iqama" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.maghrib_iqama} PM</td>
                                     </tr>
                                     <tr className="bg-gray-100 dark:bg-gray-800 dark:text-white">
                                         <td className="py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl">
@@ -120,8 +119,8 @@ function TV() {
                                                 <span>Isha</span>
                                             </div>
                                         </td>
-                                        <td className={`py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-center ${nextPrayer.next === "Isha Adhan" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.isha_adhan} PM</td>
-                                        <td className={`py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-right ${nextPrayer.next === "Isha Iqama" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.isha_iqama} PM</td>
+                                        <td className={`py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-center ${nextPrayer === "Isha Adhan" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.isha_adhan} PM</td>
+                                        <td className={`py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-right ${nextPrayer === "Isha Iqama" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.isha_iqama} PM</td>
                                     </tr>
                                 </React.Fragment>
                             ))}
@@ -158,7 +157,7 @@ function TV() {
 
                 <div className='rounded-2xl 4xl:rounded-3xl overflow-hidden shadow-lg bg-gray-200 dark:bg-gray-800 text-center flex flex-col justify-center items-center'>
                     <h1 className="text-6xl 4xl:text-9xl dark:text-white font-bold pt-4"> Next Up: </h1>
-                    <h1 className='text-6xl 4xl:text-10xl font-semibold text-emerald-500 my-auto'>{nextPrayer.next}</h1>
+                    <h1 className='text-6xl 4xl:text-10xl font-semibold text-emerald-500 my-auto'>{nextPrayer}</h1>
                 </div>
 
                 <div className='dark:text-white text-center xl:text-7xl 2xl:text-8xl 4xl:text-12xl clock-font font-bold flex justify-center items-center'>

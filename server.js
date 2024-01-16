@@ -309,7 +309,8 @@ setInterval(fetchDataFromDatabase, 300000); // 5 minutes in milliseconds
 queryMonth();
 
 app.get('/api/prayer', (req, res) => {
-  res.json(cachedData);
+  res.json({ prayers: cachedData, 
+    nextPrayer: next });
 });
 
 app.get('/api/nextPrayer', (req, res) => {

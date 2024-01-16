@@ -9,8 +9,6 @@ function Home() {
   const [prayerData, setPrayerData] = useState([]);
   const [nextPrayer, setNextPrayer] = useState('');
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [lastFetchTimestamp, setLastFetchTimestamp] = useState(null);
 
   const isIos = () => {
     const userAgent = window.navigator.userAgent.toLowerCase();
@@ -24,54 +22,34 @@ function Home() {
     showPrompt = true;
   }
 
-  const fetchPrayerData = async () => {
-    setIsLoading(true);
-    try {
-      console.log('Fetching prayer data...');
-      const [prayerResponse, nextPrayerResponse] = await Promise.all([
-        fetch('/api/prayer?v=' + new Date().getTime()).then(response => response.json()),
-        fetch('/api/nextPrayer?v=' + new Date().getTime()).then(response => response.json())
-      ]);
-
-      console.log('Prayer data received:', prayerResponse);
-      setPrayerData(prayerResponse);
-      localStorage.setItem('prayerData', JSON.stringify(prayerResponse));
-
-      console.log('Next prayer received: ', nextPrayerResponse);
-      setNextPrayer(nextPrayerResponse);
-      localStorage.setItem('nextPrayer', JSON.stringify(nextPrayerResponse));
-    } catch (error) {
-      setError(error);
-      console.error('Error fetching data:', error);
-    } finally {
-      setIsLoading(false);
-      setLastFetchTimestamp(new Date().getTime());
-    }
-  };
-
   useEffect(() => {
-    const shouldRefreshData = () => {
-      const currentTime = new Date().getTime();
-      const timeSinceLastFetch = currentTime - lastFetchTimestamp;
-      const refreshInterval = 300000; // 5 minutes in milliseconds
-
-      return !lastFetchTimestamp || timeSinceLastFetch >= refreshInterval;
+    const fetchPrayerData = async () => {
+      console.log('Fetching prayer data...');
+      fetch('/api/prayer')
+        .then(response => response.json())
+        .then(data => {
+          console.log('Prayer data received:', data.prayers);
+          console.log('Next Prayer Received:', data.nextPrayer);
+          setPrayerData(data.prayers);
+          setNextPrayer(data.nextPrayer);
+          localStorage.setItem('prayerData', JSON.stringify(data.prayers)); // Save data to local storage
+          localStorage.setItem('nextPrayerData', JSON.stringify(data.nextPrayer)); // Save data to local storage
+        })
+        .catch(error => console.error('Error fetching prayer data:', error));
     };
 
-    if (shouldRefreshData()) {
-      fetchPrayerData();
+    fetchPrayerData();
+
+    const storedPrayerData = JSON.parse(localStorage.getItem('prayerData'));
+    const storedNextPrayerData = JSON.parse(localStorage.getItem('nextPrayerData'));
+
+    if (storedPrayerData) {
+      setPrayerData(storedPrayerData);
     }
-
-    const intervalId = setInterval(() => {
-      if (shouldRefreshData()) {
-        fetchPrayerData();
-      }
-    }, 300000); // Check every 5 minutes for timestamp comparison
-
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, [prayerData, nextPrayer]);
+    if (storedNextPrayerData) {
+      setNextPrayer(storedNextPrayerData);
+    }
+  }, []); // Empty dependency array to ensure useEffect runs only once on component mount
 
 
   return (
@@ -91,7 +69,8 @@ function Home() {
               : ''}
           </h1>
           <h1 className="text-3xl xs:text-2xl">
-            Next Up: <span className='font-semibold text-emerald-500'>{nextPrayer.next}</span>
+            Next Up: <span className='font-semibold text-emerald-500'>
+              {nextPrayer}</span>
           </h1>
         </div>
         <div className="rounded-2xl overflow-hidden shadow-lg">
@@ -113,8 +92,8 @@ function Home() {
                         <span>Fajr</span>
                       </div>
                     </td>
-                    <td className={`py-2 pr-4 text-xl text-center ${nextPrayer.next === "Fajr Adhan" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.fajr_adhan} AM</td>
-                    <td className={`py-2 text-xl pr-2 text-right ${nextPrayer.next === "Fajr Iqama" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.fajr_iqama} AM</td>
+                    <td className={`py-2 pr-4 text-xl text-center ${nextPrayer === "Fajr Adhan" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.fajr_adhan} AM</td>
+                    <td className={`py-2 text-xl pr-2 text-right ${nextPrayer === "Fajr Iqama" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.fajr_iqama} AM</td>
                   </tr>
                   <tr className="bg-gray-100 dark:bg-gray-800 dark:text-white">
                     <td className="py-2 px-4 text-xl">
@@ -123,7 +102,7 @@ function Home() {
                         <span>Sunrise</span>
                       </div>
                     </td>
-                    <td className={`py-2 pr-4 text-xl text-center ${nextPrayer.next === "Sunrise" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.sunrise} AM</td>
+                    <td className={`py-2 pr-4 text-xl text-center ${nextPrayer === "Sunrise" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.sunrise} AM</td>
                     <td className="py-2 text-xl pr-2 text-center xl:text-right 2xl:text-right">---</td>
                   </tr>
                   <tr className="bg-white dark:bg-gray-700 dark:text-white">
@@ -133,8 +112,8 @@ function Home() {
                         <span>Dhuhr</span>
                       </div>
                     </td>
-                    <td className={`py-2 pr-4 text-xl text-center ${nextPrayer.next === "Dhuhr Adhan" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.dhuhr_adhan} PM</td>
-                    <td className={`py-2 text-xl pr-2 text-right ${nextPrayer.next === "Dhuhr Iqama" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.dhuhr_iqama} PM</td>
+                    <td className={`py-2 pr-4 text-xl text-center ${nextPrayer === "Dhuhr Adhan" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.dhuhr_adhan} PM</td>
+                    <td className={`py-2 text-xl pr-2 text-right ${nextPrayer === "Dhuhr Iqama" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.dhuhr_iqama} PM</td>
                   </tr>
                   <tr className="bg-gray-100 dark:bg-gray-800 dark:text-white">
                     <td className="py-2 px-4 text-xl">
@@ -143,8 +122,8 @@ function Home() {
                         <span>Asr</span>
                       </div>
                     </td>
-                    <td className={`py-2 pr-4 text-xl text-center ${nextPrayer.next === "Asr Adhan" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.asr_adhan} PM</td>
-                    <td className={`py-2 text-xl pr-2 text-right ${nextPrayer.next === "Asr Iqama" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.asr_iqama} PM</td>
+                    <td className={`py-2 pr-4 text-xl text-center ${nextPrayer === "Asr Adhan" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.asr_adhan} PM</td>
+                    <td className={`py-2 text-xl pr-2 text-right ${nextPrayer === "Asr Iqama" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.asr_iqama} PM</td>
                   </tr>
                   <tr className="bg-white dark:bg-gray-700 dark:text-white">
                     <td className="py-2 px-4 text-xl">
@@ -153,8 +132,8 @@ function Home() {
                         <span>Maghrib</span>
                       </div>
                     </td>
-                    <td className={`py-2 pr-4 text-xl text-center ${nextPrayer.next === "Maghrib Adhan" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.maghrib_adhan} PM</td>
-                    <td className={`py-2 pr-2 text-xl text-right ${nextPrayer.next === "Maghrib Iqama" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.maghrib_iqama} PM</td>
+                    <td className={`py-2 pr-4 text-xl text-center ${nextPrayer === "Maghrib Adhan" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.maghrib_adhan} PM</td>
+                    <td className={`py-2 pr-2 text-xl text-right ${nextPrayer === "Maghrib Iqama" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.maghrib_iqama} PM</td>
                   </tr>
                   <tr className="bg-gray-100 dark:bg-gray-800 dark:text-white">
                     <td className="py-2 px-4 text-xl">
@@ -163,8 +142,8 @@ function Home() {
                         <span>Isha</span>
                       </div>
                     </td>
-                    <td className={`py-2 pr-4 text-xl text-center ${nextPrayer.next === "Isha Adhan" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.isha_adhan} PM</td>
-                    <td className={`py-2 pr-2 text-xl text-right ${nextPrayer.next === "Isha Iqama" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.isha_iqama} PM</td>
+                    <td className={`py-2 pr-4 text-xl text-center ${nextPrayer === "Isha Adhan" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.isha_adhan} PM</td>
+                    <td className={`py-2 pr-2 text-xl text-right ${nextPrayer === "Isha Iqama" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.isha_iqama} PM</td>
                   </tr>
                 </React.Fragment>
               ))}

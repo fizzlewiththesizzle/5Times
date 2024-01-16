@@ -6,8 +6,6 @@ import PageTransition from './PageTransition';
 
 function Month() {
     const [monthlyData, setMonthlyData] = useState({});
-    const [prayerData, setPrayerData] = useState([]);
-    const [nextPrayer, setNextPrayer] = useState('');
     const [selectedMonth, setSelectedMonth] = useState("jan"); // State for selected month
 
     useEffect(() => {
@@ -22,40 +20,11 @@ function Month() {
                     localStorage.setItem('monthlyData', JSON.stringify(data)); // Save nextPrayer to local storage
                 })
                 .catch(error => console.error('Error fetching monthly data:', error));
-
-                console.log('Fetching prayer data...');
-                fetch('/api/prayer')
-                  .then(response => response.json())
-                  .then(data => {
-                    console.log('Prayer data received:', data);
-                    setPrayerData(data);
-                    localStorage.setItem('prayerData', JSON.stringify(data)); // Save data to local storage
-                  })
-                  .catch(error => console.error('Error fetching prayer data:', error));
-
-                  fetch('/api/nextPrayer')
-                  .then(response => response.json())
-                  .then(data => {
-                    console.log('Next prayer received: ', data);
-                    setNextPrayer(data);
-                    localStorage.setItem('nextPrayer', JSON.stringify(data)); // Save nextPrayer to local storage
-                  })
-                  .catch(error => console.error('Error fetching next prayer:', error));
         };
 
         fetchPrayerData();
 
         const storedMonthlyData = JSON.parse(localStorage.getItem('monthlyData'));
-        const storedPrayerData = JSON.parse(localStorage.getItem('prayerData'));
-        const storedNextPrayer = JSON.parse(localStorage.getItem('nextPrayer'));
-        
-        if (storedPrayerData) {
-          setPrayerData(storedPrayerData);
-        }
-        
-        if (storedNextPrayer) {
-          setNextPrayer(storedNextPrayer);
-        }
 
         if (storedMonthlyData) {
           setMonthlyData(storedMonthlyData);
