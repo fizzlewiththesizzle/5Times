@@ -1,15 +1,38 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import useSWR from 'swr';
 import { Link } from 'react-router-dom';
 import Alert from './Alert';
 import './App.css';
 import mac_neo from './Calgary-neo.png';
 import PageTransition from './PageTransition';
 
+const fetcher = (url) => fetch(url).then((res) => res.json());
+
 function Home() {
-  const [prayerData, setPrayerData] = useState([]);
-  const [nextPrayer, setNextPrayer] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { data, error, isLoading } = useSWR('/api/prayer', fetcher, { refreshInterval: 300000 });
+  if (error) return <div>Error loading data</div>;
+  if (isLoading) return <div></div>;
+
+  const month = data.prayers[0].month_s;
+  const day = data.prayers[0].day;
+  const year = data.prayers[0].year_s;
+  const hijriMonth = data.prayers[0].hijri_month;
+  const hijriDay = data.prayers[0].hijri_day;
+  const hijriYear = data.prayers[0].hijri_year;
+  const fajrAdhan = data.prayers[0].fajr_adhan;
+  const fajrIqama = data.prayers[0].fajr_iqama;
+  const sunrise = data.prayers[0].sunrise;
+  const dhuhrAdhan = data.prayers[0].dhuhr_adhan;
+  const dhuhrIqama = data.prayers[0].dhuhr_iqama;
+  const asrAdhan = data.prayers[0].asr_adhan;
+  const asrIqama = data.prayers[0].dhuhr_iqama;
+  const maghribAdhan = data.prayers[0].maghrib_adhan;
+  const maghribIqama = data.prayers[0].maghrib_iqama;
+  const ishaAdhan = data.prayers[0].isha_adhan;
+  const ishaIqama = data.prayers[0].isha_iqama;
+  const jumuah1 = data.prayers[0].jumuah_1;
+  const jumuah2 = data.prayers[0].jumuah_2;
+  const nextPrayer = data.nextPrayer;
 
   const isIos = () => {
     const userAgent = window.navigator.userAgent.toLowerCase();
@@ -23,52 +46,6 @@ function Home() {
     showPrompt = true;
   }
 
-  useEffect(() => {
-    const fetchPrayerData = async () => {
-      setIsLoading(true);
-      console.log('Fetching prayer data...');
-      fetch('/api/prayer')
-        .then(response => response.json())
-        .then(data => {
-          console.log('Prayer data received:', data.prayers);
-          console.log('Next Prayer Received:', data.nextPrayer);
-          setPrayerData(data.prayers);
-          setNextPrayer(data.nextPrayer);
-          localStorage.setItem('prayerData', JSON.stringify(data.prayers)); // Save data to local storage
-          localStorage.setItem('nextPrayerData', JSON.stringify(data.nextPrayer)); // Save data to local storage
-        })
-        .catch(error => {
-          setError(error);
-          console.error('Error fetching prayer data:', error);
-        })
-        .finally(() => setIsLoading(false));
-    };
-
-    fetchPrayerData();
-
-    const storedPrayerData = JSON.parse(localStorage.getItem('prayerData'));
-    const storedNextPrayerData = JSON.parse(localStorage.getItem('nextPrayerData'));
-
-    if (storedPrayerData) {
-      setPrayerData(storedPrayerData);
-    }
-    if (storedNextPrayerData) {
-      setNextPrayer(storedNextPrayerData);
-    }
-    // Set up interval to fetch data every 5 minutes (300000 milliseconds)
-    const intervalId = setInterval(fetchPrayerData, 300000);
-
-    // Clean up the interval when the component unmounts
-    return () => clearInterval(intervalId);
-  }, []); // Empty dependency array to ensure useEffect runs only once on component mount
-
-  if (isLoading) {
-    return <div></div>; // or display a loading spinner
-  }
-  if (error) {
-    return <div>Error loading data: {error.message}</div>; // Display error message
-  }
-
   return (
     <PageTransition>
       <div className="space-y-4 w-fit xl:w-3/4 2xl:w-3/4 mx-auto">
@@ -76,14 +53,10 @@ function Home() {
           <img src={mac_neo} alt="logo" className='h-10 mt-2 xs:mx-auto xl:mx-0 2xl:mx-0'></img>
           <h1 className='text-4xl xs:text-3xl font-bold'>Al-Salam Centre</h1>
           <h1 className="text-3xl xs:text-2xl">
-            {prayerData.length > 0
-              ? `${prayerData[0].month_s} ${prayerData[0].day_s}, ${prayerData[0].year_s}`
-              : ''}
+            {month} {day}, {year}
           </h1>
           <h1 className="text-3xl xs:text-2xl">
-            {prayerData.length > 0
-              ? `${prayerData[0].hijri_month} ${prayerData[0].hijri_day}, ${prayerData[0].hijri_year} AH`
-              : ''}
+            {hijriMonth} {hijriDay}, {hijriYear} AH
           </h1>
           <h1 className="text-3xl xs:text-2xl">
             Next Up: <span className='font-semibold text-emerald-500'>
@@ -100,83 +73,75 @@ function Home() {
               </tr>
             </thead>
             <tbody>
-              {prayerData.map(prayer => (
-                <React.Fragment key={prayer.id}>
-                  <tr className="bg-white dark:bg-gray-700 dark:text-white">
-                    <td className="py-2 px-4 text-xl">
-                      <div className="flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-star" className="mr-3 stroke-emerald-500"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                        <span>Fajr</span>
-                      </div>
-                    </td>
-                    <td className={`py-2 pr-4 text-xl text-center ${nextPrayer === "Fajr Adhan" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.fajr_adhan} AM</td>
-                    <td className={`py-2 text-xl pr-2 text-right ${nextPrayer === "Fajr Iqama" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.fajr_iqama} AM</td>
-                  </tr>
-                  <tr className="bg-gray-100 dark:bg-gray-800 dark:text-white">
-                    <td className="py-2 px-4 text-xl">
-                      <div className="flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sunrise" className='mr-3 stroke-emerald-500'><path d="M17 18a5 5 0 0 0-10 0"></path><line x1="12" y1="2" x2="12" y2="9"></line><line x1="4.22" y1="10.22" x2="5.64" y2="11.64"></line><line x1="1" y1="18" x2="3" y2="18"></line><line x1="21" y1="18" x2="23" y2="18"></line><line x1="18.36" y1="11.64" x2="19.78" y2="10.22"></line><line x1="23" y1="22" x2="1" y2="22"></line><polyline points="8 6 12 2 16 6"></polyline></svg>
-                        <span>Sunrise</span>
-                      </div>
-                    </td>
-                    <td className={`py-2 pr-4 text-xl text-center ${nextPrayer === "Sunrise" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.sunrise} AM</td>
-                    <td className="py-2 text-xl pr-2 text-center xl:text-right 2xl:text-right">---</td>
-                  </tr>
-                  <tr className="bg-white dark:bg-gray-700 dark:text-white">
-                    <td className="py-2 px-4 text-xl">
-                      <div className="flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun" className='mr-3 stroke-emerald-500'><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-                        <span>Dhuhr</span>
-                      </div>
-                    </td>
-                    <td className={`py-2 pr-4 text-xl text-center ${nextPrayer === "Dhuhr Adhan" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.dhuhr_adhan} PM</td>
-                    <td className={`py-2 text-xl pr-2 text-right ${nextPrayer === "Dhuhr Iqama" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.dhuhr_iqama} PM</td>
-                  </tr>
-                  <tr className="bg-gray-100 dark:bg-gray-800 dark:text-white">
-                    <td className="py-2 px-4 text-xl">
-                      <div className="flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle" className='mr-3 stroke-emerald-500'><circle cx="12" cy="12" r="10"></circle></svg>
-                        <span>Asr</span>
-                      </div>
-                    </td>
-                    <td className={`py-2 pr-4 text-xl text-center ${nextPrayer === "Asr Adhan" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.asr_adhan} PM</td>
-                    <td className={`py-2 text-xl pr-2 text-right ${nextPrayer === "Asr Iqama" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.asr_iqama} PM</td>
-                  </tr>
-                  <tr className="bg-white dark:bg-gray-700 dark:text-white">
-                    <td className="py-2 px-4 text-xl">
-                      <div className="flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sunset" className='mr-3 stroke-emerald-500'><path d="M17 18a5 5 0 0 0-10 0"></path><line x1="12" y1="9" x2="12" y2="2"></line><line x1="4.22" y1="10.22" x2="5.64" y2="11.64"></line><line x1="1" y1="18" x2="3" y2="18"></line><line x1="21" y1="18" x2="23" y2="18"></line><line x1="18.36" y1="11.64" x2="19.78" y2="10.22"></line><line x1="23" y1="22" x2="1" y2="22"></line><polyline points="16 5 12 9 8 5"></polyline></svg>
-                        <span>Maghrib</span>
-                      </div>
-                    </td>
-                    <td className={`py-2 pr-4 text-xl text-center ${nextPrayer === "Maghrib Adhan" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.maghrib_adhan} PM</td>
-                    <td className={`py-2 pr-2 text-xl text-right ${nextPrayer === "Maghrib Iqama" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.maghrib_iqama} PM</td>
-                  </tr>
-                  <tr className="bg-gray-100 dark:bg-gray-800 dark:text-white">
-                    <td className="py-2 px-4 text-xl">
-                      <div className="flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon" className='mr-3 stroke-emerald-500'><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-                        <span>Isha</span>
-                      </div>
-                    </td>
-                    <td className={`py-2 pr-4 text-xl text-center ${nextPrayer === "Isha Adhan" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.isha_adhan} PM</td>
-                    <td className={`py-2 pr-2 text-xl text-right ${nextPrayer === "Isha Iqama" ? 'text-emerald-500 font-bold' : ''}`}>{prayer.isha_iqama} PM</td>
-                  </tr>
-                </React.Fragment>
-              ))}
+              <tr className="bg-white dark:bg-gray-700 dark:text-white">
+                <td className="py-2 px-4 text-xl">
+                  <div className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-star" className="mr-3 stroke-emerald-500"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <span>Fajr</span>
+                  </div>
+                </td>
+                <td className={`py-2 pr-4 text-xl text-center ${nextPrayer === "Fajr Adhan" ? 'text-emerald-500 font-bold' : ''}`}>{fajrAdhan} AM</td>
+                <td className={`py-2 text-xl pr-2 text-right ${nextPrayer === "Fajr Iqama" ? 'text-emerald-500 font-bold' : ''}`}>{fajrIqama} AM</td>
+              </tr>
+              <tr className="bg-gray-100 dark:bg-gray-800 dark:text-white">
+                <td className="py-2 px-4 text-xl">
+                  <div className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sunrise" className='mr-3 stroke-emerald-500'><path d="M17 18a5 5 0 0 0-10 0"></path><line x1="12" y1="2" x2="12" y2="9"></line><line x1="4.22" y1="10.22" x2="5.64" y2="11.64"></line><line x1="1" y1="18" x2="3" y2="18"></line><line x1="21" y1="18" x2="23" y2="18"></line><line x1="18.36" y1="11.64" x2="19.78" y2="10.22"></line><line x1="23" y1="22" x2="1" y2="22"></line><polyline points="8 6 12 2 16 6"></polyline></svg>
+                    <span>Sunrise</span>
+                  </div>
+                </td>
+                <td className={`py-2 pr-4 text-xl text-center ${nextPrayer === "Sunrise" ? 'text-emerald-500 font-bold' : ''}`}>{sunrise} AM</td>
+                <td className="py-2 text-xl pr-2 text-center xl:text-right 2xl:text-right">---</td>
+              </tr>
+              <tr className="bg-white dark:bg-gray-700 dark:text-white">
+                <td className="py-2 px-4 text-xl">
+                  <div className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun" className='mr-3 stroke-emerald-500'><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                    <span>Dhuhr</span>
+                  </div>
+                </td>
+                <td className={`py-2 pr-4 text-xl text-center ${nextPrayer === "Dhuhr Adhan" ? 'text-emerald-500 font-bold' : ''}`}>{dhuhrAdhan} PM</td>
+                <td className={`py-2 text-xl pr-2 text-right ${nextPrayer === "Dhuhr Iqama" ? 'text-emerald-500 font-bold' : ''}`}>{dhuhrIqama} PM</td>
+              </tr>
+              <tr className="bg-gray-100 dark:bg-gray-800 dark:text-white">
+                <td className="py-2 px-4 text-xl">
+                  <div className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle" className='mr-3 stroke-emerald-500'><circle cx="12" cy="12" r="10"></circle></svg>
+                    <span>Asr</span>
+                  </div>
+                </td>
+                <td className={`py-2 pr-4 text-xl text-center ${nextPrayer === "Asr Adhan" ? 'text-emerald-500 font-bold' : ''}`}>{asrAdhan} PM</td>
+                <td className={`py-2 text-xl pr-2 text-right ${nextPrayer === "Asr Iqama" ? 'text-emerald-500 font-bold' : ''}`}>{asrIqama} PM</td>
+              </tr>
+              <tr className="bg-white dark:bg-gray-700 dark:text-white">
+                <td className="py-2 px-4 text-xl">
+                  <div className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sunset" className='mr-3 stroke-emerald-500'><path d="M17 18a5 5 0 0 0-10 0"></path><line x1="12" y1="9" x2="12" y2="2"></line><line x1="4.22" y1="10.22" x2="5.64" y2="11.64"></line><line x1="1" y1="18" x2="3" y2="18"></line><line x1="21" y1="18" x2="23" y2="18"></line><line x1="18.36" y1="11.64" x2="19.78" y2="10.22"></line><line x1="23" y1="22" x2="1" y2="22"></line><polyline points="16 5 12 9 8 5"></polyline></svg>
+                    <span>Maghrib</span>
+                  </div>
+                </td>
+                <td className={`py-2 pr-4 text-xl text-center ${nextPrayer === "Maghrib Adhan" ? 'text-emerald-500 font-bold' : ''}`}>{maghribAdhan} PM</td>
+                <td className={`py-2 pr-2 text-xl text-right ${nextPrayer === "Maghrib Iqama" ? 'text-emerald-500 font-bold' : ''}`}>{maghribIqama} PM</td>
+              </tr>
+              <tr className="bg-gray-100 dark:bg-gray-800 dark:text-white">
+                <td className="py-2 px-4 text-xl">
+                  <div className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon" className='mr-3 stroke-emerald-500'><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                    <span>Isha</span>
+                  </div>
+                </td>
+                <td className={`py-2 pr-4 text-xl text-center ${nextPrayer === "Isha Adhan" ? 'text-emerald-500 font-bold' : ''}`}>{ishaAdhan} PM</td>
+                <td className={`py-2 pr-2 text-xl text-right ${nextPrayer === "Isha Iqama" ? 'text-emerald-500 font-bold' : ''}`}>{ishaIqama} PM</td>
+              </tr>
             </tbody>
           </table>
         </div>
         <div className="bg-gray-200 dark:bg-gray-800 rounded-2xl overflow-hidden text-center text-emerald-500 font-semibold shadow-lg text-3xl xs:text-2xl xl:text-4xl 2xl:text-4xl px-4">
           <h1>
-            {prayerData.length > 0
-              ? <span>1<sup>st</sup> Jumuah: {prayerData[0].jumuah_1}</span>
-              : ''}
+            <span>1<sup>st</sup> Jumuah: {jumuah1}</span>
           </h1>
           <h1>
-            {prayerData.length > 0
-              ? <span>2<sup>nd</sup> Jumuah: {prayerData[0].jumuah_2}</span>
-              : ''}
+            <span>2<sup>nd</sup> Jumuah: {jumuah2}</span>
           </h1>
         </div>
         <Link to='/Month' >
