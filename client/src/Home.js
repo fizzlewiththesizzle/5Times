@@ -71,7 +71,7 @@ function Home() {
     return () => {
       clearInterval(intervalId);
     };
-  }, [lastFetchTimestamp]);
+  }, [prayerData, nextPrayer]);
 
 
   return (
