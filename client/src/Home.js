@@ -8,15 +8,7 @@ import PageTransition from './PageTransition';
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 function Home() {
-  const { data, error, isLoading } = useSWR('/api/prayer', fetcher, { 
-    refreshInterval: 1000,
-    refreshWhenHidden: true, 
-    keepPreviousData: true, 
-    fallbackData: data => {
-      mutate('/api/prayer', data, false);
-      return data;
-    }
- });
+  const { data, error, isLoading } = useSWR('/api/prayer', fetcher, { refreshInterval: 1000, refreshWhenHidden: true, keepPreviousData: true });
   if (error) return <div>Error loading data</div>;
   if (isLoading) return <div></div>;
 
