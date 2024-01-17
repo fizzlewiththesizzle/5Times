@@ -9,7 +9,7 @@ import PageTransition from './PageTransition';
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 function Home() {
-  const { data, error, isLoading } = useSWR('/api/prayer', fetcher, { refreshInterval: 300000 });
+  const { data, error, isLoading } = useSWR('/api/prayer', fetcher, { refreshInterval: 300000, keepPreviousData: true });
   if (error) return <div>Error loading data</div>;
   if (isLoading) return <div></div>;
 
