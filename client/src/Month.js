@@ -20,7 +20,7 @@ function Month() {
     };
 
     const handleButtonClick = () => {
-        window.location.href = '/#/'; // Navigate to '/#/'
+        window.location.href = '/'; // Navigate to '/#/'
       };
 
     return (
