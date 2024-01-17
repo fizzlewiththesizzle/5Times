@@ -1,5 +1,5 @@
 import React from 'react';
-import useSWR from 'swr';
+import useSWR, { mutate } from 'swr';
 import { Link } from 'react-router-dom';
 import Alert from './Alert';
 import './App.css';
@@ -9,7 +9,14 @@ import PageTransition from './PageTransition';
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 function Home() {
-  const { data, error, isLoading } = useSWR('/api/prayer', fetcher, { refreshInterval: 300000, keepPreviousData: true });
+  const { data, error, isLoading } = useSWR('/api/prayer', fetcher, { 
+    refreshInterval: 300000, 
+    keepPreviousData: true, 
+    fallbackData: data => {
+      mutate('/api/prayer', data, false);
+      return data;
+    }
+ });
   if (error) return <div>Error loading data</div>;
   if (isLoading) return <div></div>;
 
