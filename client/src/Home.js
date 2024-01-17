@@ -10,7 +10,8 @@ const fetcher = (url) => fetch(url).then((res) => res.json());
 
 function Home() {
   const { data, error, isLoading } = useSWR('/api/prayer', fetcher, { 
-    refreshInterval: 300000, 
+    refreshInterval: 1000,
+    refreshWhenHidden: true, 
     keepPreviousData: true, 
     fallbackData: data => {
       mutate('/api/prayer', data, false);
