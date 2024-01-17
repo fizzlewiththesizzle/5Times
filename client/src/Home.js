@@ -8,9 +8,9 @@ import PageTransition from './PageTransition';
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 function Home() {
-  const { data, error, isLoading } = useSWR('/api/prayer', fetcher, { refreshInterval: 1000, refreshWhenHidden: true, keepPreviousData: true });
+  const { data, error, isLoading } = useSWR('/api/prayer', fetcher, { refreshInterval: 1000, keepPreviousData: true, revalidateOnFocus: false });
   if (error) return <div>Error loading data</div>;
-  if (isLoading) return <div></div>;
+  if (isLoading) return <div>Loading...</div>;
 
   const handleButtonClick = () => {
     window.location.href = '/#/Month'; // Navigate to '/Month'
