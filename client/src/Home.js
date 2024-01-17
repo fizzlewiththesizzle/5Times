@@ -21,7 +21,7 @@ function Home() {
   if (isLoading) return <div></div>;
 
   const handleButtonClick = () => {
-    window.location.href = '/Month'; // Navigate to '/Month'
+    window.location.href = '/#/Month'; // Navigate to '/Month'
   };
 
   const month = data.prayers[0].month_s;

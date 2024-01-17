@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 
 import Home from './Home';
@@ -7,22 +7,25 @@ import TV from './TV';
 import Month from './Month';
 
 const App = () => (
-  <BrowserRouter>
+  <HashRouter>
     <Routes>
       <Route
+        exact
         path='/'
         element={<Home />}
       />
       <Route
+        exact
         path='/TV'
         element={<TV />}
       />
       <Route
+        exact
         path='/Month'
         element={<Month />}
       />
     </Routes>
-  </BrowserRouter>
+  </HashRouter>
 );
 
 export default App;
