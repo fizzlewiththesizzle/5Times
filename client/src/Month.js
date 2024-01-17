@@ -1,6 +1,5 @@
 import React from 'react';
 import useSWR from 'swr';
-import { Link } from 'react-router-dom';
 import './App.css';
 import mac_neo from './Calgary-neo.png';
 import PageTransition from './PageTransition';
@@ -19,6 +18,10 @@ function Month() {
         const newSelectedMonth = event.target.value;
         mutateSelectedMonth(newSelectedMonth, false); // Update the selectedMonth without re-fetching
     };
+
+    const handleButtonClick = () => {
+        window.location.href = '/#/'; // Navigate to '/#/'
+      };
 
     return (
         <PageTransition>
@@ -73,11 +76,9 @@ function Month() {
                         ))}
                     </tbody>
                 </table>
-                <Link to='/' >
                     <div className='flex flex-col items-center'>
-                        <button className='bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xl py-2 px-4 rounded-lg shadow-lg'>Daily Times</button>
+                        <button onClick={handleButtonClick} className='bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xl py-2 px-4 rounded-lg shadow-lg'>Daily Times</button>
                     </div>
-                </Link>
                 <footer className='text-gray-500 text-xl text-center pt-2 pb-4'>Beta</footer>
             </div>
         </PageTransition>

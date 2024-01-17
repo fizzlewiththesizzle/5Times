@@ -1,6 +1,5 @@
 import React from 'react';
 import useSWR, { mutate } from 'swr';
-import { Link } from 'react-router-dom';
 import Alert from './Alert';
 import './App.css';
 import mac_neo from './Calgary-neo.png';
@@ -20,6 +19,10 @@ function Home() {
  });
   if (error) return <div>Error loading data</div>;
   if (isLoading) return <div></div>;
+
+  const handleButtonClick = () => {
+    window.location.href = '/#/Month'; // Navigate to '/Month'
+  };
 
   const month = data.prayers[0].month_s;
   const day = data.prayers[0].day;
@@ -152,11 +155,9 @@ function Home() {
             <span>2<sup>nd</sup> Jumuah: {jumuah2}</span>
           </h1>
         </div>
-        <Link to='/Month' >
           <div className='flex flex-col items-center'>
-            <button className='bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xl py-2 px-4 rounded-lg shadow-lg mt-4'>Monthly Times</button>
+            <button onClick={handleButtonClick} className='bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xl py-2 px-4 rounded-lg shadow-lg mt-4'>Monthly Times</button>
           </div>
-        </Link>
         <Alert showAlert={showPrompt} />
         <footer className='text-gray-500 text-xl text-center'>Beta</footer>
       </div>
