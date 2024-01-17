@@ -148,7 +148,7 @@ function Home() {
           </h1>
         </div>
           <div className='flex flex-col items-center'>
-            <button onClick={handleButtonClick} className='bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xl py-2 px-4 rounded-lg shadow-lg mt-4'>Monthly Times</button>
+            <button type="button" onClick={handleButtonClick} className='bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xl py-2 px-4 rounded-lg shadow-lg mt-4'>Monthly Times</button>
           </div>
         <Alert showAlert={showPrompt} />
         <footer className='text-gray-500 text-xl text-center'>Beta</footer>

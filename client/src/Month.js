@@ -77,7 +77,7 @@ function Month() {
                     </tbody>
                 </table>
                     <div className='flex flex-col items-center'>
-                        <button onClick={handleButtonClick} className='bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xl py-2 px-4 rounded-lg shadow-lg'>Daily Times</button>
+                        <button type="button" onClick={handleButtonClick} className='bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xl py-2 px-4 rounded-lg shadow-lg'>Daily Times</button>
                     </div>
                 <footer className='text-gray-500 text-xl text-center pt-2 pb-4'>Beta</footer>
             </div>
