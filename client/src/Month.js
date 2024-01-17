@@ -7,11 +7,11 @@ import PageTransition from './PageTransition';
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 function Month() {
-    const { data, error, isLoading } = useSWR('/api/month', fetcher, { refreshInterval: 300000 });
+    const { data, error, isLoading } = useSWR('/api/month', fetcher);
     const { data: selectedMonth, mutate: mutateSelectedMonth } = useSWR('selectedMonth', fetcher, { fallbackData: "jan" });
 
     if (error) return <div>Error loading data</div>;
-    if (isLoading) return <div></div>;
+    if (isLoading) return <div className='dark:text-white'></div>;
     const monthlyData = data;
 
     const handleMonthChange = (event) => {

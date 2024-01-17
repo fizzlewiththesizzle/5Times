@@ -9,7 +9,7 @@ const fetcher = (url) => fetch(url).then((res) => res.json());
 
 function Home() {
   const { data, error, isLoading } = useSWR('/api/prayer', fetcher);
-  if (error) return <div>Error loading data</div>;
+  if (error) return <div className='dark:text-white'>Error loading data</div>;
   if (isLoading) return <div></div>;
 
   const handleButtonClick = () => {
