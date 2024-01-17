@@ -1,5 +1,5 @@
 import React from 'react';
-import useSWR, { mutate } from 'swr';
+import useSWR from 'swr';
 import Alert from './Alert';
 import './App.css';
 import mac_neo from './Calgary-neo.png';
@@ -8,9 +8,9 @@ import PageTransition from './PageTransition';
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 function Home() {
-  const { data, error, isLoading } = useSWR('/api/prayer', fetcher, { refreshInterval: 1000, keepPreviousData: true, revalidateOnFocus: false });
+  const { data, error, isLoading } = useSWR('/api/prayer', fetcher);
   if (error) return <div>Error loading data</div>;
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <div></div>;
 
   const handleButtonClick = () => {
     window.location.href = '/#/Month'; // Navigate to '/Month'
