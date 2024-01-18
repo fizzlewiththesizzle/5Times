@@ -11,8 +11,9 @@ function Month() {
     const { data: selectedMonth, mutate: mutateSelectedMonth } = useSWR('selectedMonth', fetcher, { fallbackData: "jan" });
 
     if (error) return <div>Error loading data</div>;
-    if (isLoading) return <div className='dark:text-white'></div>;
-    const monthlyData = data;
+    if (isLoading || !data || !data[selectedMonth]) return <div className='dark:text-white'></div>;
+
+    const monthlyData = data[selectedMonth];
 
     const handleMonthChange = (event) => {
         const newSelectedMonth = event.target.value;
@@ -21,7 +22,7 @@ function Month() {
 
     const handleButtonClick = () => {
         window.location.href = '/#/'; // Navigate to '/#/'
-      };
+    };
 
     return (
         <PageTransition>
@@ -63,7 +64,7 @@ function Month() {
                         </tr>
                     </thead>
                     <tbody className='bg-white dark:bg-gray-700'>
-                        {monthlyData[selectedMonth] && monthlyData[selectedMonth].map((item, index) => (
+                        {monthlyData.map((item, index) => (
                             <tr key={item.id} className={index % 2 === 0 ? 'bg-gray-100 dark:bg-gray-700' : 'bg-gray-200 dark:bg-gray-800'}>
                                 <td className='py-3 pl-2 first:rounded-tl-lg first:rounded-bl-lg last:rounded-tr-lg last:rounded-br-lg'>{item.day}</td>
                                 <td className='py-3 first:rounded-tl-lg first:rounded-bl-lg last:rounded-tr-lg last:rounded-br-lg'>{item.fajr_adhan}</td>
@@ -76,9 +77,9 @@ function Month() {
                         ))}
                     </tbody>
                 </table>
-                    <div className='flex flex-col items-center'>
-                        <button type="button" onClick={handleButtonClick} className='bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xl py-2 px-4 rounded-lg shadow-lg'>Daily Times</button>
-                    </div>
+                <div className='flex flex-col items-center'>
+                    <button type="button" onClick={handleButtonClick} className='bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xl py-2 px-4 rounded-lg shadow-lg'>Daily Times</button>
+                </div>
                 <footer className='text-gray-500 text-xl text-center pt-2 pb-4'>Beta</footer>
             </div>
         </PageTransition>

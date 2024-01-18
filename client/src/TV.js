@@ -13,31 +13,48 @@ const SLIDES = Array.from(Array(SLIDE_COUNT).keys())
 const iconSize = window.innerWidth >= 3840 ? '70px' : window.innerWidth >= 1920 ? '40px' : '24px';
 
 function TV() {
-    const { data, error, isLoading } = useSWR('/api/prayer', fetcher, { refreshInterval: 300000 });
-    if (error) return <div>Error loading data</div>;
-    if (isLoading) return <div></div>;
+    const { data, error, isLoading } = useSWR('/api/prayer', fetcher, {
+        onLoadingSlow: () => {
+            window.location.reload()
+            return <div className="dark:text-white">Loading...</div>;
+        },
+        loadingTimeout: 10000, // Set timeout to 10 seconds
+    });
 
-    const month = data.prayers[0].month_s;
-    const day = data.prayers[0].day;
-    const year = data.prayers[0].year_s;
-    const hijriMonth = data.prayers[0].hijri_month;
-    const hijriDay = data.prayers[0].hijri_day;
-    const hijriYear = data.prayers[0].hijri_year;
-    const fajrAdhan = data.prayers[0].fajr_adhan;
-    const fajrIqama = data.prayers[0].fajr_iqama;
-    const sunrise = data.prayers[0].sunrise;
-    const dhuhrAdhan = data.prayers[0].dhuhr_adhan;
-    const dhuhrIqama = data.prayers[0].dhuhr_iqama;
-    const asrAdhan = data.prayers[0].asr_adhan;
-    const asrIqama = data.prayers[0].asr_iqama;
-    const maghribAdhan = data.prayers[0].maghrib_adhan;
-    const maghribIqama = data.prayers[0].maghrib_iqama;
-    const ishaAdhan = data.prayers[0].isha_adhan;
-    const ishaIqama = data.prayers[0].isha_iqama;
-    const jumuah1 = data.prayers[0].jumuah_1;
-    const jumuah2 = data.prayers[0].jumuah_2;
-    const nextPrayer = data.nextPrayer;
+    if (error) {
+        console.error('Error loading data:', error);
+        return <div className='dark:text-white'>Error loading data</div>;
+    }
 
+    if (isLoading || !data || !data.prayers || !data.prayers[0] || !data.nextPrayer) {
+        return <div className='dark:text-white'>Loading...</div>;
+    }
+
+    const prayerData = data.prayers[0]; // Declare a variable to avoid repetition
+
+    const {
+        month_s: month,
+        day,
+        year_s: year,
+        hijri_month: hijriMonth,
+        hijri_day: hijriDay,
+        hijri_year: hijriYear,
+        fajr_adhan: fajrAdhan,
+        fajr_iqama: fajrIqama,
+        sunrise,
+        dhuhr_adhan: dhuhrAdhan,
+        dhuhr_iqama: dhuhrIqama,
+        asr_adhan: asrAdhan,
+        asr_iqama: asrIqama,
+        maghrib_adhan: maghribAdhan,
+        maghrib_iqama: maghribIqama,
+        isha_adhan: ishaAdhan,
+        isha_iqama: ishaIqama,
+        jumuah_1: jumuah1,
+        jumuah_2: jumuah2,
+    } = prayerData;
+
+    const nextPrayer = data.nextPrayer; // Accessing nextPrayer from the data object
 
     return (
         <React.Fragment>

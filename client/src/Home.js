@@ -24,9 +24,9 @@ function Home() {
   if (isLoading || !data || !data.prayers || !data.prayers[0] || !data.nextPrayer) {
     return <div className='dark:text-white'>Loading...</div>;
   }
-  
+
   const prayerData = data.prayers[0]; // Declare a variable to avoid repetition
-  
+
   const {
     month_s: month,
     day,
@@ -48,7 +48,7 @@ function Home() {
     jumuah_1: jumuah1,
     jumuah_2: jumuah2,
   } = prayerData;
-  
+
   const nextPrayer = data.nextPrayer; // Accessing nextPrayer from the data object
 
   const handleButtonClick = () => {
@@ -165,9 +165,9 @@ function Home() {
             <span>2<sup>nd</sup> Jumuah: {jumuah2}</span>
           </h1>
         </div>
-          <div className='flex flex-col items-center'>
-            <button type="button" onClick={handleButtonClick} className='bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xl py-2 px-4 rounded-lg shadow-lg mt-4'>Monthly Times</button>
-          </div>
+        <div className='flex flex-col items-center'>
+          <button type="button" onClick={handleButtonClick} className='bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xl py-2 px-4 rounded-lg shadow-lg mt-4'>Monthly Times</button>
+        </div>
         <Alert showAlert={showPrompt} />
         <footer className='text-gray-500 text-xl text-center'>Beta</footer>
       </div>
