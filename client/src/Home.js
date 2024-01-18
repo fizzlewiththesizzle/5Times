@@ -1,5 +1,5 @@
 import React from 'react';
-import useSWR from 'swr';
+import useSWR, { mutate } from 'swr';
 import Alert from './Alert';
 import './App.css';
 import mac_neo from './Calgary-neo.png';
@@ -8,7 +8,16 @@ import PageTransition from './PageTransition';
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 function Home() {
-  const { data, error, isLoading } = useSWR('/api/prayer', fetcher);
+  const { data, error, isLoading } = useSWR('/api/prayer', fetcher, {
+    onLoadingSlow: () => {
+      return (
+        <div className="dark:text-white">
+          Loading...Reload if stuck <button type="button" onClick={() => mutate('/api/prayer', false)}>Retry</button>
+        </div>
+      );
+    },
+    loadingTimeout: 10000, // Set timeout to 10 seconds
+  });
 
   if (error) {
     console.error('Error loading data:', error);
@@ -16,7 +25,7 @@ function Home() {
   }
 
   if (isLoading || !data || !data.prayers || !data.prayers[0] || !data.nextPrayer) {
-    return <div className='dark:text-white'>Loading...Reload the app if stuck</div>;
+    return <div className='dark:text-white'>Loading...</div>;
   }
   
   const prayerData = data.prayers[0]; // Declare a variable to avoid repetition
