@@ -17,8 +17,10 @@ function Home() {
     loadingTimeout: 10000,
     keepPreviousData: true,
     revalidateOnFocus: false,
+    refreshInterval: 1000,
   });
 
+  /*
   // Revalidate data when app becomes active
   useEffect(() => {
     const revalidate = async () => {
@@ -39,6 +41,7 @@ function Home() {
       document.removeEventListener('visibilitychange', handleAppActive);
     };
   }, []);
+  */
 
   if (error) {
     console.error('Error loading data:', error);
