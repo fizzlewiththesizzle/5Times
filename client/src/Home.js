@@ -1,5 +1,5 @@
 import React from 'react';
-import useSWR, { mutate } from 'swr';
+import useSWR, { keepPreviousData } from 'swr';
 import Alert from './Alert';
 import './App.css';
 import mac_neo from './Calgary-neo.png';
@@ -10,10 +10,11 @@ const fetcher = (url) => fetch(url).then((res) => res.json());
 function Home() {
   const { data, error, isLoading } = useSWR('/api/prayer', fetcher, {
     onLoadingSlow: () => {
-      window.location.reload()
+      window.location.reload();
       return <div className="dark:text-white">Loading...</div>;
     },
-    loadingTimeout: 10000, // Set timeout to 10 seconds
+    loadingTimeout: 10000,
+    keepPreviousData: true, // Add this line
   });
 
   if (error) {
