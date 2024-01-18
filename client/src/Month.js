@@ -11,7 +11,7 @@ function Month() {
     const { data: selectedMonth, mutate: mutateSelectedMonth } = useSWR('selectedMonth', fetcher, { fallbackData: "jan" });
 
     if (error) return <div>Error loading data</div>;
-    if (isLoading || !data || !data[selectedMonth]) return <div className='dark:text-white'></div>;
+    if (isLoading || !data || !data[selectedMonth]) return <div className='dark:text-white'>Loading...</div>;
 
     const monthlyData = data[selectedMonth];
 
