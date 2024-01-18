@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import useSWR from 'swr';
 import './App.css';
 import mac_neo from './Calgary-neo.png';
@@ -7,8 +7,8 @@ import PageTransition from './PageTransition';
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 function Month() {
+    const [selectedMonth, setSelectedMonth] = useState('jan'); // Initialize selectedMonth as a local state
     const { data, error, isLoading } = useSWR('/api/month', fetcher);
-    const { data: selectedMonth, mutate: mutateSelectedMonth } = useSWR('selectedMonth || jan', fetcher, { fallbackData: "jan" });
 
     if (error) return <div>Error loading data</div>;
     if (isLoading || !data || !data[selectedMonth]) return <div className='dark:text-white'>Loading...</div>;
@@ -16,8 +16,7 @@ function Month() {
     const monthlyData = data[selectedMonth];
 
     const handleMonthChange = (event) => {
-        const newSelectedMonth = event.target.value;
-        mutateSelectedMonth(newSelectedMonth, false); // Update the selectedMonth without re-fetching
+        setSelectedMonth(event.target.value); // Update the selectedMonth state using useState
     };
 
     const handleButtonClick = () => {
