@@ -1,5 +1,5 @@
-import React from 'react';
-import useSWR, { keepPreviousData } from 'swr';
+import React, { useEffect } from 'react';
+import useSWR, { mutate } from 'swr';
 import Alert from './Alert';
 import './App.css';
 import mac_neo from './Calgary-neo.png';
@@ -8,14 +8,36 @@ import PageTransition from './PageTransition';
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 function Home() {
+  // Using keepPreviousData to maintain data while fetching
   const { data, error, isLoading } = useSWR('/api/prayer', fetcher, {
     onLoadingSlow: () => {
       window.location.reload();
       return <div className="dark:text-white">Loading...</div>;
     },
     loadingTimeout: 10000,
-    keepPreviousData: true, // Add this line
+    keepPreviousData: true,
   });
+
+  // Revalidate data when app becomes active
+  useEffect(() => {
+    const revalidate = async () => {
+      try {
+        await mutate('/api/prayer'); // Refetch data
+      } catch (error) {
+        console.error('Error revalidating data:', error);
+      }
+    };
+
+    const handleAppActive = () => {
+      revalidate();
+    };
+
+    document.addEventListener('visibilitychange', handleAppActive);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleAppActive);
+    };
+  }, []);
 
   if (error) {
     console.error('Error loading data:', error);
