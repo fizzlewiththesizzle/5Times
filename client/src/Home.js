@@ -10,11 +10,8 @@ const fetcher = (url) => fetch(url).then((res) => res.json());
 function Home() {
   const { data, error, isLoading } = useSWR('/api/prayer', fetcher, {
     onLoadingSlow: () => {
-      return (
-        <div className="dark:text-white">
-          Loading...Reload if stuck <button type="button" onClick={() => mutate('/api/prayer', false)}>Retry</button>
-        </div>
-      );
+      mutate('/api/prayer', false); // Automatically refresh data
+      return <div className="dark:text-white">Loading...</div>;
     },
     loadingTimeout: 10000, // Set timeout to 10 seconds
   });
