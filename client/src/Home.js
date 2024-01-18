@@ -16,6 +16,7 @@ function Home() {
     },
     loadingTimeout: 10000,
     keepPreviousData: true,
+    revalidateOnFocus: false,
   });
 
   // Revalidate data when app becomes active
