@@ -20,29 +20,6 @@ function Home() {
     refreshInterval: 1000,
   });
 
-  /*
-  // Revalidate data when app becomes active
-  useEffect(() => {
-    const revalidate = async () => {
-      try {
-        await mutate('/api/prayer'); // Refetch data
-      } catch (error) {
-        console.error('Error revalidating data:', error);
-      }
-    };
-
-    const handleAppActive = () => {
-      revalidate();
-    };
-
-    document.addEventListener('visibilitychange', handleAppActive);
-
-    return () => {
-      document.removeEventListener('visibilitychange', handleAppActive);
-    };
-  }, []);
-  */
-
   if (error) {
     console.error('Error loading data:', error);
     return <div className='dark:text-white'>Error loading data</div>;
