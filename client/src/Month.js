@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import useSWR from 'swr';
 import './App.css';
+import Loading from './Loading';
 import mac_neo from './Calgary-neo.png';
 import PageTransition from './PageTransition';
 
@@ -11,7 +12,7 @@ function Month() {
     const { data, error, isLoading } = useSWR('/api/month', fetcher);
 
     if (error) return <div>Error loading data</div>;
-    if (isLoading || !data || !data[selectedMonth]) return <div className='dark:text-white'>Loading...</div>;
+    if (isLoading || !data || !data[selectedMonth]) return <Loading></Loading>;
 
     const monthlyData = data[selectedMonth];
 

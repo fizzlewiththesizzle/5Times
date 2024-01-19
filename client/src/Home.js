@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
-import useSWR, { mutate } from 'swr';
+import React from 'react';
+import useSWR from 'swr';
 import Alert from './Alert';
+import Loading from './Loading';
 import './App.css';
 import mac_neo from './Calgary-neo.png';
 import PageTransition from './PageTransition';
@@ -8,7 +9,6 @@ import PageTransition from './PageTransition';
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 function Home() {
-  // Using keepPreviousData to maintain data while fetching
   const { data, error, isLoading } = useSWR('/api/prayer', fetcher, {
     onLoadingSlow: () => {
       window.location.reload();
@@ -49,7 +49,7 @@ function Home() {
   }
 
   if (isLoading || !data || !data.prayers || !data.prayers[0] || !data.nextPrayer) {
-    return <div className='dark:text-white'>Loading...</div>;
+    return <Loading></Loading>;
   }
 
   const prayerData = data.prayers[0]; // Declare a variable to avoid repetition
