@@ -7,6 +7,7 @@ import { injectSpeedInsights } from '@vercel/speed-insights';
 import Home from './Home';
 import TV from './TV';
 import Month from './Month';
+import Vertical from './Vertical';
 
 inject();
 injectSpeedInsights();
@@ -28,6 +29,11 @@ const App = () => (
         exact
         path='/Month'
         element={<Month />}
+      />
+      <Route
+        exact
+        path='/Vertical'
+        element={<Vertical />}
       />
     </Routes>
   </HashRouter>
