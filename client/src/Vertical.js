@@ -99,7 +99,7 @@ function Vertical() {
                 </div>
               </td>
               <td className={`py-4 pr-4 text-5xl text-center ${nextPrayer === "Sunrise" ? 'text-emerald-500 font-bold' : ''}`}>{sunrise} AM</td>
-              <td className="py-4 text-5xl pr-4 text-center xl:text-right 2xl:text-right">---</td>
+              <td className="py-4 text-5xl pr-4 text-right">---</td>
             </tr>
             <tr className="bg-white dark:bg-gray-700 dark:text-white">
               <td className="py-4 px-4 text-5xl">
