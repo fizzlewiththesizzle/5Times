@@ -42,11 +42,14 @@ function queryDatabase(callback) {
   const month = today.getMonth() + 1;
   const h_m = hijri_today.monthText;
   const isDaylightSavingTime = today.getTimezoneOffset() < new Date(today.getFullYear(), 0, 1).getTimezoneOffset();
+  var dhuhr_DS_offset = 0;
   
   if (isDaylightSavingTime) {
     //console.log("Daylight savings in effect");
     jumuah_time_1 = "01:00 PM";
     jumuah_time_2 = "02:00 PM";
+    dhuhr_DS_offset = 12;
+
   } else {
     //console.log("Daylight savings not in effect");
     jumuah_time_1 = "12:00 PM";
@@ -157,7 +160,7 @@ function queryDatabase(callback) {
     da = result[0].dhuhr_adhan;
     const dhuhr_adhan_today = new Date();
     const [da_hours, da_minutes] = da.split(':');
-    dhuhr_adhan_today.setHours(parseInt(da_hours, 10), parseInt(da_minutes, 10), 0, 0);
+    dhuhr_adhan_today.setHours(parseInt(da_hours, 10) + dhuhr_DS_offset, parseInt(da_minutes, 10), 0, 0);
     console.log(dhuhr_adhan_today);
 
     di = result[0].dhuhr_iqama;
