@@ -5,6 +5,7 @@ import './App.css';
 import mac_neo from './Calgary-neo.png';
 import qr_code from './qr-code.png';
 import Clock from './Clock';
+import Countdown from './Countdown';
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -152,9 +153,15 @@ function Vertical() {
           <span>2<sup>nd</sup> Jumuah: {jumuah2}</span>
         </h1>
       </div>
-      <div className='dark:text-white text-center text-9xl clock-font font-bold flex justify-center items-center py-2'>
+      <div className='dark:text-white text-center flex flex-col justify-center items-center py-2'>
+        <div className='text-9xl font-bold clock-font'>
         <Clock></Clock>
-      </div>
+        </div>
+  
+  <h1 className='text-4xl'>Next Prayer In</h1>
+  <div className='text-7xl clock-font text-emerald-500'><Countdown></Countdown></div>
+</div>
+
       <div className="bg-gray-200 dark:bg-gray-800 rounded-3xl dark:text-white text-left flex py-8 shadow-lg">
         <img src={qr_code} alt="qr code" className='h-80 px-8'></img>
         <div className="flex-1">

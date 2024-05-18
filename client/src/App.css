@@ -73,6 +73,10 @@ table {
   font-family: 'Roboto', sans-serif;
 }
 
+.inter-font {
+  font-family: 'Inter', sans-serif;
+}
+
 .text-10xl {
   font-size: 10rem;
 }

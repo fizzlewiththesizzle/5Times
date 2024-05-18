@@ -32,6 +32,18 @@ let oct_data = [];
 let nov_data = [];
 let dec_data = [];
 
+let fajr_adhan_today;
+let fajr_iqama_today;
+let sunrise_today;
+let dhuhr_adhan_today;
+let dhuhr_iqama_today;
+let asr_adhan_today;
+let asr_iqama_today;
+let maghrib_adhan_today;
+let maghrib_iqama_today;
+let isha_adhan_today;
+let isha_iqama_today;
+
 function queryDatabase(callback) {
   const today = new Date();
   const s_year = today.getFullYear();
@@ -139,68 +151,68 @@ function queryDatabase(callback) {
     console.log("Greogorian Date: " + result[0].month_s + " " + result[0].day_s + ", " + result[0].year_s);
 
     fa = result[0].fajr_adhan;
-    const fajr_adhan_today = new Date();
+    fajr_adhan_today = new Date();
     const [fa_hours, fa_minutes] = fa.split(':');
     fajr_adhan_today.setHours(parseInt(fa_hours, 10), parseInt(fa_minutes, 10), 0, 0);
     console.log(today);
     console.log(fajr_adhan_today);
     
     fi = result[0].fajr_iqama;
-    const fajr_iqama_today = new Date();
+    fajr_iqama_today = new Date();
     const [fi_hours, fi_minutes] = fi.split(':');
     fajr_iqama_today.setHours(parseInt(fi_hours, 10), parseInt(fi_minutes, 10), 0, 0);
     console.log(fajr_iqama_today);
 
     sr = result[0].sunrise;
-    const sunrise_today = new Date();
+    sunrise_today = new Date();
     const [sr_hours, sr_minutes] = sr.split(':');
     sunrise_today.setHours(parseInt(sr_hours, 10), parseInt(sr_minutes, 10), 0, 0);
     console.log(sunrise_today);
 
     da = result[0].dhuhr_adhan;
-    const dhuhr_adhan_today = new Date();
+    dhuhr_adhan_today = new Date();
     const [da_hours, da_minutes] = da.split(':');
     dhuhr_adhan_today.setHours(parseInt(da_hours, 10) + dhuhr_DS_offset, parseInt(da_minutes, 10), 0, 0);
     console.log(dhuhr_adhan_today);
 
     di = result[0].dhuhr_iqama;
-    const dhuhr_iqama_today = new Date();
+    dhuhr_iqama_today = new Date();
     const [di_hours, di_minutes] = di.split(':');
     dhuhr_iqama_today.setHours(parseInt(di_hours, 10) + 12, parseInt(di_minutes, 10), 0, 0);
     console.log(dhuhr_iqama_today);
 
     aa = result[0].asr_adhan;
-    const asr_adhan_today = new Date();
+    asr_adhan_today = new Date();
     const [aa_hours, aa_minutes] = aa.split(':');
     asr_adhan_today.setHours(parseInt(aa_hours, 10) + 12, parseInt(aa_minutes, 10), 0, 0);
     console.log(asr_adhan_today);
 
     ai = result[0].asr_iqama;
-    const asr_iqama_today = new Date();
+    asr_iqama_today = new Date();
     const [ai_hours, ai_minutes] = ai.split(':');
     asr_iqama_today.setHours(parseInt(ai_hours, 10) + 12, parseInt(ai_minutes, 10), 0, 0);
     console.log(asr_iqama_today);
 
     ma = result[0].maghrib_adhan;
-    const maghrib_adhan_today = new Date();
+    maghrib_adhan_today = new Date();
     const [ma_hours, ma_minutes] = ma.split(':');
     maghrib_adhan_today.setHours(parseInt(ma_hours, 10) + 12, parseInt(ma_minutes, 10), 0, 0);
     console.log(maghrib_adhan_today);
 
     mi = result[0].maghrib_iqama;
-    const maghrib_iqama_today = new Date();
+    maghrib_iqama_today = new Date();
     const [mi_hours, mi_minutes] = mi.split(':');
     maghrib_iqama_today.setHours(parseInt(mi_hours, 10) + 12, parseInt(mi_minutes, 10), 0, 0);
     console.log(maghrib_iqama_today);
 
     ia = result[0].isha_adhan;
-    const isha_adhan_today = new Date();
+    isha_adhan_today = new Date();
     const [ia_hours, ia_minutes] = ia.split(':');
     isha_adhan_today.setHours(parseInt(ia_hours, 10) + 12, parseInt(ia_minutes, 10), 0, 0);
     console.log(isha_adhan_today);
 
     ii = result[0].isha_iqama;
-    const isha_iqama_today = new Date();
+    isha_iqama_today = new Date();
     const [ii_hours, ii_minutes] = ii.split(':');
     isha_iqama_today.setHours(parseInt(ii_hours, 10) + 12, parseInt(ii_minutes, 10), 0, 0);
     console.log(isha_iqama_today);
@@ -336,6 +348,23 @@ app.get('/api/month', (req, res) => {
     dec: dec_data,
   };
   res.json(monthlyData);
+});
+
+app.get('/api/prayerUTC', (req, res) => {
+  const utcData = {
+    fajr_adhan: fajr_adhan_today,
+    fajr_iqama: fajr_iqama_today,
+    sunrise: sunrise_today,
+    dhuhr_adhan: dhuhr_adhan_today,
+    dhuhr_iqama: dhuhr_iqama_today,
+    asr_adhan: asr_adhan_today,
+    asr_iqama: asr_iqama_today,
+    maghrib_adhan: maghrib_adhan_today, 
+    maghrib_iqama: maghrib_iqama_today,
+    isha_adhan: isha_adhan_today,
+    isha_iqama: isha_iqama_today,
+  };
+  res.json(utcData);
 });
 
 app.get('*', (req, res) => {
