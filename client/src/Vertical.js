@@ -144,8 +144,8 @@ function Vertical() {
           </tbody>
         </table>
       </div>
-      <div className="bg-gray-200 dark:bg-gray-800 rounded-3xl overflow-hidden text-center text-emerald-500 font-semibold shadow-lg text-6xl py-2 space-y-4">
-        <h1>
+      <div className="bg-gray-200 dark:bg-gray-800 rounded-3xl overflow-hidden text-center text-emerald-500 font-semibold shadow-lg text-6xl py-2 space-y-4 pt-4 pb-4">
+        <h1 className="mb-8">
           <span>1<sup>st</sup> Jumuah: {jumuah1}</span>
         </h1>
         <h1>
@@ -155,7 +155,7 @@ function Vertical() {
       <div className='dark:text-white text-center text-9xl clock-font font-bold flex justify-center items-center py-2'>
         <Clock></Clock>
       </div>
-      <div className="bg-gray-200 dark:bg-gray-800 rounded-3xl dark:text-white text-left flex py-8">
+      <div className="bg-gray-200 dark:bg-gray-800 rounded-3xl dark:text-white text-left flex py-8 shadow-lg">
         <img src={qr_code} alt="qr code" className='h-80 px-8'></img>
         <div className="flex-1">
           <h1 className='text-5xl'>Access the salah times from your mobile device</h1>

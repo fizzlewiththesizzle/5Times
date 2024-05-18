@@ -161,8 +161,8 @@ function Home() {
             </tbody>
           </table>
         </div>
-        <div className="bg-gray-200 dark:bg-gray-800 rounded-2xl overflow-hidden text-center text-emerald-500 font-semibold shadow-lg text-3xl xs:text-2xl xl:text-4xl 2xl:text-4xl px-4">
-          <h1>
+        <div className="bg-gray-200 dark:bg-gray-800 rounded-2xl overflow-hidden text-center text-emerald-500 font-semibold shadow-lg text-3xl xs:text-2xl xl:text-4xl 2xl:text-4xl px-4 pt-2 pb-2">
+          <h1 className='pb-2'>
             <span>1<sup>st</sup> Jumuah: {jumuah1}</span>
           </h1>
           <h1>
