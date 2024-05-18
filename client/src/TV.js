@@ -2,14 +2,15 @@ import React from 'react';
 import useSWR from 'swr';
 import './App.css';
 import './embla.css';
-import EmblaCarousel from './EmblaCarousel';
+//import EmblaCarousel from './EmblaCarousel';
 import Clock from './Clock';
+import Countdown from './Countdown';
 import mac_neo from './Calgary-neo.png';
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
-const OPTIONS = {}
-const SLIDE_COUNT = 4
-const SLIDES = Array.from(Array(SLIDE_COUNT).keys())
+//const OPTIONS = {}
+//const SLIDE_COUNT = 4
+//const SLIDES = Array.from(Array(SLIDE_COUNT).keys())
 const iconSize = window.innerWidth >= 3840 ? '70px' : window.innerWidth >= 1920 ? '40px' : '24px';
 
 function TV() {
@@ -60,7 +61,11 @@ function TV() {
         <React.Fragment>
             <div className='grid grid-cols-3 gap-4 4xl:gap-8 mt-6 4xl:mt-12 ml-4 4xl:ml-8 mr-4 4xl:mr-8'>
                 <div className='col-span-2'>
-                    <EmblaCarousel slides={SLIDES} options={OPTIONS} />
+                    {/*<EmblaCarousel slides={SLIDES} options={OPTIONS} />*/}
+                    <div class="iframe-container rounded-2xl 4xl:rounded-3xl shadow-lg">
+                        <iframe title="Slides" src="https://docs.google.com/presentation/d/e/2PACX-1vTWns7mxGazs98zIM3RP-05M5F0R0IDUEDXruimw5aDCvAW2GDvz8I53Kpo1kaomDpHY0XGRPKIIV41/embed?start=true&loop=true&delayms=5000&rm=minimal" frameborder="0" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+                    </div>
+
                 </div>
 
                 <div>
@@ -142,6 +147,10 @@ function TV() {
                         <h1 className='pb-4'>
                             <span>2<sup>nd</sup> Jumuah: {jumuah2}</span>
                         </h1>
+                    </div>
+                    <div className='text-center text-white pt-6'>
+                        <h1 className='text-5xl 4xl:text-8xl'>Next Prayer In</h1>
+                        <div className='clock-font font-bold xl:text-5xl 2xl:text-6xl 4xl:text-9xl text-emerald-500'><Countdown></Countdown></div>
                     </div>
                 </div>
 
