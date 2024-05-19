@@ -27,6 +27,7 @@ function Countdown() {
         asr_adhan,
         maghrib_adhan,
         isha_adhan,
+        next_fajr_adhan,
       } = data;
 
       // Create an array of prayer times
@@ -36,6 +37,7 @@ function Countdown() {
         new Date(asr_adhan),
         new Date(maghrib_adhan),
         new Date(isha_adhan),
+        new Date(next_fajr_adhan),
       ];
 
       // Find the next prayer time

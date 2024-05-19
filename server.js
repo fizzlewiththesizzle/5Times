@@ -43,15 +43,25 @@ let maghrib_adhan_today;
 let maghrib_iqama_today;
 let isha_adhan_today;
 let isha_iqama_today;
+let fajr_adhan_tomorrow;
+let fajr_iqama_tomorrow;
+
+let tomorrow;
+let n_day;
+let n_month;
 
 function queryDatabase(callback) {
   const today = new Date();
+  tomorrow = new Date(today);
+  tomorrow.setDate(today.getDate() + 1);
   const s_year = today.getFullYear();
   const s_month = today.toLocaleString('en-US', { month: 'long' });
   const s_day = today.getDate();
   const hijri_today = hijri.convert(today, -1);
   const day = today.getDate();
   const month = today.getMonth() + 1;
+  n_day = tomorrow.getDate();
+  n_month = tomorrow.getMonth() + 1;
   const h_m = hijri_today.monthText;
   const isDaylightSavingTime = today.getTimezoneOffset() < new Date(today.getFullYear(), 0, 1).getTimezoneOffset();
   var dhuhr_DS_offset = 0;
@@ -268,10 +278,50 @@ function queryDatabase(callback) {
   });
 }
 
+function fetchTomorrowFajrTimes(callback) {
+  db.all(query, [n_day, n_month], (err, rows) => {
+    if (err) {
+      console.error('Error fetching tomorrow\'s Fajr times from the database:', err.message);
+      return callback(err, null);
+    }
+
+    const resultTomorrow = rows.map(row => ({
+      fajr_adhan: row.FajrAdhan,
+      fajr_iqama: row.FajrIqama,
+    }));
+
+    callback(null, resultTomorrow);
+    //console.log("Tomorrow Fajr Adhan: " + resultTomorrow[0].fajr_adhan);
+    //console.log("Tomorrow Fajr Iqama: " + resultTomorrow[0].fajr_iqama);
+
+    n_fa = resultTomorrow[0].fajr_adhan;
+    fajr_adhan_tomorrow = new Date(tomorrow);
+    const [n_fa_hours, n_fa_minutes] = n_fa.split(':');
+    fajr_adhan_tomorrow.setHours(parseInt(n_fa_hours, 10), parseInt(n_fa_minutes, 10), 0, 0);
+    //console.log(today);
+    console.log("Tomorrow FA: " + fajr_adhan_tomorrow);
+    
+    n_fi = resultTomorrow[0].fajr_iqama;
+    fajr_iqama_tomorrow = new Date(tomorrow);
+    const [n_fi_hours, n_fi_minutes] = n_fi.split(':');
+    fajr_iqama_tomorrow.setHours(parseInt(n_fi_hours, 10), parseInt(n_fi_minutes, 10), 0, 0);
+    console.log("Tomorrow FI: " + fajr_iqama_tomorrow);
+  });
+}
+
 function fetchDataFromDatabase() {
   queryDatabase((err, result) => {
     if (!err) {
       cachedData = result;
+    }
+  });
+
+  fetchTomorrowFajrTimes((err, resultTomorrow) => {
+    // Handle the result or error if needed
+    if (!err) {
+      // Do something with resultTomorrow
+    } else {
+      // Handle the error
     }
   });
 }
@@ -363,6 +413,8 @@ app.get('/api/prayerUTC', (req, res) => {
     maghrib_iqama: maghrib_iqama_today,
     isha_adhan: isha_adhan_today,
     isha_iqama: isha_iqama_today,
+    next_fajr_adhan: fajr_adhan_tomorrow,
+    next_fajr_iqama: fajr_iqama_tomorrow,
   };
   res.json(utcData);
 });
