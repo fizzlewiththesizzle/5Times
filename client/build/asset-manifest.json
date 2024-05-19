@@ -1,20 +1,16 @@
 {
   "files": {
-    "main.css": "/static/css/main.dc1ed1d1.css",
-    "main.js": "/static/js/main.df7d4d13.js",
+    "main.css": "/static/css/main.99c2e515.css",
+    "main.js": "/static/js/main.c4746e01.js",
     "static/js/787.d5fa4d18.chunk.js": "/static/js/787.d5fa4d18.chunk.js",
-    "static/media/slide-1.png": "/static/media/slide-1.ff150bee7c44a1a4d5b3.png",
-    "static/media/slide-3.png": "/static/media/slide-3.f964bc70518ef1b53ef4.png",
-    "static/media/5times-ad.png": "/static/media/5times-ad.d7f2c53678e91ebd43ae.png",
-    "static/media/slide-2.png": "/static/media/slide-2.b60b8ee4287c7c42e51e.png",
     "static/media/Calgary-neo.png": "/static/media/Calgary-neo.fc731a7897e5a3c666e1.png",
     "index.html": "/index.html",
-    "main.dc1ed1d1.css.map": "/static/css/main.dc1ed1d1.css.map",
-    "main.df7d4d13.js.map": "/static/js/main.df7d4d13.js.map",
+    "main.99c2e515.css.map": "/static/css/main.99c2e515.css.map",
+    "main.c4746e01.js.map": "/static/js/main.c4746e01.js.map",
     "787.d5fa4d18.chunk.js.map": "/static/js/787.d5fa4d18.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.dc1ed1d1.css",
-    "static/js/main.df7d4d13.js"
+    "static/css/main.99c2e515.css",
+    "static/js/main.c4746e01.js"
   ]
 }
