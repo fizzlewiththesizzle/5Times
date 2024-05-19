@@ -62,7 +62,7 @@ function TV() {
             <div className='grid grid-cols-3 gap-4 4xl:gap-8 mt-6 4xl:mt-12 ml-4 4xl:ml-8 mr-4 4xl:mr-8'>
                 <div className='col-span-2'>
                     {/*<EmblaCarousel slides={SLIDES} options={OPTIONS} />*/}
-                    <div class="iframe-container shadow-lg">
+                    <div class="iframe-container rounded-2xl 4xl:rounded-3xl shadow-lg">
                         <iframe title="Slides" src="https://docs.google.com/presentation/d/e/2PACX-1vTWns7mxGazs98zIM3RP-05M5F0R0IDUEDXruimw5aDCvAW2GDvz8I53Kpo1kaomDpHY0XGRPKIIV41/embed?start=true&loop=true&delayms=5000&rm=minimal" frameborder="0" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
                     </div>
 
