@@ -148,7 +148,7 @@ function TV() {
                             <span>2<sup>nd</sup> Jumuah: {jumuah2}</span>
                         </h1>
                     </div>
-                    <div className='text-center text-white pt-6'>
+                    <div className='text-center dark:text-white pt-6'>
                         <h1 className='text-5xl 4xl:text-8xl'>Next Prayer In</h1>
                         <div className='clock-font font-bold xl:text-5xl 2xl:text-6xl 4xl:text-9xl text-emerald-500'><Countdown></Countdown></div>
                     </div>
