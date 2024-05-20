@@ -20,6 +20,9 @@ function TV() {
             return <div className="dark:text-white">Loading...</div>;
         },
         loadingTimeout: 10000, // Set timeout to 10 seconds
+        keepPreviousData: true,
+        revalidateOnFocus: false,
+        refreshInterval: 1000,
     });
 
     if (error) {
