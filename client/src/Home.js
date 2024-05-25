@@ -3,7 +3,8 @@ import useSWR from 'swr';
 import Alert from './Alert';
 import Loading from './Loading';
 import './App.css';
-import mac_neo from './Calgary-neo.png';
+//import mac_neo from './Calgary-neo.png';
+import mac_neo from './Calgary-neo.webp';
 import PageTransition from './PageTransition';
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
