@@ -4,7 +4,7 @@ import Alert from './Alert';
 import Loading from './Loading';
 import './App.css';
 //import mac_neo from './Calgary-neo.png';
-import mac_neo from './Calgary-neo.webp';
+//import mac_neo from './Calgary-neo.webp';
 import PageTransition from './PageTransition';
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
@@ -76,7 +76,7 @@ function Home() {
     <PageTransition>
       <div className="space-y-4 w-fit md:w-screen md:px-4 xl:w-3/4 2xl:w-3/4 mx-auto">
         <div className='bg-gray-200 dark:bg-gray-800 dark:text-white rounded-2xl overflow-hidden text-left xs:text-center md:text-left xl:text-left 2xl:text-left mt-4 shadow-lg px-4'>
-          <img src={mac_neo} alt="logo" className='h-10 mt-2 xs:mx-auto md:mx-0 xl:mx-0 2xl:mx-0'></img>
+          <img src="Calgary-neo.webp" alt="logo" className='h-10 mt-2 xs:mx-auto md:mx-0 xl:mx-0 2xl:mx-0'></img>
           <h1 className='text-4xl xs:text-3xl font-bold '>Al-Salam Centre</h1>
           <h1 className="text-3xl xs:text-2xl">
             {month} {day}, {year}
