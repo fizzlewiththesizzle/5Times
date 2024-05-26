@@ -156,7 +156,7 @@ function TV() {
                     </div>
                 </div>
 
-                <div className='pl-4 4xl:pl-8 dark:text-white col-span-1 bg-gray-200 dark:bg-gray-800 rounded-2xl 4xl:rounded-3xl overflow-hidden shadow-lg'>
+                <div className='pl-4 4xl:pl-8 dark:text-white col-span-1 bg-gray-200 dark:bg-gray-800 rounded-2xl 4xl:rounded-3xl overflow-hidden shadow-lg 4xl:-mt-20'>
                     <h1 className='text-6xl 4xl:text-9xl font-bold pt-4'>Al-Salam Centre</h1>
                     <h1 className="text-5xl 4xl:text-8xl">
                         {month} {day}, {year}
@@ -167,7 +167,7 @@ function TV() {
                     <img src={mac_neo} alt="logo" className='pt-4 w-4/5 h-auto pb-4'></img>
                 </div>
 
-                <div className='rounded-2xl 4xl:rounded-3xl overflow-hidden shadow-lg bg-gray-200 dark:bg-gray-800 text-center flex flex-col justify-center items-center'>
+                <div className='rounded-2xl 4xl:rounded-3xl overflow-hidden shadow-lg bg-gray-200 dark:bg-gray-800 text-center flex flex-col justify-center items-center 4xl:-mt-20'>
                     <h1 className="text-6xl 4xl:text-9xl dark:text-white font-bold pt-4"> Next Up: </h1>
                     <h1 className='text-6xl 4xl:text-10xl font-semibold text-emerald-500 my-auto'>{nextPrayer}</h1>
                 </div>
