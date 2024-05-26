@@ -68,7 +68,6 @@ function TV() {
                     <div class="iframe-container rounded-2xl 4xl:rounded-3xl shadow-lg">
                         <iframe title="Slides" src="https://docs.google.com/presentation/d/e/2PACX-1vTWns7mxGazs98zIM3RP-05M5F0R0IDUEDXruimw5aDCvAW2GDvz8I53Kpo1kaomDpHY0XGRPKIIV41/embed?start=true&loop=true&delayms=5000&rm=minimal" frameborder="0" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
                     </div>
-
                 </div>
 
                 <div>
