@@ -8,6 +8,7 @@ import Home from './Home';
 import TV from './TV';
 import Month from './Month';
 import Vertical from './Vertical';
+import Lookup from './Lookup';
 
 inject();
 injectSpeedInsights();
@@ -34,6 +35,11 @@ const App = () => (
         exact
         path='/Vertical'
         element={<Vertical />}
+      />
+      <Route
+        exact
+        path='/Lookup'
+        element={<Lookup />}
       />
     </Routes>
   </HashRouter>

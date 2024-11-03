@@ -6,6 +6,7 @@ import './App.css';
 //import mac_neo from './Calgary-neo.png';
 //import mac_neo from './Calgary-neo.webp';
 import PageTransition from './PageTransition';
+import BottomNavigation from './BottomNavigation';
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -56,9 +57,9 @@ function Home() {
 
   const nextPrayer = data.nextPrayer; // Accessing nextPrayer from the data object
 
-  const handleButtonClick = () => {
+  /*const handleButtonClick = () => {
     window.location.href = '/#/Month'; // Navigate to '/Month'
-  };
+  };*/
 
   const isIos = () => {
     const userAgent = window.navigator.userAgent.toLowerCase();
@@ -73,8 +74,9 @@ function Home() {
   }
 
   return (
-    <PageTransition>
-      <div className="space-y-4 w-fit md:w-screen md:px-4 xl:w-3/4 2xl:w-3/4 mx-auto">
+    <div className="flex flex-col min-h-screen">
+      <div className="flex-grow space-y-4 w-fit md:w-screen md:px-4 xl:w-3/4 2xl:w-3/4 mx-auto">
+      <PageTransition>
         <div className='bg-gray-200 dark:bg-gray-800 dark:text-white rounded-2xl overflow-hidden text-left xs:text-center md:text-left xl:text-left 2xl:text-left mt-4 shadow-lg px-4 pt-2 pb-2'>
           <img src="Calgary-neo.webp" alt="logo" className='h-10 mt-2 xs:mx-auto md:mx-0 xl:mx-0 2xl:mx-0'></img>
           <h1 className='text-4xl xs:text-3xl font-bold '>Al-Salam Centre</h1>
@@ -89,6 +91,8 @@ function Home() {
               {nextPrayer}</span>
           </h1>
         </div>
+        </PageTransition>
+        <PageTransition>
         <div className="rounded-2xl overflow-hidden shadow-lg">
           <table className="w-full border-collapse">
             <thead className="bg-gray-200 dark:bg-gray-800 dark:text-white">
@@ -162,6 +166,8 @@ function Home() {
             </tbody>
           </table>
         </div>
+        </PageTransition>
+      <PageTransition>
         <div className="bg-gray-200 dark:bg-gray-800 rounded-2xl overflow-hidden text-center text-emerald-500 font-semibold shadow-lg text-3xl xs:text-2xl xl:text-4xl 2xl:text-4xl px-4 pt-2 pb-2">
           <h1 className='pb-2'>
             <span>1<sup>st</sup> Jumuah: {jumuah1}</span>
@@ -170,13 +176,17 @@ function Home() {
             <span>2<sup>nd</sup> Jumuah: {jumuah2}</span>
           </h1>
         </div>
-        <div className='flex flex-col items-center'>
-          <button type="button" onClick={handleButtonClick} className='bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xl py-2 px-4 rounded-lg shadow-lg mt-4'>Monthly Times</button>
-        </div>
+        </PageTransition>
         <Alert showAlert={showPrompt} />
         <footer className='text-gray-500 text-xl text-center'>Beta</footer>
+
+        
       </div>
-    </PageTransition>
+      <BottomNavigation className="fixed-bottom-navigation"/>
+    
+    </div>
+    
+    
   );
 }
 
