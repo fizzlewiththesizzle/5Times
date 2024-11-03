@@ -7,27 +7,34 @@ import PageTransition from './PageTransition';
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
+// Function to get the current month as a string in 'jan', 'feb', etc.
+const getCurrentMonth = () => {
+    const monthNames = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+    const currentMonthIndex = new Date().getMonth();
+    return monthNames[currentMonthIndex];
+};
+
 function Month() {
-    const [selectedMonth, setSelectedMonth] = useState('jan'); // Initialize selectedMonth as a local state
+    const [selectedMonth, setSelectedMonth] = useState(getCurrentMonth()); // Set default month to current month
     const { data, error, isLoading } = useSWR('/api/month', fetcher);
 
     if (error) return <div>Error loading data</div>;
-    if (isLoading || !data || !data[selectedMonth]) return <Loading></Loading>;
+    if (isLoading || !data || !data[selectedMonth]) return <Loading />;
 
     const monthlyData = data[selectedMonth];
 
     const handleMonthChange = (event) => {
-        setSelectedMonth(event.target.value); // Update the selectedMonth state using useState
+        setSelectedMonth(event.target.value);
     };
 
     const handleButtonClick = () => {
-        window.location.href = '/#/'; // Navigate to '/#/'
+        window.location.href = '/#/';
     };
 
     return (
         <PageTransition>
             <div className='px-4 w-screen dark:text-white'>
-                <div className='bg-gray-200 dark:bg-gray-800 dark:text-white rounded-2xl overflow-hidden text-left xs:text-center xl:text-left 2xl:text-left mt-4 shadow-lg px-4 mb-4'>
+                <div className='bg-gray-200 dark:bg-gray-800 dark:text-white rounded-2xl overflow-hidden text-left xs:text-center xl:text-left 2xl:text-left mt-4 shadow-lg px-4 mb-4 pt-2 pb-2'>
                     <img src={mac_neo} alt="logo" className='h-10 mt-2 xs:mx-auto xl:mx-0 2xl:mx-0'></img>
                     <h1 className='text-4xl xs:text-3xl font-bold'>Al-Salam Centre</h1>
                 </div>
@@ -47,7 +54,7 @@ function Month() {
                         <option value="dec">December</option>
                     </select>
                     <div className="absolute top-0 right-0 h-full flex items-center pr-2 pointer-events-none">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
                     </div>
                 </div>
 

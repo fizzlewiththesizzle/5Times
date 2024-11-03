@@ -75,7 +75,7 @@ function Home() {
   return (
     <PageTransition>
       <div className="space-y-4 w-fit md:w-screen md:px-4 xl:w-3/4 2xl:w-3/4 mx-auto">
-        <div className='bg-gray-200 dark:bg-gray-800 dark:text-white rounded-2xl overflow-hidden text-left xs:text-center md:text-left xl:text-left 2xl:text-left mt-4 shadow-lg px-4'>
+        <div className='bg-gray-200 dark:bg-gray-800 dark:text-white rounded-2xl overflow-hidden text-left xs:text-center md:text-left xl:text-left 2xl:text-left mt-4 shadow-lg px-4 pt-2 pb-2'>
           <img src="Calgary-neo.webp" alt="logo" className='h-10 mt-2 xs:mx-auto md:mx-0 xl:mx-0 2xl:mx-0'></img>
           <h1 className='text-4xl xs:text-3xl font-bold '>Al-Salam Centre</h1>
           <h1 className="text-3xl xs:text-2xl">
