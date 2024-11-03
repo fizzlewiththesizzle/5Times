@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import useSWR from 'swr';
 import PageTransition from './PageTransition';
 import BottomNavigation from './BottomNavigation';
+import Loading from './Loading';
 
 // Fetcher function to get data from the API
 const fetcher = (url) => fetch(url).then((res) => res.json());
@@ -70,7 +71,7 @@ const Lookup = () => {
     }
     if (!data) {
         console.log("Loading data...");
-        return <div>Loading...</div>;
+        return <Loading />;
     }
 
     // Generate days based on selected month

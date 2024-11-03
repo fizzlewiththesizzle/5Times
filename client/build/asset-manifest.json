@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/static/css/main.5f44fcb8.css",
-    "main.js": "/static/js/main.babe988c.js",
+    "main.js": "/static/js/main.c393707c.js",
     "static/js/787.d5fa4d18.chunk.js": "/static/js/787.d5fa4d18.chunk.js",
     "static/media/Calgary-neo.png": "/static/media/Calgary-neo.fc731a7897e5a3c666e1.png",
     "index.html": "/index.html",
     "main.5f44fcb8.css.map": "/static/css/main.5f44fcb8.css.map",
-    "main.babe988c.js.map": "/static/js/main.babe988c.js.map",
+    "main.c393707c.js.map": "/static/js/main.c393707c.js.map",
     "787.d5fa4d18.chunk.js.map": "/static/js/787.d5fa4d18.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.5f44fcb8.css",
-    "static/js/main.babe988c.js"
+    "static/js/main.c393707c.js"
   ]
 }
