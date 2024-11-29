@@ -74,8 +74,8 @@ function queryDatabase(callback) {
 
   } else {
     //console.log("Daylight savings not in effect");
-    jumuah_time_1 = "12:00 PM";
-    jumuah_time_2 = "01:00 PM";
+    jumuah_time_1 = "12:30 PM";
+    jumuah_time_2 = "01:30 PM";
   }
 
   // convert arabic hijri months to english
