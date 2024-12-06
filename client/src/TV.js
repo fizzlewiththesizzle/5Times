@@ -87,8 +87,8 @@ function TV() {
                                         <span>Fajr</span>
                                     </div>
                                 </td>
-                                <td className={`py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-center ${nextPrayer === "Fajr Adhan" ? 'text-emerald-500 font-bold' : ''}`}>{fajrAdhan} AM</td>
-                                <td className={`py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-right ${nextPrayer === "Fajr Iqama" ? 'text-emerald-500 font-bold' : ''}`}>{fajrIqama} AM</td>
+                                <td className={`py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-center ${nextPrayer === "Fajr Adhan" ? 'text-emerald-500 font-bold' : ''} whitespace-nowrap`}>{fajrAdhan} AM</td>
+                                <td className={`py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-right ${nextPrayer === "Fajr Iqama" ? 'text-emerald-500 font-bold' : ''} whitespace-nowrap`}>{fajrIqama} AM</td>
                             </tr>
                             <tr className="bg-gray-100 dark:bg-gray-800 dark:text-white">
                                 <td className="py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl">
@@ -97,7 +97,7 @@ function TV() {
                                         <span>Sunrise</span>
                                     </div>
                                 </td>
-                                <td className={`py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-center ${nextPrayer === "Sunrise" ? 'text-emerald-500 font-bold' : ''}`}>{sunrise} AM</td>
+                                <td className={`py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-center ${nextPrayer === "Sunrise" ? 'text-emerald-500 font-bold' : ''} whitespace-nowrap`}>{sunrise} AM</td>
                                 <td className="py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-center xl:text-right 2xl:text-right">---</td>
                             </tr>
                             <tr className="bg-white dark:bg-gray-700 dark:text-white">
@@ -107,8 +107,8 @@ function TV() {
                                         <span>Dhuhr</span>
                                     </div>
                                 </td>
-                                <td className={`py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-center ${nextPrayer === "Dhuhr Adhan" ? 'text-emerald-500 font-bold' : ''}`}>{dhuhrAdhan} PM</td>
-                                <td className={`py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-right ${nextPrayer === "Dhuhr Iqama" ? 'text-emerald-500 font-bold' : ''}`}>{dhuhrIqama} PM</td>
+                                <td className={`py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-center ${nextPrayer === "Dhuhr Adhan" ? 'text-emerald-500 font-bold' : ''} whitespace-nowrap`}>{dhuhrAdhan} PM</td>
+                                <td className={`py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-right ${nextPrayer === "Dhuhr Iqama" ? 'text-emerald-500 font-bold' : ''} whitespace-nowrap`}>{dhuhrIqama} PM</td>
                             </tr>
                             <tr className="bg-gray-100 dark:bg-gray-800 dark:text-white">
                                 <td className="py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl">
@@ -117,8 +117,8 @@ function TV() {
                                         <span>Asr</span>
                                     </div>
                                 </td>
-                                <td className={`py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-center ${nextPrayer === "Asr Adhan" ? 'text-emerald-500 font-bold' : ''}`}>{asrAdhan} PM</td>
-                                <td className={`py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-right ${nextPrayer === "Asr Iqama" ? 'text-emerald-500 font-bold' : ''}`}>{asrIqama} PM</td>
+                                <td className={`py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-center ${nextPrayer === "Asr Adhan" ? 'text-emerald-500 font-bold' : ''} whitespace-nowrap`}>{asrAdhan} PM</td>
+                                <td className={`py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-right ${nextPrayer === "Asr Iqama" ? 'text-emerald-500 font-bold' : ''} whitespace-nowrap`}>{asrIqama} PM</td>
                             </tr>
                             <tr className="bg-white dark:bg-gray-700 dark:text-white">
                                 <td className="py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl">
@@ -127,8 +127,8 @@ function TV() {
                                         <span>Maghrib</span>
                                     </div>
                                 </td>
-                                <td className={`py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-center ${nextPrayer === "Maghrib Adhan" ? 'text-emerald-500 font-bold' : ''}`}>{maghribAdhan} PM</td>
-                                <td className={`py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-right ${nextPrayer === "Maghrib Iqama" ? 'text-emerald-500 font-bold' : ''}`}>{maghribIqama} PM</td>
+                                <td className={`py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-center ${nextPrayer === "Maghrib Adhan" ? 'text-emerald-500 font-bold' : ''} whitespace-nowrap`}>{maghribAdhan} PM</td>
+                                <td className={`py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-right ${nextPrayer === "Maghrib Iqama" ? 'text-emerald-500 font-bold' : ''} whitespace-nowrap`}>{maghribIqama} PM</td>
                             </tr>
                             <tr className="bg-gray-100 dark:bg-gray-800 dark:text-white">
                                 <td className="py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl">
@@ -137,8 +137,8 @@ function TV() {
                                         <span>Isha</span>
                                     </div>
                                 </td>
-                                <td className={`py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-center ${nextPrayer === "Isha Adhan" ? 'text-emerald-500 font-bold' : ''}`}>{ishaAdhan} PM</td>
-                                <td className={`py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-right ${nextPrayer === "Isha Iqama" ? 'text-emerald-500 font-bold' : ''}`}>{ishaIqama} PM</td>
+                                <td className={`py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-center ${nextPrayer === "Isha Adhan" ? 'text-emerald-500 font-bold' : ''} whitespace-nowrap`}>{ishaAdhan} PM</td>
+                                <td className={`py-2 px-4 4xl:py-8 4xl:px-8 xl:text-2xl 2xl:text-3xl 4xl:text-7xl text-right ${nextPrayer === "Isha Iqama" ? 'text-emerald-500 font-bold' : ''} whitespace-nowrap`}>{ishaIqama} PM</td>
                             </tr>
                         </tbody>
                     </table>
