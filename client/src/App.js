@@ -9,6 +9,7 @@ import TV from './TV';
 import Month from './Month';
 import Vertical from './Vertical';
 import Lookup from './Lookup';
+import Musallah from './Musallah';
 
 inject();
 injectSpeedInsights();
@@ -40,6 +41,11 @@ const App = () => (
         exact
         path='/Lookup'
         element={<Lookup />}
+      />
+      <Route
+        exact
+        path='/Musallah'
+        element={<Musallah />}
       />
     </Routes>
   </HashRouter>
