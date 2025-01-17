@@ -167,7 +167,7 @@ function Musallah() {
                             </tr>
                         </tbody>
                     </table>
-                    <div className="bg-gray-200 dark:bg-gray-800 rounded-2xl 4xl:rounded-3xl overflow-hidden text-center text-emerald-500 font-semibold shadow-lg xl:text-4xl 2xl:text-5xl 4xl:text-9xl px-4 space-y-8 pt-5 pb-5">
+                    <div className="bg-gray-200 dark:bg-gray-800 rounded-2xl 4xl:rounded-3xl overflow-hidden text-center text-emerald-500 font-semibold shadow-lg xl:text-4xl 2xl:text-5xl 4xl:text-9xl px-4 space-y-8 py-2">
                         <h1 className="pt-4">
                             <span>1<sup>st</sup> Jumuah: {jumuah1}</span>
                         </h1>
