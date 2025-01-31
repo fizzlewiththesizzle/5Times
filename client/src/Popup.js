@@ -52,7 +52,7 @@ function Popup() {
           // for testing multiply by 60, 60 and how many hrs
           if (timeDifference <= 1000 && timeDifference > 0) {
             setShowNotification(true);
-            setTimeout(() => setShowNotification(false), 60000); // Hide after 60 seconds
+            setTimeout(() => setShowNotification(false), 300000); // Hide after 5 minutes
           }
         } else {
         }
