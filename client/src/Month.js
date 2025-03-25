@@ -36,10 +36,10 @@ function Month() {
             
                 <div className='flex-grow px-4 w-screen dark:text-white max-w-full w-fit md:w-screen xl:w-3/4 2xl:w-3/4 mx-auto'> 
                     <PageTransition>
-                    <div className='bg-gray-200 dark:bg-gray-800 dark:text-white rounded-2xl overflow-hidden text-left xs:text-center xl:text-left 2xl:text-left mt-4 shadow-lg px-4 mb-4 pt-4 pb-4 space-y-2'>
+                    <div className='bg-zinc-200 dark:bg-zinc-800 dark:text-white rounded-2xl overflow-hidden text-left xs:text-center xl:text-left 2xl:text-left mt-4 shadow-lg px-4 mb-4 pt-4 pb-4 space-y-2'>
                         <h2 className='text-4xl xs:text-2xl font-bold dark:text-white xs:text-center md:text-left xl:text-left 2xl:text-left'>Select a Month</h2>
                         <div className='relative'>
-                        <select className='bg-white dark:bg-gray-700 font-semibold rounded-lg shadow-lg block w-full p-2.5 appearance-none' value={selectedMonth} onChange={handleMonthChange}>
+                        <select className='bg-white dark:bg-zinc-700 font-semibold rounded-lg shadow-lg block w-full p-2.5 appearance-none' value={selectedMonth} onChange={handleMonthChange}>
                             <option value="jan">January</option>
                             <option value="feb">February</option>
                             <option value="mar">March</option>
@@ -67,7 +67,7 @@ function Month() {
 
                     <PageTransition>
                     <table className='text-center xs:text-sm w-full border-separate border-spacing-y-4'>
-                        <thead className='bg-gray-200 dark:bg-gray-800'>
+                        <thead className='bg-zinc-200 dark:bg-zinc-800'>
                             <tr>
                                 <th className='py-3 pl-4 first:rounded-tl-lg first:rounded-bl-lg last:rounded-tr-lg last:rounded-br-lg'>Day</th>
                                 <th className='py-3 first:rounded-tl-lg first:rounded-bl-lg last:rounded-tr-lg last:rounded-br-lg'>Fajr</th>
@@ -78,9 +78,9 @@ function Month() {
                                 <th className='py-3 pr-2 first:rounded-tl-lg first:rounded-bl-lg last:rounded-tr-lg last:rounded-br-lg'>Isha</th>
                             </tr>
                         </thead>
-                        <tbody className='bg-white dark:bg-gray-700'>
+                        <tbody className='bg-white dark:bg-zinc-700'>
                             {monthlyData.map((item, index) => (
-                                <tr key={item.id} className={index % 2 === 0 ? 'bg-gray-100 dark:bg-gray-700' : 'bg-gray-200 dark:bg-gray-800'}>
+                                <tr key={item.id} className={index % 2 === 0 ? 'bg-zinc-100 dark:bg-zinc-700' : 'bg-zinc-200 dark:bg-zinc-800'}>
                                     <td className='py-3 pl-2 first:rounded-tl-lg first:rounded-bl-lg last:rounded-tr-lg last:rounded-br-lg'>{item.day}</td>
                                     <td className='py-3 first:rounded-tl-lg first:rounded-bl-lg last:rounded-tr-lg last:rounded-br-lg'>{item.fajr_adhan}</td>
                                     <td className='py-3 first:rounded-tl-lg first:rounded-bl-lg last:rounded-tr-lg last:rounded-br-lg'>{item.sunrise}</td>
@@ -95,7 +95,7 @@ function Month() {
                     </PageTransition>
                     <div className='flex flex-col items-center'>
                     </div>
-                    <footer className='text-gray-500 text-xl text-center pt-2 pb-4'>Beta</footer>
+                    <footer className='text-zinc-500 text-xl text-center pt-2 pb-4'>Beta</footer>
                 </div>
             <BottomNavigation />
         </div>
