@@ -57,7 +57,7 @@ function queryDatabase(callback) {
   const s_year = today.getFullYear();
   const s_month = today.toLocaleString('en-US', { month: 'long' });
   const s_day = today.getDate();
-  const hijri_today = hijri.convert(today, -1);
+  const hijri_today = hijri.convert(today, );
   const day = today.getDate();
   const month = today.getMonth() + 1;
   n_day = tomorrow.getDate();
