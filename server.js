@@ -68,8 +68,8 @@ function queryDatabase(callback) {
   
   if (isDaylightSavingTime) {
     //console.log("Daylight savings in effect");
-    jumuah_time_1 = "01:00 PM";
-    jumuah_time_2 = "02:00 PM";
+    jumuah_time_1 = "01:30 PM";
+    jumuah_time_2 = "02:30 PM";
     dhuhr_DS_offset = 12;
 
   } else {
