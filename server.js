@@ -57,7 +57,7 @@ function queryDatabase(callback) {
   const s_year = today.getFullYear();
   const s_month = today.toLocaleString('en-US', { month: 'long' });
   const s_day = today.getDate();
-  const hijri_today = hijri.convert(today, -1);
+  const hijri_today = hijri.convert(today, 0); // add hijri offset here
   const day = today.getDate();
   const month = today.getMonth() + 1;
   n_day = tomorrow.getDate();
@@ -68,8 +68,8 @@ function queryDatabase(callback) {
   
   if (isDaylightSavingTime) {
     //console.log("Daylight savings in effect");
-    jumuah_time_1 = "01:00 PM";
-    jumuah_time_2 = "02:00 PM";
+    jumuah_time_1 = "01:30 PM";
+    jumuah_time_2 = "02:30 PM";
     dhuhr_DS_offset = 12;
 
   } else {
