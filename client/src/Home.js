@@ -121,7 +121,7 @@ function Home() {
                   </div>
                 </td>
                 <td className={`py-2 pr-4 text-xl text-center ${nextPrayer === "Sunrise" ? 'text-green-700 font-bold' : ''}`}>{sunrise} AM</td>
-                <td className="py-2 text-xl pr-2 text-center xl:text-right 2xl:text-right">---</td>
+                <td className="py-2 text-xl pr-2 text- md:text-right xl:text-right 2xl:text-right">---</td>
               </tr>
               <tr className="bg-white dark:bg-zinc-700 dark:text-white">
                 <td className="py-2 px-4 text-xl">
