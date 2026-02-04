@@ -11,7 +11,7 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Use the cors middleware
-app.use(cors());
+//app.use(cors()); // DISABLED to minimize edge requests
 
 const dbPath = path.join(__dirname, 'SalamPrayerDB.sqlite3');
 const db = new sqlite3.Database(dbPath);
@@ -369,54 +369,77 @@ function queryMonth() {
 }
 
 // Initial fetch and setup interval for periodic fetch (every hour)
-fetchDataFromDatabase();
-setInterval(fetchDataFromDatabase, 300000); // 5 minutes in milliseconds
-queryMonth();
+// fetchDataFromDatabase();
+// setInterval(fetchDataFromDatabase, 300000); // 5 minutes in milliseconds
+// queryMonth(); // removed periodic refresh to reduce edge function calls
 
 app.get('/api/prayer', (req, res) => {
-  res.json({ prayers: cachedData, 
-    nextPrayer: next });
+  // CACHE HEADER: Tells Vercel "Save this data for 1 hour (3600s)"
+  res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=60');
+
+  queryDatabase((err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "Database error" });
+    }
+
+    res.json({ 
+      prayers: result, 
+      nextPrayer: next 
+    });
+  });
 });
 
 app.get('/api/nextPrayer', (req, res) => {
-  res.json({ next });
+  res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=60');
+  queryDatabase(() => {
+    res.json({ next });
+  });
 });
 
 app.get('/api/month', (req, res) => {
-  const monthlyData = {
-    jan: jan_data,
-    feb: feb_data,
-    mar: mar_data,
-    apr: apr_data,
-    may: may_data,
-    jun: jun_data,
-    jul: jul_data,
-    aug: aug_data,
-    sep: sep_data,
-    oct: oct_data,
-    nov: nov_data, 
-    dec: dec_data,
-  };
-  res.json(monthlyData);
+  res.setHeader('Cache-Control', 'public, s-maxage=86400, stale-while-revalidate=3600');
+
+  queryMonth(); 
+
+  setTimeout(() => {
+    const monthlyData = {
+      jan: jan_data, feb: feb_data, mar: mar_data, apr: apr_data,
+      may: may_data, jun: jun_data, jul: jul_data, aug: aug_data,
+      sep: sep_data, oct: oct_data, nov: nov_data, dec: dec_data,
+    };
+    res.json(monthlyData);
+  }, 500); // wait for 500ms to ensure data is fetched
 });
 
 app.get('/api/prayerUTC', (req, res) => {
-  const utcData = {
-    fajr_adhan: fajr_adhan_today,
-    fajr_iqama: fajr_iqama_today,
-    sunrise: sunrise_today,
-    dhuhr_adhan: dhuhr_adhan_today,
-    dhuhr_iqama: dhuhr_iqama_today,
-    asr_adhan: asr_adhan_today,
-    asr_iqama: asr_iqama_today,
-    maghrib_adhan: maghrib_adhan_today, 
-    maghrib_iqama: maghrib_iqama_today,
-    isha_adhan: isha_adhan_today,
-    isha_iqama: isha_iqama_today,
-    next_fajr_adhan: fajr_adhan_tomorrow,
-    next_fajr_iqama: fajr_iqama_tomorrow,
-  };
-  res.json(utcData);
+  res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=60');
+
+  queryDatabase((err) => {
+    if (err) return res.status(500).json({ error: "Database error" });
+
+    fetchTomorrowFajrTimes((errTomorrow) => {
+      if (errTomorrow) return res.status(500).json({ error: "Database error fetching tomorrow" });
+
+      const utcData = {
+        fajr_adhan: fajr_adhan_today,
+        fajr_iqama: fajr_iqama_today,
+        sunrise: sunrise_today,
+        dhuhr_adhan: dhuhr_adhan_today,
+        dhuhr_iqama: dhuhr_iqama_today,
+        asr_adhan: asr_adhan_today,
+        asr_iqama: asr_iqama_today,
+        maghrib_adhan: maghrib_adhan_today, 
+        maghrib_iqama: maghrib_iqama_today,
+        isha_adhan: isha_adhan_today,
+        isha_iqama: isha_iqama_today,
+        next_fajr_adhan: fajr_adhan_tomorrow,
+        next_fajr_iqama: fajr_iqama_tomorrow,
+      };
+
+      res.json(utcData);
+    });
+  });
 });
 
 app.get('*', (req, res) => {
