@@ -5,7 +5,7 @@ import './App.css';
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 function Countdown() {
-  const { data, error} = useSWR('/api/prayerUTC', fetcher, {
+  const { data, error } = useSWR('/api/prayerUTC', fetcher, {
     onLoadingSlow: () => {
       window.location.reload();
       return <div className="dark:text-white">Loading...</div>;
@@ -13,7 +13,6 @@ function Countdown() {
     loadingTimeout: 10000,
     keepPreviousData: true,
     revalidateOnFocus: false,
-    refreshInterval: 1000,
   });
 
   const [timeToNextPrayer, setTimeToNextPrayer] = useState(null);
@@ -70,9 +69,9 @@ function Countdown() {
     return <div className='dark:text-white'>Error loading data</div>;
   }
 
-//   if (isLoading || !data || timeToNextPrayer === null) {
-//     return <Loading />;
-//   }
+  //   if (isLoading || !data || timeToNextPrayer === null) {
+  //     return <Loading />;
+  //   }
 
   // Convert milliseconds to hours, minutes, and seconds
   const hours = Math.floor((timeToNextPrayer / (1000 * 60 * 60)) % 24);

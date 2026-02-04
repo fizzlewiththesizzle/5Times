@@ -23,7 +23,7 @@ function Musallah() {
         loadingTimeout: 10000, // Set timeout to 10 seconds
         keepPreviousData: true,
         revalidateOnFocus: false,
-        refreshInterval: 1000,
+        refreshInterval: 900000,
     });
 
     if (error) {
@@ -93,10 +93,10 @@ function Musallah() {
                         <img src={mac} alt="logo" className="pt-4 w-3/5 h-auto pb-4" />
                     </div>
                 </div>
-    
+
                 {/* Right Column */}
                 <div className="space-y-4 4xl:space-y-8">
-                <table className="rounded-2xl 4xl:rounded-3xl overflow-hidden shadow-lg w-full border-collapse">
+                    <table className="rounded-2xl 4xl:rounded-3xl overflow-hidden shadow-lg w-full border-collapse">
                         <thead className="bg-zinc-200 dark:bg-zinc-800 dark:text-white">
                             <tr>
                                 <th className="py-4 px-4 4xl:py-8 4xl:px-8 xl:text-3xl 2xl:text-6xl 4xl:text-9xl flex">Prayer</th>
@@ -188,9 +188,9 @@ function Musallah() {
             </div>
         </React.Fragment>
     );
-    
+
 }
-    
+
 
 
 export default Musallah;

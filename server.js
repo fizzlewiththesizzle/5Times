@@ -65,7 +65,7 @@ function queryDatabase(callback) {
   const h_m = hijri_today.monthText;
   const isDaylightSavingTime = today.getTimezoneOffset() < new Date(today.getFullYear(), 0, 1).getTimezoneOffset();
   var dhuhr_DS_offset = 0;
-  
+
   if (isDaylightSavingTime) {
     //console.log("Daylight savings in effect");
     jumuah_time_1 = "01:30 PM";
@@ -79,40 +79,40 @@ function queryDatabase(callback) {
   }
 
   // convert arabic hijri months to english
-  if (h_m == 'المحرّم'){
+  if (h_m == 'المحرّم') {
     hijri_month_en = "Muharram";
   }
-  else if (h_m == 'صفر'){
+  else if (h_m == 'صفر') {
     hijri_month_en = "Safar";
   }
-  else if (h_m == 'ربيع الأوّل'){
+  else if (h_m == 'ربيع الأوّل') {
     hijri_month_en = "Rabi' Al Awwal";
   }
-  else if (h_m == 'ربيع الآخر'){
+  else if (h_m == 'ربيع الآخر') {
     hijri_month_en = "Rabi' Al-Thani";
   }
-  else if (h_m == 'جمادى الأولى'){
+  else if (h_m == 'جمادى الأولى') {
     hijri_month_en = "Jumada Al-Awwal";
   }
-  else if (h_m == 'جمادى الآخرة'){
+  else if (h_m == 'جمادى الآخرة') {
     hijri_month_en = "Jumada Al-Thani";
   }
-  else if (h_m == 'رجب'){
+  else if (h_m == 'رجب') {
     hijri_month_en = "Rajab";
   }
-  else if (h_m == 'شعبان'){
+  else if (h_m == 'شعبان') {
     hijri_month_en = "Sha'aban";
   }
-  else if (h_m == 'رمضان'){
+  else if (h_m == 'رمضان') {
     hijri_month_en = "Ramadan";
   }
-  else if (h_m == 'شوّال'){
+  else if (h_m == 'شوّال') {
     hijri_month_en = "Shawwal";
   }
-  else if (h_m == 'ذو القعدة'){
+  else if (h_m == 'ذو القعدة') {
     hijri_month_en = "Dhu Al-Qi'dah";
   }
-  else if (h_m == 'ذو الحجّة'){
+  else if (h_m == 'ذو الحجّة') {
     hijri_month_en = "Dhu Al-Hijjah";
   }
 
@@ -166,7 +166,7 @@ function queryDatabase(callback) {
     fajr_adhan_today.setHours(parseInt(fa_hours, 10), parseInt(fa_minutes, 10), 0, 0);
     console.log(today);
     console.log(fajr_adhan_today);
-    
+
     fi = result[0].fajr_iqama;
     fajr_iqama_today = new Date();
     const [fi_hours, fi_minutes] = fi.split(':');
@@ -227,51 +227,51 @@ function queryDatabase(callback) {
     isha_iqama_today.setHours(parseInt(ii_hours, 10) + 12, parseInt(ii_minutes, 10), 0, 0);
     console.log(isha_iqama_today);
 
-    if(fajr_adhan_today >= today){
+    if (fajr_adhan_today >= today) {
       console.log("Fajr Adhan Next");
       next = "Fajr Adhan";
     }
-    else if(fajr_iqama_today >= today){
+    else if (fajr_iqama_today >= today) {
       console.log("Fajr Iqama Next");
       next = "Fajr Iqama";
     }
-    else if(sunrise_today >= today){
+    else if (sunrise_today >= today) {
       console.log("Sunrise Next");
       next = "Sunrise";
     }
-    else if(dhuhr_adhan_today >= today){
+    else if (dhuhr_adhan_today >= today) {
       console.log("Dhuhr Adhan Next");
       next = "Dhuhr Adhan";
     }
-    else if(dhuhr_iqama_today >= today){
+    else if (dhuhr_iqama_today >= today) {
       console.log("Dhuhr Iqama Next");
       next = "Dhuhr Iqama";
     }
-    else if(asr_adhan_today >= today){
+    else if (asr_adhan_today >= today) {
       console.log("Asr Adhan Next");
       next = "Asr Adhan";
     }
-    else if(asr_iqama_today >= today){
+    else if (asr_iqama_today >= today) {
       console.log("Asr Iqama Next");
       next = "Asr Iqama";
     }
-    else if(maghrib_adhan_today >= today){
+    else if (maghrib_adhan_today >= today) {
       console.log("Maghrib Adhan Next");
       next = "Maghrib Adhan";
     }
-    else if(maghrib_iqama_today >= today){
+    else if (maghrib_iqama_today >= today) {
       console.log("Maghrib Iqama Next");
       next = "Maghrib Iqama";
     }
-    else if(isha_adhan_today >= today){
+    else if (isha_adhan_today >= today) {
       console.log("Isha Adhan Next");
       next = "Isha Adhan";
     }
-    else if(isha_iqama_today >= today){
+    else if (isha_iqama_today >= today) {
       console.log("Isha Iqama Next");
       next = "Isha Iqama";
     }
-    else{
+    else {
       console.log("Fajr Adhan Next (end of day)");
       next = "Fajr Adhan";
     }
@@ -300,7 +300,7 @@ function fetchTomorrowFajrTimes(callback) {
     fajr_adhan_tomorrow.setHours(parseInt(n_fa_hours, 10), parseInt(n_fa_minutes, 10), 0, 0);
     //console.log(today);
     console.log("Tomorrow FA: " + fajr_adhan_tomorrow);
-    
+
     n_fi = resultTomorrow[0].fajr_iqama;
     fajr_iqama_tomorrow = new Date(tomorrow);
     const [n_fi_hours, n_fi_minutes] = n_fi.split(':');
@@ -363,7 +363,7 @@ function queryMonth() {
     nov_data = result.filter(row => row.month === 11);
     dec_data = result.filter(row => row.month === 12);
     //feb_data.forEach((row) => {
-      //console.log(row.fajr_adhan);
+    //console.log(row.fajr_adhan);
     //});
   });
 }
@@ -374,11 +374,15 @@ setInterval(fetchDataFromDatabase, 300000); // 5 minutes in milliseconds
 queryMonth();
 
 app.get('/api/prayer', (req, res) => {
-  res.json({ prayers: cachedData, 
-    nextPrayer: next });
+  res.set('Cache-Control', 'public, max-age=300, s-maxage=300');
+  res.json({
+    prayers: cachedData,
+    nextPrayer: next
+  });
 });
 
 app.get('/api/nextPrayer', (req, res) => {
+  res.set('Cache-Control', 'public, max-age=300, s-maxage=300');
   res.json({ next });
 });
 
@@ -394,7 +398,7 @@ app.get('/api/month', (req, res) => {
     aug: aug_data,
     sep: sep_data,
     oct: oct_data,
-    nov: nov_data, 
+    nov: nov_data,
     dec: dec_data,
   };
   res.json(monthlyData);
@@ -409,13 +413,14 @@ app.get('/api/prayerUTC', (req, res) => {
     dhuhr_iqama: dhuhr_iqama_today,
     asr_adhan: asr_adhan_today,
     asr_iqama: asr_iqama_today,
-    maghrib_adhan: maghrib_adhan_today, 
+    maghrib_adhan: maghrib_adhan_today,
     maghrib_iqama: maghrib_iqama_today,
     isha_adhan: isha_adhan_today,
     isha_iqama: isha_iqama_today,
     next_fajr_adhan: fajr_adhan_tomorrow,
     next_fajr_iqama: fajr_iqama_tomorrow,
   };
+  res.set('Cache-Control', 'public, max-age=300, s-maxage=300');
   res.json(utcData);
 });
 

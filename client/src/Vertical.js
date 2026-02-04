@@ -18,7 +18,7 @@ function Vertical() {
     loadingTimeout: 10000,
     keepPreviousData: true,
     revalidateOnFocus: false,
-    refreshInterval: 1000,
+    refreshInterval: 900000,
   });
 
   if (error) {

@@ -22,7 +22,7 @@ function TV() {
         loadingTimeout: 10000, // Set timeout to 10 seconds
         keepPreviousData: true,
         revalidateOnFocus: false,
-        refreshInterval: 1000,
+        refreshInterval: 900000,
     });
 
     if (error) {
