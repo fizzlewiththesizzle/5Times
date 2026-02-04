@@ -401,6 +401,7 @@ app.get('/api/month', (req, res) => {
     nov: nov_data,
     dec: dec_data,
   };
+  res.set('Cache-Control', 'public, max-age=300, s-maxage=300');
   res.json(monthlyData);
 });
 
