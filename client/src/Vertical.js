@@ -17,7 +17,7 @@ function Vertical() {
     },
     loadingTimeout: 10000,
     keepPreviousData: true,
-    revalidateOnFocus: false,
+    revalidateOnFocus: true,
     refreshInterval: 900000,
   });
 

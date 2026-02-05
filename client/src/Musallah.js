@@ -22,7 +22,7 @@ function Musallah() {
         },
         loadingTimeout: 10000, // Set timeout to 10 seconds
         keepPreviousData: true,
-        revalidateOnFocus: false,
+        revalidateOnFocus: true,
         refreshInterval: 900000,
     });
 
