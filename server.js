@@ -148,7 +148,6 @@ function queryDatabase(callback) {
       year_s: s_year,
     }));
 
-    callback(null, result);
     console.log('\nData refreshed:', moment().tz('America/Denver').format('YYYY-MM-DD HH:mm:ss'));
     console.log("Fajr    " + result[0].fajr_adhan + " " + result[0].fajr_iqama);
     console.log("Sunrise " + result[0].sunrise + "  ---");
@@ -275,6 +274,8 @@ function queryDatabase(callback) {
       console.log("Fajr Adhan Next (end of day)");
       next = "Fajr Adhan";
     }
+
+    callback(null, result);
   });
 }
 
@@ -290,7 +291,6 @@ function fetchTomorrowFajrTimes(callback) {
       fajr_iqama: row.FajrIqama,
     }));
 
-    callback(null, resultTomorrow);
     //console.log("Tomorrow Fajr Adhan: " + resultTomorrow[0].fajr_adhan);
     //console.log("Tomorrow Fajr Iqama: " + resultTomorrow[0].fajr_iqama);
 
@@ -306,6 +306,8 @@ function fetchTomorrowFajrTimes(callback) {
     const [n_fi_hours, n_fi_minutes] = n_fi.split(':');
     fajr_iqama_tomorrow.setHours(parseInt(n_fi_hours, 10), parseInt(n_fi_minutes, 10), 0, 0);
     console.log("Tomorrow FI: " + fajr_iqama_tomorrow);
+
+    callback(null, resultTomorrow);
   });
 }
 
@@ -327,11 +329,16 @@ function fetchDataFromDatabase() {
 }
 
 const query_m = 'SELECT * FROM SalamPrayerDB_Time';
-function queryMonth() {
+function queryMonth(callback) {
+  if (jan_data.length > 0) {
+    if (callback) callback();
+    return;
+  }
   db.all(query_m, [], (err, rows) => {
     if (err) {
       console.error('Error fetching data from the database:', err.message);
-      return callback(err, null);
+      if (callback) callback(err);
+      return;
     }
     const result = rows.map(row => ({
       id: row.Id,
@@ -362,67 +369,80 @@ function queryMonth() {
     oct_data = result.filter(row => row.month === 10);
     nov_data = result.filter(row => row.month === 11);
     dec_data = result.filter(row => row.month === 12);
-    //feb_data.forEach((row) => {
-    //console.log(row.fajr_adhan);
-    //});
+    if (callback) callback();
   });
 }
 
-// Initial fetch and setup interval for periodic fetch (every hour)
+// Ensure the endpoints always recalculate time to avoid staleness in serverless environments
+// Initial fetch to populate terminal logs and pre-warm variables
 fetchDataFromDatabase();
-setInterval(fetchDataFromDatabase, 300000); // 5 minutes in milliseconds
 queryMonth();
 
 app.get('/api/prayer', (req, res) => {
-  res.set('Cache-Control', 'public, max-age=300, s-maxage=300');
-  res.json({
-    prayers: cachedData,
-    nextPrayer: next
+  queryDatabase((err, result) => {
+    if (err) return res.status(500).json({ error: 'DB Error' });
+    res.set('Cache-Control', 'public, max-age=300, s-maxage=300');
+    res.json({
+      prayers: result,
+      nextPrayer: next
+    });
   });
 });
 
 app.get('/api/nextPrayer', (req, res) => {
-  res.set('Cache-Control', 'public, max-age=300, s-maxage=300');
-  res.json({ next });
+  queryDatabase((err, result) => {
+    if (err) return res.status(500).json({ error: 'DB Error' });
+    res.set('Cache-Control', 'public, max-age=300, s-maxage=300');
+    res.json({ next });
+  });
 });
 
 app.get('/api/month', (req, res) => {
-  const monthlyData = {
-    jan: jan_data,
-    feb: feb_data,
-    mar: mar_data,
-    apr: apr_data,
-    may: may_data,
-    jun: jun_data,
-    jul: jul_data,
-    aug: aug_data,
-    sep: sep_data,
-    oct: oct_data,
-    nov: nov_data,
-    dec: dec_data,
-  };
-  res.set('Cache-Control', 'public, max-age=300, s-maxage=300');
-  res.json(monthlyData);
+  queryMonth((err) => {
+    if (err) return res.status(500).json({ error: 'DB Error' });
+    const monthlyData = {
+      jan: jan_data,
+      feb: feb_data,
+      mar: mar_data,
+      apr: apr_data,
+      may: may_data,
+      jun: jun_data,
+      jul: jul_data,
+      aug: aug_data,
+      sep: sep_data,
+      oct: oct_data,
+      nov: nov_data,
+      dec: dec_data,
+    };
+    res.set('Cache-Control', 'public, max-age=300, s-maxage=300');
+    res.json(monthlyData);
+  });
 });
 
 app.get('/api/prayerUTC', (req, res) => {
-  const utcData = {
-    fajr_adhan: fajr_adhan_today,
-    fajr_iqama: fajr_iqama_today,
-    sunrise: sunrise_today,
-    dhuhr_adhan: dhuhr_adhan_today,
-    dhuhr_iqama: dhuhr_iqama_today,
-    asr_adhan: asr_adhan_today,
-    asr_iqama: asr_iqama_today,
-    maghrib_adhan: maghrib_adhan_today,
-    maghrib_iqama: maghrib_iqama_today,
-    isha_adhan: isha_adhan_today,
-    isha_iqama: isha_iqama_today,
-    next_fajr_adhan: fajr_adhan_tomorrow,
-    next_fajr_iqama: fajr_iqama_tomorrow,
-  };
-  res.set('Cache-Control', 'public, max-age=300, s-maxage=300');
-  res.json(utcData);
+  queryDatabase((err, result) => {
+    if (err) return res.status(500).json({ error: 'DB Error' });
+    fetchTomorrowFajrTimes((err2, resultTomorrow) => {
+      if (err2) return res.status(500).json({ error: 'DB Error' });
+      const utcData = {
+        fajr_adhan: fajr_adhan_today,
+        fajr_iqama: fajr_iqama_today,
+        sunrise: sunrise_today,
+        dhuhr_adhan: dhuhr_adhan_today,
+        dhuhr_iqama: dhuhr_iqama_today,
+        asr_adhan: asr_adhan_today,
+        asr_iqama: asr_iqama_today,
+        maghrib_adhan: maghrib_adhan_today,
+        maghrib_iqama: maghrib_iqama_today,
+        isha_adhan: isha_adhan_today,
+        isha_iqama: isha_iqama_today,
+        next_fajr_adhan: fajr_adhan_tomorrow,
+        next_fajr_iqama: fajr_iqama_tomorrow,
+      };
+      res.set('Cache-Control', 'public, max-age=300, s-maxage=300');
+      res.json(utcData);
+    });
+  });
 });
 
 app.get('*', (req, res) => {
