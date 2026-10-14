@@ -57,6 +57,7 @@ function Musallah() {
         isha_iqama: ishaIqama,
         jumuah_1: jumuah1,
         jumuah_2: jumuah2,
+        jumuah_3: jumuah3,
     } = prayerData;
 
     const nextPrayer = data.nextPrayer; // Accessing nextPrayer from the data object
@@ -167,14 +168,76 @@ function Musallah() {
                             </tr>
                         </tbody>
                     </table>
-                    <div className="bg-zinc-200 dark:bg-zinc-800 rounded-2xl 4xl:rounded-3xl overflow-hidden text-center text-green-700 font-semibold shadow-lg xl:text-4xl 2xl:text-6xl 4xl:text-9xl px-4 space-y-8">
-                        <h1 className="pt-4">
-                            <span>1<sup>st</sup> Jumuah: {jumuah1}</span>
-                        </h1>
-                        <h1 className="pb-4">
-                            <span>2<sup>nd</sup> Jumuah: {jumuah2}</span>
-                        </h1>
-                    </div>
+
+<div className="bg-zinc-200 dark:bg-zinc-800
+                rounded-2xl 4xl:rounded-3xl
+                overflow-hidden text-center
+                shadow-lg mt-4 4xl:mt-8">
+
+    <h2 className="font-bold text-zinc-800
+                   dark:text-white
+                   text-2xl xl:text-3xl 2xl:text-4xl
+                   4xl:text-6xl px-4 pt-4 pb-3
+                   4xl:pt-8 4xl:pb-6">
+        Jumuah Prayers
+    </h2>
+
+    <div className="grid grid-cols-3
+                    divide-x divide-zinc-300
+                    dark:divide-zinc-700
+                    border-t border-zinc-300
+                    dark:border-zinc-700">
+
+        <div className="px-1 py-4
+                        xl:py-5 4xl:py-8">
+            <p className="text-sm xl:text-xl
+                          2xl:text-2xl 4xl:text-4xl
+                          text-zinc-600 dark:text-zinc-400
+                          mb-2 whitespace-nowrap">
+                <span>1<sup>st</sup> Jumuah</span>
+            </p>
+            <p className="font-semibold text-green-700
+                          text-lg xl:text-3xl
+                          2xl:text-4xl 4xl:text-6xl
+                          whitespace-nowrap">
+                {jumuah1}
+            </p>
+        </div>
+
+        <div className="px-1 py-4
+                        xl:py-5 4xl:py-8">
+            <p className="text-sm xl:text-xl
+                          2xl:text-2xl 4xl:text-4xl
+                          text-zinc-600 dark:text-zinc-400
+                          mb-2 whitespace-nowrap">
+                <span>2<sup>nd</sup> Jumuah</span>
+            </p>
+            <p className="font-semibold text-green-700
+                          text-lg xl:text-3xl
+                          2xl:text-4xl 4xl:text-6xl
+                          whitespace-nowrap">
+                {jumuah2}
+            </p>
+        </div>
+
+        <div className="px-1 py-4
+                        xl:py-5 4xl:py-8">
+            <p className="text-sm xl:text-xl
+                          2xl:text-2xl 4xl:text-4xl
+                          text-zinc-600 dark:text-zinc-400
+                          mb-2 whitespace-nowrap">
+                <span>3<sup>rd</sup> Jumuah</span>
+            </p>
+            <p className="font-semibold text-green-700
+                          text-lg xl:text-3xl
+                          2xl:text-4xl 4xl:text-6xl
+                          whitespace-nowrap">
+                {jumuah3}
+            </p>
+        </div>
+    </div>
+</div>
+
                     <div className="text-center dark:text-white">
                         <h1 className="text-6xl 4xl:text-9xl">Next Prayer In</h1>
                         <div className="clock-font font-bold xl:text-5xl 2xl:text-7xl 4xl:text-10xl text-green-700">

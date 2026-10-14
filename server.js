@@ -63,19 +63,22 @@ function queryDatabase(callback) {
   n_day = tomorrow.getDate();
   n_month = tomorrow.getMonth() + 1;
   const h_m = hijri_today.monthText;
-  const isDaylightSavingTime = today.getTimezoneOffset() < new Date(today.getFullYear(), 0, 1).getTimezoneOffset();
+  const isDaylightSavingTime = false; // always false due to Alberta now not observing DST, but keeping the variable for potential future use
+  // const isDaylightSavingTime = today.getTimezoneOffset() < new Date(today.getFullYear(), 0, 1).getTimezoneOffset();
   var dhuhr_DS_offset = 0;
 
   if (isDaylightSavingTime) {
     //console.log("Daylight savings in effect");
     jumuah_time_1 = "01:00 PM";
     jumuah_time_2 = "02:00 PM";
+    jumuah_time_3 = "03:00 PM";
     dhuhr_DS_offset = 12;
 
   } else {
     //console.log("Daylight savings not in effect");
     jumuah_time_1 = "12:30 PM";
     jumuah_time_2 = "01:30 PM";
+    jumuah_time_3 = "02:30 PM";
   }
 
   // convert arabic hijri months to english
@@ -143,6 +146,7 @@ function queryDatabase(callback) {
       hijri_month: hijri_month_en,
       jumuah_1: jumuah_time_1,
       jumuah_2: jumuah_time_2,
+      jumuah_3: jumuah_time_3,
       day_s: s_day,
       month_s: s_month,
       year_s: s_year,
@@ -155,7 +159,7 @@ function queryDatabase(callback) {
     console.log("Asr     " + result[0].asr_adhan + " " + result[0].asr_iqama);
     console.log("Maghrib " + result[0].maghrib_adhan + " " + result[0].maghrib_iqama);
     console.log("Isha    " + result[0].isha_adhan + " " + result[0].isha_iqama + "\n");
-    console.log("Jumuah 1: " + result[0].jumuah_1 + " | Jumuah 2: " + result[0].jumuah_2);
+    console.log("Jumuah 1: " + result[0].jumuah_1 + " | Jumuah 2: " + result[0].jumuah_2 + " | Jumuah 3: " + result[0].jumuah_3);
     console.log("Hijri Date: " + result[0].hijri_month + " " + result[0].hijri_day + ", " + result[0].hijri_year);
     console.log("Greogorian Date: " + result[0].month_s + " " + result[0].day_s + ", " + result[0].year_s);
 

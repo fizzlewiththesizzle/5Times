@@ -53,6 +53,7 @@ function Home() {
     isha_iqama: ishaIqama,
     jumuah_1: jumuah1,
     jumuah_2: jumuah2,
+    jumuah_3: jumuah3,
   } = prayerData;
 
   const nextPrayer = data.nextPrayer; // Accessing nextPrayer from the data object
@@ -167,16 +168,62 @@ function Home() {
             </table>
           </div>
         </PageTransition>
-        <PageTransition>
-          <div className="bg-zinc-200 dark:bg-zinc-800 rounded-2xl overflow-hidden text-center text-green-700 font-semibold shadow-lg text-3xl xs:text-2xl xl:text-4xl 2xl:text-4xl px-4 pt-2 pb-2">
-            <h1 className='pb-2'>
-              <span>1<sup>st</sup> Jumuah: {jumuah1}</span>
-            </h1>
-            <h1>
-              <span>2<sup>nd</sup> Jumuah: {jumuah2}</span>
-            </h1>
-          </div>
-        </PageTransition>
+        
+
+<PageTransition>
+  <div className="bg-zinc-200 dark:bg-zinc-800
+                  dark:text-white rounded-2xl
+                  overflow-hidden text-center
+                  shadow-lg px-4 py-3">
+
+    <h2 className="text-xl xs:text-2xl font-bold
+                   text-zinc-800 dark:text-white mb-3">
+      Jumuah Prayers
+    </h2>
+
+    <div className="grid grid-cols-1 min-[360px]:grid-cols-3
+                    divide-y min-[360px]:divide-y-0
+                    min-[360px]:divide-x
+                    divide-zinc-300 dark:divide-zinc-700">
+
+      <div className="px-2 py-3 min-[360px]:px-1 min-[360px]:py-1">
+        <p className="text-sm xs:text-base
+                      text-zinc-600 dark:text-zinc-400 mb-1">
+          <span>1<sup>st</sup> Jumuah</span>
+        </p>
+        <p className="text-lg xs:text-xl sm:text-2xl
+                      font-semibold text-green-700 whitespace-nowrap">
+          {jumuah1}
+        </p>
+      </div>
+
+      <div className="px-2 py-3 min-[360px]:px-1 min-[360px]:py-1">
+        <p className="text-sm xs:text-base
+                      text-zinc-600 dark:text-zinc-400 mb-1">
+          <span>2<sup>nd</sup> Jumuah</span>
+        </p>
+        <p className="text-lg xs:text-xl sm:text-2xl
+                      font-semibold text-green-700 whitespace-nowrap">
+          {jumuah2}
+        </p>
+      </div>
+
+      <div className="px-2 py-3 min-[360px]:px-1 min-[360px]:py-1">
+        <p className="text-sm xs:text-base
+                      text-zinc-600 dark:text-zinc-400 mb-1">
+          <span>3<sup>rd</sup> Jumuah</span>
+        </p>
+        <p className="text-lg xs:text-xl sm:text-2xl
+                      font-semibold text-green-700 whitespace-nowrap">
+          {jumuah3}
+        </p>
+      </div>
+
+    </div>
+  </div>
+</PageTransition>
+
+
         <Alert showAlert={showPrompt} />
         <footer className='text-zinc-500 text-xl text-center'>Beta</footer>
 
