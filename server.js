@@ -1,4 +1,4 @@
-process.env.TZ = 'America/Denver'; // Use 'America/Denver' for MST
+process.env.TZ = 'America/Edmonton'; // Use 'America/Edmonton' for MDT
 const express = require('express');
 const cors = require('cors');
 const sqlite3 = require('sqlite3').verbose();
