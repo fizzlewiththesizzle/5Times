@@ -65,7 +65,7 @@ function Musallah() {
     return (
         <React.Fragment>
             <Popup></Popup>
-            <div className="grid grid-cols-2 gap-4 4xl:gap-8 mt-6 4xl:mt-12 ml-4 4xl:ml-8 mr-4 4xl:mr-8">
+            <div className="grid grid-cols-2 gap-4 4xl:gap-8 mt-6 4xl:mt-12 ml-4 4xl:ml-8 mr-4 4xl:mr-8 overflow-hidden">
                 {/* Left Column */}
                 <div className="space-y-4 4xl:space-y-8">
                     <div className="iframe-container rounded-2xl 4xl:rounded-3xl shadow-lg">

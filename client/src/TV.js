@@ -63,7 +63,7 @@ function TV() {
 
     return (
         <React.Fragment>
-            <div className='grid grid-cols-3 gap-4 4xl:gap-8 mt-6 4xl:mt-12 ml-4 4xl:ml-8 mr-4 4xl:mr-8'>
+            <div className='grid grid-cols-3 gap-4 4xl:gap-8 mt-6 4xl:mt-12 ml-4 4xl:ml-8 mr-4 4xl:mr-8 overflow-hidden'>
                 <div className='col-span-2'>
                     {/*<EmblaCarousel slides={SLIDES} options={OPTIONS} />*/}
                     <div class="iframe-container rounded-2xl 4xl:rounded-3xl shadow-lg">
