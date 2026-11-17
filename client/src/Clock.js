@@ -33,12 +33,19 @@ const Clock = () => {
   }
 
   useEffect(() => {
-    // Update the clock every second
-    const intervalId = setInterval(updateClock, 1000);
+    updateClock();
 
-    // Clear the interval when the component unmounts
-    return () => clearInterval(intervalId);
-  }, );
+    let intervalId;
+    const timeoutId = setTimeout(() => {
+      updateClock();
+      intervalId = setInterval(updateClock, 1000);
+    }, 1000 - (Date.now() % 1000));
+
+    return () => {
+      clearTimeout(timeoutId);
+      if (intervalId) clearInterval(intervalId);
+    };
+  }, []);
 
   return (
     <div id="clock">

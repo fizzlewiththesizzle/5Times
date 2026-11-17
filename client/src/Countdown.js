@@ -54,11 +54,21 @@ function Countdown() {
         }
       };
 
-      // Update countdown every second
-      const intervalId = setInterval(updateCountdown, 1000);
+      // Run immediately on data load
+      updateCountdown();
 
-      // Clear interval on component unmount
-      return () => clearInterval(intervalId);
+      // Align timer to the exact next second boundary, then tick every 1000ms
+      let intervalId;
+      const timeoutId = setTimeout(() => {
+        updateCountdown();
+        intervalId = setInterval(updateCountdown, 1000);
+      }, 1000 - (Date.now() % 1000));
+
+      // Clear timer on component unmount or data change
+      return () => {
+        clearTimeout(timeoutId);
+        if (intervalId) clearInterval(intervalId);
+      };
 
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }
@@ -73,10 +83,19 @@ function Countdown() {
   //     return <Loading />;
   //   }
 
-  // Convert milliseconds to hours, minutes, and seconds
-  const hours = Math.floor((timeToNextPrayer / (1000 * 60 * 60)) % 24);
-  const minutes = Math.floor((timeToNextPrayer / 1000 / 60) % 60);
-  const seconds = Math.floor((timeToNextPrayer / 1000) % 60);
+  if (timeToNextPrayer === null) {
+    return (
+      <div>
+        <p>--:--:--</p>
+      </div>
+    );
+  }
+
+  // Convert milliseconds using Math.ceil so Clock + Countdown = Target Prayer Time exactly
+  const totalSeconds = Math.max(0, Math.ceil(timeToNextPrayer / 1000));
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
 
   // Add leading zero if single digit
   const formattedHours = hours < 10 ? `0${hours}` : hours;

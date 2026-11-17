@@ -1,4 +1,4 @@
-process.env.TZ = 'America/Edmonton'; // Use 'America/Edmonton' for MDT
+process.env.TZ = 'Etc/GMT+6'; // Fixed UTC-6 offset (Edmonton TZ not updated to UTC-6 yet)
 const express = require('express');
 const cors = require('cors');
 const sqlite3 = require('sqlite3').verbose();
@@ -50,6 +50,14 @@ let tomorrow;
 let n_day;
 let n_month;
 
+function parsePrayerTime(baseDate, timeStr, isPM) {
+  const [hours, minutes] = timeStr.split(':').map(Number);
+  const date = new Date(baseDate);
+  const hour24 = isPM ? (hours % 12) + 12 : (hours % 12);
+  date.setHours(hour24, minutes, 0, 0);
+  return date;
+}
+
 function queryDatabase(callback) {
   const today = new Date();
   tomorrow = new Date(today);
@@ -65,15 +73,12 @@ function queryDatabase(callback) {
   const h_m = hijri_today.monthText;
   const isDaylightSavingTime = false; // always false due to Alberta now not observing DST, but keeping the variable for potential future use
   // const isDaylightSavingTime = today.getTimezoneOffset() < new Date(today.getFullYear(), 0, 1).getTimezoneOffset();
-  var dhuhr_DS_offset = 0;
 
   if (isDaylightSavingTime) {
     //console.log("Daylight savings in effect");
     jumuah_time_1 = "01:00 PM";
     jumuah_time_2 = "02:00 PM";
     jumuah_time_3 = "03:00 PM";
-    dhuhr_DS_offset = 12;
-
   } else {
     //console.log("Daylight savings not in effect");
     jumuah_time_1 = "12:30 PM";
@@ -152,7 +157,7 @@ function queryDatabase(callback) {
       year_s: s_year,
     }));
 
-    console.log('\nData refreshed:', moment().tz('America/Denver').format('YYYY-MM-DD HH:mm:ss'));
+    console.log('\nData refreshed:', moment().tz('Etc/GMT+6').format('YYYY-MM-DD HH:mm:ss'));
     console.log("Fajr    " + result[0].fajr_adhan + " " + result[0].fajr_iqama);
     console.log("Sunrise " + result[0].sunrise + "  ---");
     console.log("Dhuhr   " + result[0].dhuhr_adhan + " " + result[0].dhuhr_iqama);
@@ -163,71 +168,39 @@ function queryDatabase(callback) {
     console.log("Hijri Date: " + result[0].hijri_month + " " + result[0].hijri_day + ", " + result[0].hijri_year);
     console.log("Greogorian Date: " + result[0].month_s + " " + result[0].day_s + ", " + result[0].year_s);
 
-    fa = result[0].fajr_adhan;
-    fajr_adhan_today = new Date();
-    const [fa_hours, fa_minutes] = fa.split(':');
-    fajr_adhan_today.setHours(parseInt(fa_hours, 10), parseInt(fa_minutes, 10), 0, 0);
+    const row = result[0];
+    fajr_adhan_today = parsePrayerTime(today, row.fajr_adhan, false);
     console.log(today);
     console.log(fajr_adhan_today);
 
-    fi = result[0].fajr_iqama;
-    fajr_iqama_today = new Date();
-    const [fi_hours, fi_minutes] = fi.split(':');
-    fajr_iqama_today.setHours(parseInt(fi_hours, 10), parseInt(fi_minutes, 10), 0, 0);
+    fajr_iqama_today = parsePrayerTime(today, row.fajr_iqama, false);
     console.log(fajr_iqama_today);
 
-    sr = result[0].sunrise;
-    sunrise_today = new Date();
-    const [sr_hours, sr_minutes] = sr.split(':');
-    sunrise_today.setHours(parseInt(sr_hours, 10), parseInt(sr_minutes, 10), 0, 0);
+    sunrise_today = parsePrayerTime(today, row.sunrise, false);
     console.log(sunrise_today);
 
-    da = result[0].dhuhr_adhan;
-    dhuhr_adhan_today = new Date();
-    const [da_hours, da_minutes] = da.split(':');
-    dhuhr_adhan_today.setHours(parseInt(da_hours, 10) + dhuhr_DS_offset, parseInt(da_minutes, 10), 0, 0);
+    dhuhr_adhan_today = parsePrayerTime(today, row.dhuhr_adhan, true);
     console.log(dhuhr_adhan_today);
 
-    di = result[0].dhuhr_iqama;
-    dhuhr_iqama_today = new Date();
-    const [di_hours, di_minutes] = di.split(':');
-    dhuhr_iqama_today.setHours(parseInt(di_hours, 10) + 12, parseInt(di_minutes, 10), 0, 0);
+    dhuhr_iqama_today = parsePrayerTime(today, row.dhuhr_iqama, true);
     console.log(dhuhr_iqama_today);
 
-    aa = result[0].asr_adhan;
-    asr_adhan_today = new Date();
-    const [aa_hours, aa_minutes] = aa.split(':');
-    asr_adhan_today.setHours(parseInt(aa_hours, 10) + 12, parseInt(aa_minutes, 10), 0, 0);
+    asr_adhan_today = parsePrayerTime(today, row.asr_adhan, true);
     console.log(asr_adhan_today);
 
-    ai = result[0].asr_iqama;
-    asr_iqama_today = new Date();
-    const [ai_hours, ai_minutes] = ai.split(':');
-    asr_iqama_today.setHours(parseInt(ai_hours, 10) + 12, parseInt(ai_minutes, 10), 0, 0);
+    asr_iqama_today = parsePrayerTime(today, row.asr_iqama, true);
     console.log(asr_iqama_today);
 
-    ma = result[0].maghrib_adhan;
-    maghrib_adhan_today = new Date();
-    const [ma_hours, ma_minutes] = ma.split(':');
-    maghrib_adhan_today.setHours(parseInt(ma_hours, 10) + 12, parseInt(ma_minutes, 10), 0, 0);
+    maghrib_adhan_today = parsePrayerTime(today, row.maghrib_adhan, true);
     console.log(maghrib_adhan_today);
 
-    mi = result[0].maghrib_iqama;
-    maghrib_iqama_today = new Date();
-    const [mi_hours, mi_minutes] = mi.split(':');
-    maghrib_iqama_today.setHours(parseInt(mi_hours, 10) + 12, parseInt(mi_minutes, 10), 0, 0);
+    maghrib_iqama_today = parsePrayerTime(today, row.maghrib_iqama, true);
     console.log(maghrib_iqama_today);
 
-    ia = result[0].isha_adhan;
-    isha_adhan_today = new Date();
-    const [ia_hours, ia_minutes] = ia.split(':');
-    isha_adhan_today.setHours(parseInt(ia_hours, 10) + 12, parseInt(ia_minutes, 10), 0, 0);
+    isha_adhan_today = parsePrayerTime(today, row.isha_adhan, true);
     console.log(isha_adhan_today);
 
-    ii = result[0].isha_iqama;
-    isha_iqama_today = new Date();
-    const [ii_hours, ii_minutes] = ii.split(':');
-    isha_iqama_today.setHours(parseInt(ii_hours, 10) + 12, parseInt(ii_minutes, 10), 0, 0);
+    isha_iqama_today = parsePrayerTime(today, row.isha_iqama, true);
     console.log(isha_iqama_today);
 
     if (fajr_adhan_today >= today) {
@@ -298,17 +271,10 @@ function fetchTomorrowFajrTimes(callback) {
     //console.log("Tomorrow Fajr Adhan: " + resultTomorrow[0].fajr_adhan);
     //console.log("Tomorrow Fajr Iqama: " + resultTomorrow[0].fajr_iqama);
 
-    n_fa = resultTomorrow[0].fajr_adhan;
-    fajr_adhan_tomorrow = new Date(tomorrow);
-    const [n_fa_hours, n_fa_minutes] = n_fa.split(':');
-    fajr_adhan_tomorrow.setHours(parseInt(n_fa_hours, 10), parseInt(n_fa_minutes, 10), 0, 0);
-    //console.log(today);
+    fajr_adhan_tomorrow = parsePrayerTime(tomorrow, resultTomorrow[0].fajr_adhan, false);
     console.log("Tomorrow FA: " + fajr_adhan_tomorrow);
 
-    n_fi = resultTomorrow[0].fajr_iqama;
-    fajr_iqama_tomorrow = new Date(tomorrow);
-    const [n_fi_hours, n_fi_minutes] = n_fi.split(':');
-    fajr_iqama_tomorrow.setHours(parseInt(n_fi_hours, 10), parseInt(n_fi_minutes, 10), 0, 0);
+    fajr_iqama_tomorrow = parsePrayerTime(tomorrow, resultTomorrow[0].fajr_iqama, false);
     console.log("Tomorrow FI: " + fajr_iqama_tomorrow);
 
     callback(null, resultTomorrow);
