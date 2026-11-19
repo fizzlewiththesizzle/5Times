@@ -225,7 +225,7 @@ function Home() {
 
 
         <Alert showAlert={showPrompt} />
-        <footer className='text-zinc-500 text-xl text-center'>Beta</footer>
+        {/* <footer className='text-zinc-500 text-xl text-center'>Beta</footer> */}
 
 
       </div>

@@ -203,7 +203,7 @@ const Lookup = () => {
                 </PageTransition>
                 
             )}
-            <footer className='text-zinc-500 text-xl text-center'>Beta</footer>
+            {/* <footer className='text-zinc-500 text-xl text-center'>Beta</footer> */}
         </div>
         <BottomNavigation />
         </div>

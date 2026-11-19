@@ -95,7 +95,7 @@ function Month() {
                     </PageTransition>
                     <div className='flex flex-col items-center'>
                     </div>
-                    <footer className='text-zinc-500 text-xl text-center pt-2 pb-4'>Beta</footer>
+                    {/* <footer className='text-zinc-500 text-xl text-center pt-2 pb-4'>Beta</footer> */}
                 </div>
             <BottomNavigation />
         </div>
